@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -10,6 +10,7 @@ int main() {
     cout << "Jay-Mark has access and can contribute" << endl;
     cout << "Ben has access and can contribute" << endl;
     cout << "Adrian has access and can contribute" << endl;
+    cout << "Solomon has access and can contribute" << endl;
     cout << "Press ENTER to quit... ";
     while (cin.get() != '\n');
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
