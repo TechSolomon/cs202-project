@@ -3,7 +3,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-int main(){
+int main() {
     cout << "Hello, world." << endl;
 
     cout << "Jay-Mark has access and can contribute" << endl;
