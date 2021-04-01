@@ -11,12 +11,12 @@ int main() {
     cout << "Ben has access and can contribute" << endl;
     cout << "Adrian has access and can contribute" << endl;
     cout << "Solomon has access and can contribute" << endl;
-    cout << "Press ENTER to quit... ";
+    cout << "Press ENTER to quit... TEST ";
     while (cin.get() != '\n');
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-
+    
     while (window.isOpen())
     {
         sf::Event event;
