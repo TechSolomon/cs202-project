@@ -1,35 +1,21 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-using std::cin;
-using std::cout;
-using std::endl;
-
 int main() {
-    cout << "Hello, world." << endl;
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML TEST");
 
-    cout << "Jay-Mark has access and can contribute" << endl;
-    cout << "Ben has access and can contribute" << endl;
-    cout << "Adrian has access and can contribute" << endl;
-    cout << "Solomon has access and can contribute" << endl;
-    cout << "Press ENTER to quit... TEST ";
-    while (cin.get() != '\n');
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
+    sf::Event event;
+    sf::Texture texture;
+    texture.loadFromFile("../assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
+    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
+
+    while (testWindow.isOpen()) {
+        while (testWindow.pollEvent(event)) {
+            if (event.type == sf::Event::EventType::Closed)
+                testWindow.close();
         }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
+        testWindow.clear();
+        testWindow.draw(sprite);
+        testWindow.display();
     }
-
     return 0;
 }
