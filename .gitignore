@@ -359,8 +359,8 @@ cmake-build-debug/
 
 CMakeLists.txt
 
-CS202 Project.sln
+*.sln
 
-CS202 Project.vcxproj
+*.vcxproj*
 
-CS202 Project.vcxproj.filters
+*.dll
