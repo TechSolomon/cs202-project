@@ -358,3 +358,9 @@ cmake-build-debug/
 .DS_Store
 
 CMakeLists.txt
+
+CS202 Project.sln
+
+CS202 Project.vcxproj
+
+CS202 Project.vcxproj.filters
