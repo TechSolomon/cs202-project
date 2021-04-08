@@ -5,7 +5,7 @@ int main() {
 
     sf::Event event;
     sf::Texture texture;
-    texture.loadFromFile("../assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
+    texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
     sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
 
     while (testWindow.isOpen()) {
