@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 int main() {
-    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML TEST");
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML");
 
     sf::Event event;
     sf::Texture texture;
