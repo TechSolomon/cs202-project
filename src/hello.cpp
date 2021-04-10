@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "player.h"
 int main() {
     sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML");
 
