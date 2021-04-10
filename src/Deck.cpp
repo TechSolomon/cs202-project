@@ -7,6 +7,12 @@ Deck::Deck()
 	playableCards = _cards; 
 }
 
+Deck::Deck(int amount)
+{	
+	resetCard();
+	//Adds 2 decks into playableDeck
+}
+
 Deck::~Deck()
 {
 }

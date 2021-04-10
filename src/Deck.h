@@ -8,10 +8,11 @@
 class Deck
 {
 public:
-	static std::vector<std::pair<int, std::string>> playableCards;
+	static std::vector<std::pair<int, std::string>> playableCards;//Manipulate this one 
 	Deck();
+	Deck(int amount);
 	~Deck();
-	void resetCard();
+	void resetCard();// Makes a 1 deck with 52 cards
 private:
 	std::vector < std::pair<int, std::string>> _cards;
 };
