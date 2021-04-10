@@ -11,7 +11,7 @@ public:
 	static std::vector<std::pair<int, std::string>> playableCards;
 	Deck();
 	~Deck();
-
+	void resetCard();
 private:
 	std::vector < std::pair<int, std::string>> _cards;
 };
