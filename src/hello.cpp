@@ -14,11 +14,11 @@ int main() {
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
     Deck tempCards;
     for (auto i : Deck::playableCards) {
-        std::cout << i.first << " " << i.second << std::endl;
+        std::cout << i.first << " " << i.second << std::endl;//just prints what's inside
     }
-    Deck::playableCards.push_back({ 5,"test" });
+    Deck::playableCards.push_back({ 5,"test" });//manipulate the playableCards
     for (auto i : Deck::playableCards) {
-        std::cout << i.first << " " << i.second << std::endl;
+        std::cout << i.first << " " << i.second << std::endl;// Print with changes
     }
     //------------------------------------------------------
 
