@@ -4,7 +4,7 @@
 Deck::Deck()
 {
 	resetCard();
-	playableCards = _cards;
+	// playableCards = _cards; ERROR
 }
 
 Deck::~Deck()
