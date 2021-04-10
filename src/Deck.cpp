@@ -3,6 +3,7 @@
 
 Deck::Deck()
 {
+	
 }
 
 Deck::~Deck()
