@@ -4,7 +4,7 @@
 Deck::Deck()
 {
 	resetCard();
-	// playableCards = _cards; ERROR
+	playableCards = _cards; 
 }
 
 Deck::~Deck()
@@ -29,3 +29,5 @@ void Deck::resetCard()
 	};	
 	
 }
+
+std::vector<std::pair<int, std::string>> Deck::playableCards{ {0," "} };
