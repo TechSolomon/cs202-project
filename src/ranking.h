@@ -1,5 +1,5 @@
 //
-// Created by Solomon on 4/8/21.
+// Created by Benjamin Stream & Solomon Himelbloom on 4/8/21.
 //
 
 #ifndef CS202_PROJECT_RANKING_H

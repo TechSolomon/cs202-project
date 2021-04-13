@@ -1,5 +1,5 @@
 //
-// Created by Solomon on 4/8/21.
+// Created by Benjamin Stream & Solomon Himelbloom on 4/8/21.
 //
 
 #include "ranking.h"
@@ -46,14 +46,9 @@ int sample() {
     // Final comparison on 5th card.
     // Sum of values for conflicting hands.
 
-    return 0;
-}
-
-int main() {
-    cout << "Hello, card ranking." << endl;
-
     // Steps:
     // 1 – table algorithm for ranking (already have the cards in Deck.cpp)
     // 2 – interact with cards based on rules
 
+    return 0;
 }
