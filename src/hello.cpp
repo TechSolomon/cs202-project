@@ -23,6 +23,13 @@ int main() {
     }
     //------------------------------------------------------
 
+    //----------TESTING OF PLAYER.H BY JAY-MARK PASCUA------
+
+
+    //------------------------------------------------------
+
+
+
     while (testWindow.isOpen()) {
         while (testWindow.pollEvent(event)) {
             if (event.type == sf::Event::EventType::Closed)
