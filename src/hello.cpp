@@ -12,11 +12,12 @@ int main() {
 
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
-    Deck tempCards;
+    Deck tempCards(4);//can now change how many decks
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;//just prints what's inside
     }
     Deck::playableCards.push_back({ 5,"test" });//manipulate the playableCards
+    std::cout << "_Test 2_" << std::endl;
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;// Print with changes
     }

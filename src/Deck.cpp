@@ -11,6 +11,11 @@ Deck::Deck(int amount)
 {	
 	resetCard();
 	//Adds any amount of cards into a playableDeck
+	while (amount != 0) {
+		std::copy(_cards.begin(), _cards.end(), std::back_inserter(playableCards));
+		amount--;
+	}
+	
 }
 
 Deck::~Deck()
@@ -36,4 +41,4 @@ void Deck::resetCard()
 	
 }
 
-std::vector<std::pair<int, std::string>> Deck::playableCards{ {0," "} };
+std::vector<std::pair<int, std::string>> Deck::playableCards{};//initializing outside the class
