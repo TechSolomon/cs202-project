@@ -13,17 +13,13 @@ public:
 	Player();
 	~Player();
 
-	void bet();
-	void call();
-	void raise();
+	void bet(const int& money);
+	void call(const int& money);
+	void raise(const int& money);
 	void fold();
 
 private:
-	int _whiteChips; // Amount of poker chips player has
-	int _redChips;
-	int _greenChips;
-	int _blueChips;
-	int _blackChips;
+	int _money = 1000; // Amount of poker chips player has
 
 	std::vector<std::pair<int, std::string>> _hand; // Player's current cards
 };
