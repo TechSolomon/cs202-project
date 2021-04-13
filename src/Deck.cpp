@@ -10,7 +10,7 @@ Deck::Deck()
 Deck::Deck(int amount)
 {	
 	resetCard();
-	//Adds 2 decks into playableDeck
+	//Adds any amount of cards into a playableDeck
 }
 
 Deck::~Deck()
