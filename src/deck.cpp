@@ -48,8 +48,13 @@ void Deck::shuffle()
 	std::shuffle(begin(playableCards), end(playableCards), rng);
 }
 
-void Deck::drawCards(std::vector<int, std::string>& v,int amount)
+void Deck::drawCards(std::vector<std::pair<int, std::string>>& v,int amount)
 {
+	std::move(playableCards.end()-amount, playableCards.end(), std::back_inserter(v));
+	while(amount != 0) { //can be better
+		playableCards.pop_back();
+		amount--;
+	}
 }
 
 std::vector<std::pair<int, std::string>> Deck::playableCards{};//initializing outside the class

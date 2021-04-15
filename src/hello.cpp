@@ -16,8 +16,18 @@ int main() {
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;//just prints what's inside
     }
-    tempCards.shuffle();// shuffles the deck with amount of cards
     std::cout << "_Test 2_" << std::endl;
+    tempCards.shuffle();// shuffles the deck with amount of cards
+    for (auto i : Deck::playableCards) {
+        std::cout << i.first << " " << i.second << std::endl;// Print with changes
+    }
+    std::cout << "_Test 3_" << std::endl;
+    std::vector<std::pair<int, std::string>> testHand;
+    tempCards.drawCards(testHand, 2);
+    for (auto i : testHand) {
+        std::cout << i.first << " " << i.second << std::endl;// Prints test hand
+    }
+    std::cout << "-insideplayable-" << std::endl;
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;// Print with changes
     }
