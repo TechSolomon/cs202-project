@@ -3,7 +3,8 @@
 */
 #include "player.h"
 
-Player::Player() {
+Player::Player(Deck& cards) {
+    cards.drawCards(_hand, 2);
 }
 
 Player::~Player() {
@@ -28,4 +29,8 @@ void Player::raise(const int& money) { // Player bets more than what a previous 
 
 void Player::fold() { // Player sits out for the rest of the round
     // Nullify the player's cards for the rest of the round (they are no longer taken into consideration when calculating the highest ranking hand
+}
+
+std::vector<std::pair<int, std::string>> Player::getHand() const {
+    return _hand;
 }

@@ -34,8 +34,12 @@ int main() {
     //------------------------------------------------------
 
     //----------TESTING OF PLAYER.H BY JAY-MARK PASCUA------
+    Player player(tempCards);
 
-
+    std::cout << "\n\n\n\nPLAYER HAND:" << std::endl;
+    for (const auto& x : player.getHand()) {
+        std::cout << x.first << ", " << x.second << std::endl;
+    }
     //------------------------------------------------------
 
 
