@@ -1,5 +1,5 @@
 #include "deck.h"
-
+#include<iostream>
 
 Deck::Deck()
 {
@@ -50,10 +50,15 @@ void Deck::shuffle()
 
 void Deck::drawCards(std::vector<std::pair<int, std::string>>& v,int amount)
 {
-	std::move(playableCards.end()-amount, playableCards.end(), std::back_inserter(v));
-	while(amount != 0) { //can be better
-		playableCards.pop_back();
-		amount--;
+	if (playableCards.size() >= amount) {
+		std::move(playableCards.end() - amount, playableCards.end(), std::back_inserter(v));
+		while (amount != 0) { //can be better
+			playableCards.pop_back();
+			amount--;
+		}
+	}
+	else {
+		throw std::runtime_error("ERROR: Deck::drawCards drawing more than the vector size.");
 	}
 }
 
