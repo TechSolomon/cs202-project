@@ -41,6 +41,13 @@ void Deck::resetCard()
 	
 }
 
+void Deck::shuffle()
+{
+	std::random_device rd;
+	std::default_random_engine rng(rd());
+	std::shuffle(begin(playableCards), end(playableCards), rng);
+}
+
 void Deck::drawCards(std::vector<int, std::string>& v,int amount)
 {
 }
