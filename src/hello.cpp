@@ -16,7 +16,7 @@ int main() {
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;//just prints what's inside
     }
-    Deck::playableCards.push_back({ 5,"test" });//manipulate the playableCards
+    tempCards.shuffle();// shuffles the deck with amount of cards
     std::cout << "_Test 2_" << std::endl;
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;// Print with changes
