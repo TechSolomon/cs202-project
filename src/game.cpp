@@ -6,9 +6,30 @@ Game::Game() {
 Game::~Game() {
 }
 
-void Game::setup() { // Constructs deck and player objects before starting the game
-	Deck cards; // Sets up deck of cards
-	Player player(cards); // Sets up player and assigns them their hand (2 cards)
+void Game::setup(int& players) { // Constructs deck and player objects before starting the game
+	_numPlayers = players;
+	_cards.shuffle(); // Sets up deck of cards
+
+	if (players > 0) {
+		p1.dealCards(_cards);
+		players--;
+	}
+
+	if (players > 0) {
+		p2.dealCards(_cards);
+		players--;
+	}
+
+	if (players > 0) {
+		p3.dealCards(_cards);
+		players--;
+	}
+
+	if (players > 0) {
+		p4.dealCards(_cards);
+		players--;
+	}
+
 }
 
 void Game::gameLoop() { // Starts a round of poker

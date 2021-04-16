@@ -11,9 +11,13 @@
 
 class Player
 {
+	friend class Game;
+
 public:
-	Player(Deck &cards);
+	Player();
 	~Player();
+
+	void dealCards(Deck& cards);
 
 	void bet(const int& money);
 	void call(const int& money);
@@ -21,11 +25,12 @@ public:
 	void fold();
 
 	std::vector<std::pair<int, std::string>> getHand() const;
+	int getMoney() const;
 
 private:
 	int _money = 1000; // Amount of poker chips player has
 
-	std::vector<std::pair<int, std::string>> _hand; // Player's current cards
+	std::vector<std::pair<int, std::string>> _playerHand; // Player's current cards
 };
 
 #endif // !PLAYER_H

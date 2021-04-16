@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "player.h"
-#include "deck.h"
+#include "game.h"
 int main() {
     sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML");
 
@@ -32,15 +31,25 @@ int main() {
     for (auto i : Deck::playableCards) {
         std::cout << i.first << " " << i.second << std::endl;// Print with changes
     }
-    //------------------------------------------------------
 
-    //----------TESTING OF PLAYER.H BY JAY-MARK PASCUA------
-    Player player(tempCards);
+    //----------TESTING OF GAME.H BY JAY-MARK PASCUA-------
 
-    std::cout << "\n\n\n\nPLAYER HAND:" << std::endl;
-    for (const auto& x : player.getHand()) {
+    Game game;
+    int numPlayers = 2;
+    game.setup(numPlayers); // Construct Deck and Player objects
+
+    std::cout << "PLAYER 1 HAND:" << std::endl;
+    for (const auto& x : game.p1.getHand()) {
         std::cout << x.first << ", " << x.second << std::endl;
     }
+    std::cout << game.p1.getMoney() << std::endl;
+
+    std::cout << "PLAYER 2 HAND:" << std::endl;
+    for (const auto& x : game.p2.getHand()) {
+        std::cout << x.first << ", " << x.second << std::endl;
+    }
+    std::cout << game.p2.getMoney() << std::endl;
+    
     //------------------------------------------------------
 
 

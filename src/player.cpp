@@ -3,11 +3,14 @@
 */
 #include "player.h"
 
-Player::Player(Deck& cards) {
-    cards.drawCards(_hand, 2);
+Player::Player() {
 }
 
 Player::~Player() {
+}
+
+void Player::dealCards(Deck& cards) {
+    cards.drawCards(_playerHand, 2);
 }
 
 void Player::bet(const int& money) { // Player bets an amount of money
@@ -32,5 +35,9 @@ void Player::fold() { // Player sits out for the rest of the round
 }
 
 std::vector<std::pair<int, std::string>> Player::getHand() const {
-    return _hand;
+    return _playerHand;
+}
+
+int Player::getMoney() const {
+    return _money;
 }
