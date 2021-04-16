@@ -14,14 +14,16 @@ class Player
 	friend class Game;
 
 public:
+	int playerCurrentBet = 0; // The player's current bet for the round
+
 	Player();
 	~Player();
 
 	void dealCards(Deck& cards);
 
-	void bet(const int& money);
-	void call(const int& money);
-	void raise(const int& money);
+	void bet(const int& bet);
+	void call(const int& call);
+	void raise(const int& currentBet, const int& raise);
 	void fold();
 
 	std::vector<std::pair<int, std::string>> getHand() const;

@@ -8,17 +8,23 @@
 class Game
 {
 public:
+	Player p1;
+	Player p2;
+	Player p3;
+	Player p4;
+
 	Game();
 	~Game();
 
 	void setup(int& players); // Constructs deck and player objects before starting the game
 	void gameLoop(); // Starts a round of poker
 
+	void setPot(const int& bet);
+	int getPot(const int& bet) const;
 
-	Player p1;
-	Player p2;
-	Player p3;
-	Player p4;
+	void setCurrentBet(const int& bet);
+	int getCurrentBet(const int& bet) const;
+
 
 private:
 	Deck _cards;

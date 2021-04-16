@@ -38,3 +38,19 @@ void Game::gameLoop() { // Starts a round of poker
 	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
 	// 4. Round ends, winning player gets the pot, loop back to beginning
 }
+
+void Game::setPot(const int& bet) {
+	_pot += bet;
+}
+
+int Game::getPot(const int& bet) const {
+	return _pot;
+}
+
+void Game::setCurrentBet(const int& bet) {
+	_currentBet = bet;
+}
+
+int Game::getCurrentBet(const int& bet) const {
+	return _currentBet;
+}
