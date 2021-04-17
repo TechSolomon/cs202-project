@@ -35,20 +35,59 @@ int main() {
     //----------TESTING OF GAME.H BY JAY-MARK PASCUA-------
 
     Game game;
-    int numPlayers = 2;
+    int numPlayers = 3;
     game.setup(numPlayers); // Construct Deck and Player objects
 
     std::cout << "PLAYER 1 HAND:" << std::endl;
     for (const auto& x : game.p1.getHand()) {
         std::cout << x.first << ", " << x.second << std::endl;
     }
-    std::cout << game.p1.getMoney() << std::endl;
+    std::cout << "P1 MONEY: $" << game.p1.getMoney() << std::endl;
 
     std::cout << "PLAYER 2 HAND:" << std::endl;
     for (const auto& x : game.p2.getHand()) {
         std::cout << x.first << ", " << x.second << std::endl;
     }
-    std::cout << game.p2.getMoney() << std::endl;
+    std::cout << "P2 MONEY: $" << game.p2.getMoney() << std::endl;
+
+    std::cout << "\nP1 BETS $100" << std::endl;
+
+    game.p1.playerCurrentBet = 100;
+    game.p1.bet(game.p1.playerCurrentBet);
+    game.setCurrentBet(game.p1.playerCurrentBet);
+    game.setPot(game.p1.playerCurrentBet);
+    std::cout << "P1 CURRENT BET: $" << game.p1.playerCurrentBet << std::endl;
+    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
+    std::cout << "P1 MONEY: $" << game.p1.getMoney() << std::endl;
+
+    std::cout << "\nP2 CALLS P1 BET"<< std::endl;
+
+    game.p2.call(game.getCurrentBet());
+    std::cout << "P2 CURRENT BET: $" << game.p2.playerCurrentBet << std::endl;
+    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
+    std::cout << "P2 MONEY: $" << game.p2.getMoney() << std::endl;
+
+    std::cout << "\nP3 RAISES $200" << std::endl;
+
+    game.p3.raise(game, 200); // Pass in game object to get access to the round's _currentBet
+    std::cout << "P3 CURRENT BET: $" << game.p3.playerCurrentBet << std::endl;
+    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
+    std::cout << "P3 MONEY: $" << game.p3.getMoney() << std::endl;
+
+    std::cout << "\nP1 CALLS P3" << std::endl;
+
+    game.p1.call(game.getCurrentBet());
+    std::cout << "P1 CURRENT BET: $" << game.p1.playerCurrentBet << std::endl;
+    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
+    std::cout << "P1 MONEY: $" << game.p1.getMoney() << std::endl;
+
+    std::cout << "\nP2 FOLDS:" << std::endl;
+
+    game.p2.fold();
+    if (game.p2.isFolded() == true)
+        std::cout << "P2 HAS FOLDED" << std::endl;
+    else
+        std::cout << "P2 HAS NOT FOLDED" << std::endl;
     
     //------------------------------------------------------
 

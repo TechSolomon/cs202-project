@@ -23,8 +23,9 @@ public:
 	int getPot(const int& bet) const;
 
 	void setCurrentBet(const int& bet);
-	int getCurrentBet(const int& bet) const;
+	int getCurrentBet() const;
 
+	friend void Player::raise(Game& game, const int& raise);
 
 private:
 	Deck _cards;

@@ -33,18 +33,20 @@ void Player::call(const int& call) { // Player places down same amount of money 
     }
 }
 
-void Player::raise(const int& currentBet, const int& raise) { // Player bets more than what a previous player bet
+void Player::raise(Game& game, const int& raise) { // Player bets more than what a previous player bet
     // Check if player has sufficient amount of money and is greater than the previous bet by at least $5 to make the raise
     // Subtract raise from player's money
-    if (_money >= raise || raise >= currentBet) {
+    if (_money >= raise && raise >= game._currentBet + 5) {
         _money -= raise - playerCurrentBet;
         playerCurrentBet = raise;
+        game._currentBet = raise;
     }
 }
 
 void Player::fold() { // Player sits out for the rest of the round
     // Nullify the player's cards for the rest of the round (they are no longer taken into consideration when calculating the highest ranking hand
     _playerHand.erase(_playerHand.begin(), _playerHand.end());
+    _isFolded = true;
 }
 
 std::vector<std::pair<int, std::string>> Player::getHand() const {
@@ -53,4 +55,8 @@ std::vector<std::pair<int, std::string>> Player::getHand() const {
 
 int Player::getMoney() const {
     return _money;
+}
+
+bool Player::isFolded() const {
+    return _isFolded;
 }

@@ -51,6 +51,6 @@ void Game::setCurrentBet(const int& bet) {
 	_currentBet = bet;
 }
 
-int Game::getCurrentBet(const int& bet) const {
+int Game::getCurrentBet() const {
 	return _currentBet;
 }
