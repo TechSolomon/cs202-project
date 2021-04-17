@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 int main() {
-    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML");
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML",sf::Style::Close|sf::Style::Titlebar);
 
     sf::Event event;
     sf::Texture texture;
