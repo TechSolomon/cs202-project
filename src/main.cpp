@@ -73,8 +73,11 @@ int main() {
         std::cout << "P2 HAS NOT FOLDED" << std::endl;
     
     //------------------------------------------------------
-
-
+     //----------TESTING OF RANKING.H BY BENJAMIN STREAM-------
+    std::vector<std::pair<int, std::string>> testCHand; // test community hand
+    tempCards.drawCards(testCHand, 5);
+    HandAnalysis testAnalysis;
+    testAnalysis.grade(game.p1.getHand(), testCHand);
 
     while (testWindow.isOpen()) {
         while (testWindow.pollEvent(event)) {
