@@ -9,7 +9,7 @@
 #include <string>
 #include <utility>
 
-// TODO: Investigate procedure class Game bug fix.
+// TODO: Investigate pre-declare class Game bug fix.
 class Game;
 
 class Player
