@@ -34,6 +34,12 @@ using std::vector;
 // 8. Two pair
 // 9. Pair
 // 10. High card
+void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
+{
+    for (int i = 0; i < hand.size(); i++) {
+        cout << hand[i].first << "," << hand[i].second << endl; // for testing purposes, prints the card value of each card inside the vector.
+    }
+}
 
 HandAnalysis::HandAnalysis()
 {
@@ -44,9 +50,10 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> hand, std::v
 {
     _combinedHand = chand; // throws chand (community hand) into the combinded hand.
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
-    for (int i =0; i < 7; i++) {
-        cout << _combinedHand[i].first << endl; // for testing purposes, prints the card value of each card inside the vector.
-    }
+    
+    printHand(_combinedHand);
+    sort(_combinedHand.begin(),_combinedHand.end()); // sorts by int value, ie Ace, 2,3,...,J,Q,K
+    printHand(_combinedHand);
     return 0.0;
 }
 
