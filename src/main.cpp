@@ -2,14 +2,21 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 int main() {
-    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "SFML",sf::Style::Close|sf::Style::Titlebar);
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
 
     sf::Event event;
     sf::Texture texture;
+
     // TODO: change file path to "../" if running OS other than Windows.
     texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
     sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
 
+    // TODO: create graphical text & UI buttons to input.
+    sf::Font font;
+    if (!font.loadFromFile("assets/sansation.ttf"))
+        return EXIT_FAILURE;
+    sf::Text text("Bet Call Raise Fold", font, 50);
+    text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
     Deck tempCards;//can now change how many decks
