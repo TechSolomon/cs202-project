@@ -1,5 +1,5 @@
 #include "deck.h"
-#include<iostream>
+#include <iostream>
 
 Deck::Deck()
 {

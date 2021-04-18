@@ -9,6 +9,9 @@
 #include <string>
 #include <utility>
 
+// TODO: Investigate procedure class Game bug fix.
+class Game;
+
 class Player
 {
 	friend class Game;
