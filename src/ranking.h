@@ -11,7 +11,7 @@
 class HandAnalysis {
 public:
 	HandAnalysis(); // Constructor for HandAnalysis
-	double grade(std::vector<std::pair<int, std::string>> hand, std::vector<std::pair<int, std::string>> chand);
+	double grade(std::vector<std::pair<int, std::string>> &hand, std::vector<std::pair<int, std::string>> &chand);
 private:
 	std::vector<std::pair<int, std::string>> _combinedHand;
 	//double _previous;

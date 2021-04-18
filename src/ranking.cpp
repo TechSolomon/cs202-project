@@ -58,33 +58,31 @@ void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed 
     }
 }
 
-std::pair<int, std::string>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A PAIR THAT IS NOT A CARD, IT CONTAINS WHICH HAS SUIT HAS MOST OCCOURENCES (wip)
+std::pair<int, std::string>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A PAIR THAT IS NOT A CARD, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
-    std::pair<int, std::string> hearts = { 0,"hearts" };
-    std::pair<int, std::string>spades = { 0,"spades" };
-    std::pair<int, std::string>diamonds = { 0,"diamonds" };
-    std::pair<int, std::string> clubs = { 0,"clubs" };
+    std::vector<std::pair<int, std::string>> counter = { { 0,"hearts" }, { 0,"clubs" }, { 0,"diamonds" }, { 0, "spades" } };
+    
     for (int i = 0; i < hand.size(); i++) {
 
         if (hand[i].second == "heart") 
         {
-            hearts.first++;
+            counter[0].first++;
         }
         else if (hand[i].second == "club") 
         {
-            clubs.first++;
+            counter[1].first++;
         } 
         else if (hand[i].second == "diamond")
         {
-            diamonds.first++;
+            counter[2].first++;
         }
         else if (hand[i].second == "spade") 
         {
-            spades.first++;
+            counter[3].first++;
         } 
     }
-    int winner = hearts.first > diamonds.first > clubs.first > spades.first;
-    return std::pair<int, std::string>{winner , "pop"};
+    sort(counter.begin(), counter.end());
+    return counter[3]; // sorts opposite of the hand analysis i.e. 9,8,...,2,1 so return last value in counter.
 }
 
 HandAnalysis::HandAnalysis()
@@ -92,30 +90,31 @@ HandAnalysis::HandAnalysis()
     cout << "Constructor" << endl;
 }
 
-double HandAnalysis::grade(std::vector<std::pair<int, std::string>> hand, std::vector<std::pair<int, std::string>> chand)
+double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::vector<std::pair<int, std::string>> &chand)
 {
     double totalScore= 0.0;
     _combinedHand = chand; // throws chand (community hand) into the combinded hand.
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
+
     cout << "Not Sorted" << endl;
     printHand(_combinedHand);
+
     sort(_combinedHand.begin(),_combinedHand.end()); // sorts by int value, ie Ace, 2,3,...,J,Q,K
     cout << "Sorted Via Card Value" << endl;
     printHand(_combinedHand);
+
     sort(_combinedHand.begin(), _combinedHand.end(), same_number);
     cout << "Sorted Via Same Value" << endl;
     printHand(_combinedHand);
+
     sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
-    cout << searchHandSuit(_combinedHand).first << endl;
     cout << "Sorted Via Same Suit" << endl;
     printHand(_combinedHand);
+    cout << searchHandSuit(_combinedHand).first <<" "<<searchHandSuit(_combinedHand).second << endl;
+
     return totalScore;
 }
 // the dream of this function is to be ran at the end of the round and then will return a value (double) for each player, we can then compare those values to give the winner the pot
-
-
-
-int sample() {
 
 
     //Hand has 2 cards
@@ -138,6 +137,4 @@ int sample() {
     // 1 – table algorithm for ranking (already have the cards in Deck.cpp)
     // 2 – interact with cards based on rules
 
-    return 0;
-}
 
