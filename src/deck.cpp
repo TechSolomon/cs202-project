@@ -62,4 +62,11 @@ void Deck::drawCards(std::vector<std::pair<int, std::string>>& v,int amount)
 	}
 }
 
+void Deck::displayPlayebleCards() const
+{
+	for (auto i : Deck::playableCards) {
+		std::cout << i.first << " " << i.second << std::endl;
+	}
+}
+
 std::vector<std::pair<int, std::string>> Deck::playableCards{};//initializing outside the class

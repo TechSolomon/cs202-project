@@ -12,25 +12,8 @@ int main() {
 
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
-    Deck tempCards(4);//can now change how many decks
-    for (auto i : Deck::playableCards) {
-        std::cout << i.first << " " << i.second << std::endl;//just prints what's inside
-    }
-    std::cout << "_Test 2_" << std::endl;
-    tempCards.shuffle();// shuffles the deck with amount of cards
-    for (auto i : Deck::playableCards) {
-        std::cout << i.first << " " << i.second << std::endl;// Print with changes
-    }
-    std::cout << "_Test 3_" << std::endl;
-    std::vector<std::pair<int, std::string>> testHand;
-    tempCards.drawCards(testHand, 2);
-    for (auto i : testHand) {
-        std::cout << i.first << " " << i.second << std::endl;// Prints test hand
-    }
-    std::cout << "-insideplayable-" << std::endl;
-    for (auto i : Deck::playableCards) {
-        std::cout << i.first << " " << i.second << std::endl;// Print with changes
-    }
+    Deck tempCards;//can now change how many decks
+    tempCards.shuffle();
 
     //----------TESTING OF GAME.H BY JAY-MARK PASCUA-------
 
