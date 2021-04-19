@@ -24,6 +24,33 @@ using std::string;
 using std::vector;
 
 
+
+bool incrementing_number(std::pair<int,std::string> i, std::pair<int, std::string> j) {
+    return j.first == i.first - 1;
+}
+
+bool same_suit(std::pair<int, std::string> i, std::pair<int, std::string> j) {
+
+    return i.second < j.second;
+}
+
+bool same_number(std::pair<int, std::string> i, std::pair<int, std::string> j) {
+    return i.first == j.first;
+   
+}
+
+bool idk(std::pair<int, std::string> i, std::pair<int, std::string> j) {
+    if (i.first == j.first) return true;
+    else return false;
+}
+
+void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
+{
+    for (auto i: hand) {
+        cout << i.first << "," << i.second << endl; // for testing purposes, prints the card value of each card inside the vector.
+    }
+}
+
 //Taken from https://codereview.stackexchange.com/questions/173382/sorting-elements-according-to-frequency-of-occurence-in-c
 template<class T>
 void sortByFreq2(std::vector<T>& v)
@@ -49,41 +76,6 @@ void sortByFreq2(std::vector<T>& v)
             }
             return a < b;
         });
-}
-// Poker Hands (highest to lowest):
-// 1. Royal flush
-// 2 Straight flush
-// 3. Four of a kind
-// 4. Full house
-// 5. Flush
-// 6. Straight
-// 7. Three of a kind
-// 8. Two pair
-// 9. Pair
-// 10. High card
-bool incrementing_number(std::pair<int,std::string> i, std::pair<int, std::string> j) {
-    return j.first == i.first - 1;
-}
-
-bool same_suit(std::pair<int, std::string> i, std::pair<int, std::string> j) {
-
-    return i.second < j.second;
-}
-
-bool same_number(std::pair<int, std::string> i, std::pair<int, std::string> j) {
-    return i.first == j.first;
-   
-}
-
-bool idk(std::pair<int, std::string> i, std::pair<int, std::string> j) {
-    if (i.first == j.first) return true;
-    else return false;
-}
-void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
-{
-    for (auto i: hand) {
-        cout << i.first << "," << i.second << endl; // for testing purposes, prints the card value of each card inside the vector.
-    }
 }
 
 std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
@@ -113,6 +105,55 @@ std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int
     return counter; 
 }
 
+std::vector<std::pair<int, std::string>>sortyByFreq(std::vector<std::pair<int, std::string>>& hand) //returns vector sorted by occourences.
+{
+    auto tempHand = hand;
+    auto temp = searchHandSuit(hand);
+    //sort(tempHand.begin(), tempHand.end(), same_suit);
+        std::sort(tempHand.begin(),tempHand.end(),
+            [&temp](std::pair<int, std::string> const& a, std::pair<int, std::string> const& b) {
+                for (auto i : temp) {
+                    if (i.second == a.second ) {
+
+                        if (a.second == b.second) {
+                            return a.first < b.first;
+                        }
+                        else return false;
+
+                    }
+                }
+              /*  else if (temp[1].second == a.second) {
+
+                    if (a.second == b.second) {
+                        return a.first < b.first;
+                    }
+                    else return false;
+
+                }
+                else if (temp[2].second == a.second) {
+
+                    if (a.second == b.second) {
+                        return a.first < b.first;
+                    }
+                    else return false;
+
+                }
+                else if (temp[3].second == a.second) {
+
+                    if (a.second == b.second) {
+                        return a.first < b.first;
+                    }
+                    else return false;
+
+                }
+                else return false;*/
+
+            });
+    
+    return tempHand;
+
+}
+
 HandAnalysis::HandAnalysis()
 {
     cout << "Constructor" << endl;
@@ -135,9 +176,9 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     cout << "Sorted Via Same Value" << endl;
     printHand(_combinedHand);
 
-    sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
+    //sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
     cout << "Sorted Via Same Suit" << endl;
-    printHand(_combinedHand);
+    printHand(sortyByFreq(_combinedHand));
     cout << "Occourences of Suit" << endl;
     printHand(searchHandSuit(_combinedHand));
 
@@ -161,7 +202,10 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
 // 9. Pair
 //     else if(){}
 // 10. High card
-//  else if () {}
+//  else {
+//  sort(hand.begin(), hand.end());
+//  return hand[0].first / 100; 
+//}
 
 
 
