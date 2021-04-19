@@ -1,6 +1,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "game.h"
+
+// TODO: change file path to "../" if running OS other than Windows.
+void cardDisplay() {
+//    texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
+//    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
+}
+
 int main() {
     sf::RenderWindow testWindow(sf::VideoMode(1300, 600),
                                 "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
@@ -8,12 +15,8 @@ int main() {
     sf::Event event;
     sf::Texture texture;
 
-    // TODO: change file path to "../" if running OS other than Windows.
-//    texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
-//    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
-
     // Load a sprite to display (background design)
-    if (!texture.loadFromFile("assets/poker-table-blank.png"))
+    if (!texture.loadFromFile("assets/poker-table-design.png"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
@@ -22,7 +25,7 @@ int main() {
     if (!font.loadFromFile("assets/sansation.ttf"))
         return EXIT_FAILURE;
     // TODO: transition text to touch targets or buttons for final UI design.
-    sf::Text text("Total Chip Value: $0.00 | Bet | Call | Raise | Fold", font, 50);
+    sf::Text text("Total Chip Value: $0.00 | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
     text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
