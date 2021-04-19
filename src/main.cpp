@@ -2,24 +2,27 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 int main() {
-    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600),
+                                "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
 
     sf::Event event;
     sf::Texture texture;
-    sf::Texture backgroundFile;
-    if (!backgroundFile.loadFromFile("assets/poker-table-center.png")) {
-        std::cout << "Error loading file!" << std::endl;
-    }
-    sf::Sprite background(backgroundFile);
+
     // TODO: change file path to "../" if running OS other than Windows.
-    texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
-    sf::Sprite cards(texture, sf::IntRect(142, 0, 71, 104));
-    
+//    texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
+//    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
+
+    // Load a sprite to display (background design)
+    if (!texture.loadFromFile("assets/poker-table-blank.png"))
+        return EXIT_FAILURE;
+    sf::Sprite sprite(texture);
+
     // TODO: create graphical text & UI buttons to input.
     sf::Font font;
     if (!font.loadFromFile("assets/sansation.ttf"))
         return EXIT_FAILURE;
-    sf::Text text("Bet Call Raise Fold", font, 50);
+    // TODO: transition text to touch targets or buttons for final UI design.
+    sf::Text text("Total Chip Value: $0.00 | Bet | Call | Raise | Fold", font, 50);
     text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
@@ -90,14 +93,15 @@ int main() {
     HandAnalysis testAnalysis;
     testAnalysis.grade(game.p1.getHand(), testCHand);
 
+    // SFML – start the event loop.
     while (testWindow.isOpen()) {
         while (testWindow.pollEvent(event)) {
             if (event.type == sf::Event::EventType::Closed)
                 testWindow.close();
         }
         testWindow.clear();
-        testWindow.draw(background);
-        testWindow.draw(cards);
+        testWindow.draw(sprite);
+        testWindow.draw(text);
         testWindow.display();
     }
     return 0;
