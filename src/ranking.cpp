@@ -23,6 +23,33 @@ using std::sort;
 using std::string;
 using std::vector;
 
+
+//Taken from https://codereview.stackexchange.com/questions/173382/sorting-elements-according-to-frequency-of-occurence-in-c
+template<class T>
+void sortByFreq2(std::vector<T>& v)
+{
+    std::unordered_map<T, size_t> count;
+
+    for (T i : v) {
+        count[i]++;
+    }
+
+    std::sort(
+        v.begin(),
+        v.end(),
+        [&count](T const& a, T const& b) {
+            if (a == b) {
+                return false;
+            }
+            if (count[a] > count[b]) {
+                return true;
+            }
+            else if (count[a] < count[b]) {
+                return false;
+            }
+            return a < b;
+        });
+}
 // Poker Hands (highest to lowest):
 // 1. Royal flush
 // 2 Straight flush
@@ -39,6 +66,7 @@ bool incrementing_number(std::pair<int,std::string> i, std::pair<int, std::strin
 }
 
 bool same_suit(std::pair<int, std::string> i, std::pair<int, std::string> j) {
+
     return i.second < j.second;
 }
 
@@ -53,36 +81,36 @@ bool idk(std::pair<int, std::string> i, std::pair<int, std::string> j) {
 }
 void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
 {
-    for (int i = 0; i < hand.size(); i++) {
-        cout << hand[i].first << "," << hand[i].second << endl; // for testing purposes, prints the card value of each card inside the vector.
+    for (auto i: hand) {
+        cout << i.first << "," << i.second << endl; // for testing purposes, prints the card value of each card inside the vector.
     }
 }
 
-std::pair<int, std::string>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A PAIR THAT IS NOT A CARD, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
+std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
-    std::vector<std::pair<int, std::string>> counter = { { 0,"hearts" }, { 0,"clubs" }, { 0,"diamonds" }, { 0, "spades" } };
+    std::vector<std::pair<int, std::string>> counter = { { 0,"heart" }, { 0,"club" }, { 0,"diamond" }, { 0, "spade" } };
     
-    for (int i = 0; i < hand.size(); i++) {
+    for (auto i: hand) {
 
-        if (hand[i].second == "heart") 
+        if (i.second == "heart") 
         {
             counter[0].first++;
         }
-        else if (hand[i].second == "club") 
+        else if (i.second == "club") 
         {
             counter[1].first++;
         } 
-        else if (hand[i].second == "diamond")
+        else if (i.second == "diamond")
         {
             counter[2].first++;
         }
-        else if (hand[i].second == "spade") 
+        else if (i.second == "spade") 
         {
             counter[3].first++;
         } 
     }
-    sort(counter.begin(), counter.end());
-    return counter[3]; // sorts opposite of the hand analysis i.e. 9,8,...,2,1 so return last value in counter.
+    sort(counter.begin(), counter.end(), [](std::pair<int, std::string>&i, std::pair<int, std::string> &j) {return i.first > j.first;  });
+    return counter; 
 }
 
 HandAnalysis::HandAnalysis()
@@ -110,7 +138,37 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
     cout << "Sorted Via Same Suit" << endl;
     printHand(_combinedHand);
-    cout << searchHandSuit(_combinedHand).first <<" "<<searchHandSuit(_combinedHand).second << endl;
+    cout << "Occourences of Suit" << endl;
+    printHand(searchHandSuit(_combinedHand));
+
+    // Poker Hands (highest to lowest):
+// 1. Royal flush
+//     if(){}
+// 2 Straight flush
+//     else if(){}
+// 3. Four of a kind
+//     else if(){}
+// 4. Full house
+//     else if(){}
+// 5. Flush
+//     else if(){}
+// 6. Straight
+//     else if(){}
+// 7. Three of a kind
+//     else if(){}
+// 8. Two pair
+//     else if(){}
+// 9. Pair
+//     else if(){}
+// 10. High card
+//  else if () {}
+
+
+
+
+
+
+
 
     return totalScore;
 }
