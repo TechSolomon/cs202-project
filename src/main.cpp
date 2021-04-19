@@ -2,7 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "game.h"
 int main() {
-    sf::RenderWindow testWindow(sf::VideoMode(1300, 600), "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600),
+                                "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
 
     sf::Event event;
     sf::Texture texture;
@@ -15,7 +16,7 @@ int main() {
     sf::Font font;
     if (!font.loadFromFile("assets/sansation.ttf"))
         return EXIT_FAILURE;
-    sf::Text text("Bet Call Raise Fold", font, 50);
+    sf::Text text("Total Chip Value: $0.00 | Bet | Call | Raise | Fold", font, 50);
     text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
@@ -93,6 +94,7 @@ int main() {
         }
         testWindow.clear();
         testWindow.draw(sprite);
+        testWindow.draw(text);
         testWindow.display();
     }
     return 0;
