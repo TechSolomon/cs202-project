@@ -6,11 +6,15 @@ int main() {
 
     sf::Event event;
     sf::Texture texture;
-
+    sf::Texture backgroundFile;
+    if (!backgroundFile.loadFromFile("assets/poker-table-center.png")) {
+        std::cout << "Error loading file!" << std::endl;
+    }
+    sf::Sprite background(backgroundFile);
     // TODO: change file path to "../" if running OS other than Windows.
     texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
-    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
-
+    sf::Sprite cards(texture, sf::IntRect(142, 0, 71, 104));
+    
     // TODO: create graphical text & UI buttons to input.
     sf::Font font;
     if (!font.loadFromFile("assets/sansation.ttf"))
@@ -92,7 +96,8 @@ int main() {
                 testWindow.close();
         }
         testWindow.clear();
-        testWindow.draw(sprite);
+        testWindow.draw(background);
+        testWindow.draw(cards);
         testWindow.display();
     }
     return 0;
