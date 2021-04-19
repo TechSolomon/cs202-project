@@ -1,11 +1,39 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "game.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::cin;
 
 // TODO: change file path to "../" if running OS other than Windows.
 void cardDisplay() {
 //    texture.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png");
 //    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
+}
+
+// Keyboard initial input (1-9) to change amount of chips.
+// Use b/c/r/f for bet, call, raise, and fold.
+void keyboardInput() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+        cout << "KEYBOARD INPUT – (BET) – B key was pressed." << endl;
+    }
+
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+        cout << "KEYBOARD INPUT – (CALL) – C key was pressed." << endl;
+    }
+
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+        cout << "KEYBOARD INPUT – (RAISE) – R key was pressed." << endl;
+    }
+
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+        cout << "KEYBOARD INPUT – (FOLD) – F key was pressed." << endl;
+    }
+
+    // TODO: Exception handing for numeric chip additions (1-9) & error checking for other keys.
+    else {
+        cout << "KEYBOARD INPUT – (ERROR) – Another key was pressed." << endl;
+    }
 }
 
 int main() {
@@ -16,16 +44,18 @@ int main() {
     sf::Texture texture;
 
     // Load a sprite to display (background design)
-    if (!texture.loadFromFile("assets/poker-table-design.png"))
+    if (!texture.loadFromFile("../assets/poker-table-design.png"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
     // TODO: create graphical text & UI buttons to input.
     sf::Font font;
-    if (!font.loadFromFile("assets/sansation.ttf"))
+    if (!font.loadFromFile("../assets/sansation.ttf"))
         return EXIT_FAILURE;
+
     // TODO: transition text to touch targets or buttons for final UI design.
     sf::Text text("Total Chip Value: $0.00 | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
+    keyboardInput();
     text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
