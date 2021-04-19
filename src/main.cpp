@@ -11,31 +11,6 @@ void cardDisplay() {
 //    sf::Sprite sprite(texture, sf::IntRect(142, 0, 71, 104));
 }
 
-// Keyboard initial input (1-9) to change amount of chips.
-// Use b/c/r/f for bet, call, raise, and fold.
-void keyboardInput() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
-        cout << "KEYBOARD INPUT – (BET) – B key was pressed." << endl;
-    }
-
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
-        cout << "KEYBOARD INPUT – (CALL) – C key was pressed." << endl;
-    }
-
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-        cout << "KEYBOARD INPUT – (RAISE) – R key was pressed." << endl;
-    }
-
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
-        cout << "KEYBOARD INPUT – (FOLD) – F key was pressed." << endl;
-    }
-
-    // TODO: Exception handing for numeric chip additions (1-9) & error checking for other keys.
-    else {
-        cout << "KEYBOARD INPUT – (ERROR) – Another key was pressed." << endl;
-    }
-}
-
 int main() {
     sf::RenderWindow testWindow(sf::VideoMode(1300, 600),
                                 "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
@@ -55,7 +30,6 @@ int main() {
 
     // TODO: transition text to touch targets or buttons for final UI design.
     sf::Text text("Total Chip Value: $0.00 | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
-    keyboardInput();
     text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
@@ -136,6 +110,30 @@ int main() {
         testWindow.draw(sprite);
         testWindow.draw(text);
         testWindow.display();
+
+        // Keyboard initial input (1-9) to change amount of chips.
+        // Use b/c/r/f for bet, call, raise, and fold.
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+            // BET
+            cout << "KEYBOARD INPUT – (BET) – B key was pressed." << endl;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            // CALL
+            cout << "KEYBOARD INPUT – (CALL) – C key was pressed." << endl;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            // RAISE
+            cout << "KEYBOARD INPUT – (RAISE) – R key was pressed." << endl;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+            // FOLD
+            cout << "KEYBOARD INPUT – (FOLD) – F key was pressed." << endl;
+        }
+
+        // TODO: Exception handling for numeric chip additions (1-9) & error checking for other keys.
     }
     return 0;
 }
