@@ -1,6 +1,9 @@
-#include <iostream>
 #include <SFML/Graphics.hpp>
 #include "game.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::cin;
 
 // TODO: change file path to "../" if running OS other than Windows.
 void cardDisplay() {
@@ -16,14 +19,15 @@ int main() {
     sf::Texture texture;
 
     // Load a sprite to display (background design)
-    if (!texture.loadFromFile("assets/poker-table-design.png"))
+    if (!texture.loadFromFile("../assets/poker-table-design.png"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
     // TODO: create graphical text & UI buttons to input.
     sf::Font font;
-    if (!font.loadFromFile("assets/sansation.ttf"))
+    if (!font.loadFromFile("../assets/sansation.ttf"))
         return EXIT_FAILURE;
+
     // TODO: transition text to touch targets or buttons for final UI design.
     sf::Text text("Total Chip Value: $0.00 | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
     text.setFillColor(sf::Color::White);
@@ -106,6 +110,30 @@ int main() {
         testWindow.draw(sprite);
         testWindow.draw(text);
         testWindow.display();
+
+        // Keyboard initial input (1-9) to change amount of chips.
+        // Use b/c/r/f for bet, call, raise, and fold.
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+            // BET
+            cout << "KEYBOARD INPUT – (BET) – B key was pressed." << endl;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            // CALL
+            cout << "KEYBOARD INPUT – (CALL) – C key was pressed." << endl;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            // RAISE
+            cout << "KEYBOARD INPUT – (RAISE) – R key was pressed." << endl;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+            // FOLD
+            cout << "KEYBOARD INPUT – (FOLD) – F key was pressed." << endl;
+        }
+
+        // TODO: Exception handling for numeric chip additions (1-9) & error checking for other keys.
     }
     return 0;
 }
