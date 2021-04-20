@@ -19,13 +19,13 @@ int main() {
     sf::Texture texture;
 
     // Load a sprite to display (background design)
-    if (!texture.loadFromFile("../assets/poker-table-design.png"))
+    if (!texture.loadFromFile("assets/poker-table-design.png"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
     // TODO: create graphical text & UI buttons to input.
     sf::Font font;
-    if (!font.loadFromFile("../assets/sansation.ttf"))
+    if (!font.loadFromFile("assets/sansation.ttf"))
         return EXIT_FAILURE;
 
     // TODO: transition text to touch targets or buttons for final UI design.
