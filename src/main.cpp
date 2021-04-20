@@ -14,7 +14,6 @@ void cardDisplay() {
 int main() {
     sf::RenderWindow testWindow(sf::VideoMode(1300, 600),
                                 "Texas Hold'em Poker",sf::Style::Close|sf::Style::Titlebar);
-
     sf::Event event;
     sf::Texture texture;
 
@@ -42,56 +41,7 @@ int main() {
     int numPlayers = 3;
     game.setup(numPlayers); // Construct Deck and Player objects
 
-    std::cout << "PLAYER 1 HAND:" << std::endl;
-    for (const auto& x : game.p1.getHand()) {
-        std::cout << x.first << ", " << x.second << std::endl;
-    }
-    std::cout << "P1 MONEY: $" << game.p1.getMoney() << std::endl;
-
-    std::cout << "PLAYER 2 HAND:" << std::endl;
-    for (const auto& x : game.p2.getHand()) {
-        std::cout << x.first << ", " << x.second << std::endl;
-    }
-    std::cout << "P2 MONEY: $" << game.p2.getMoney() << std::endl;
-
-    std::cout << "\nP1 BETS $100" << std::endl;
-
-    game.p1.playerCurrentBet = 100;
-    game.p1.bet(game.p1.playerCurrentBet);
-    game.setCurrentBet(game.p1.playerCurrentBet);
-    game.setPot(game.p1.playerCurrentBet);
-    std::cout << "P1 CURRENT BET: $" << game.p1.playerCurrentBet << std::endl;
-    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
-    std::cout << "P1 MONEY: $" << game.p1.getMoney() << std::endl;
-
-    std::cout << "\nP2 CALLS P1 BET"<< std::endl;
-
-    game.p2.call(game.getCurrentBet());
-    std::cout << "P2 CURRENT BET: $" << game.p2.playerCurrentBet << std::endl;
-    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
-    std::cout << "P2 MONEY: $" << game.p2.getMoney() << std::endl;
-
-    std::cout << "\nP3 RAISES $200" << std::endl;
-
-    game.p3.raise(game, 200); // Pass in game object to get access to the round's _currentBet
-    std::cout << "P3 CURRENT BET: $" << game.p3.playerCurrentBet << std::endl;
-    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
-    std::cout << "P3 MONEY: $" << game.p3.getMoney() << std::endl;
-
-    std::cout << "\nP1 CALLS P3" << std::endl;
-
-    game.p1.call(game.getCurrentBet());
-    std::cout << "P1 CURRENT BET: $" << game.p1.playerCurrentBet << std::endl;
-    std::cout << "GET CURRENT BET: $" << game.getCurrentBet() << std::endl;
-    std::cout << "P1 MONEY: $" << game.p1.getMoney() << std::endl;
-
-    std::cout << "\nP2 FOLDS:" << std::endl;
-
-    game.p2.fold();
-    if (game.p2.isFolded() == true)
-        std::cout << "P2 HAS FOLDED" << std::endl;
-    else
-        std::cout << "P2 HAS NOT FOLDED" << std::endl;
+    
     
     //------------------------------------------------------
      //----------TESTING OF RANKING.H BY BENJAMIN STREAM-------
@@ -196,28 +146,7 @@ int main() {
         testWindow.draw(text);
         testWindow.display();
 
-//        // Keyboard initial input (1-9) to change amount of chips.
-//        // Use b/c/r/f for bet, call, raise, and fold.
-//        if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
-//            // BET
-//            cout << "KEYBOARD INPUT – (BET) – B key was pressed." << endl;
-//        }
-//
-//        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
-//            // CALL
-//            cout << "KEYBOARD INPUT – (CALL) – C key was pressed." << endl;
-//        }
-//
-//        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-//            // RAISE
-//            cout << "KEYBOARD INPUT – (RAISE) – R key was pressed." << endl;
-//        }
-//
-//        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
-//            // FOLD
-//            cout << "KEYBOARD INPUT – (FOLD) – F key was pressed." << endl;
-//        }
-
+        
     }
     return 0;
 }
