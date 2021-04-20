@@ -17,7 +17,7 @@ class Player
 	friend class Game;
 
 public:
-	int playerCurrentBet = 0; // The player's current bet for the round, use as player input
+	int playerCurrentBet = 0; // The player's current bet for the round
 
 	Player();
 	~Player();
@@ -32,6 +32,8 @@ public:
 	std::vector<std::pair<int, std::string>> getHand() const;
 	int getMoney() const;
 	bool isFolded() const;
+
+	void getPlayerInput(Game& game, Player& p) const;
 
 private:
 	int _money = 1000; // Amount of poker chips player has
