@@ -35,13 +35,9 @@ bool same_suit(std::pair<int, std::string> i, std::pair<int, std::string> j) {
 }
 
 bool same_number(std::pair<int, std::string> i, std::pair<int, std::string> j) {
-    return i.first == j.first;
-   
-}
-
-bool idk(std::pair<int, std::string> i, std::pair<int, std::string> j) {
     if (i.first == j.first) return true;
     else return false;
+   
 }
 
 void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
@@ -77,6 +73,9 @@ void sortByFreq2(std::vector<T>& v)
             return a < b;
         });
 }
+
+
+
 
 std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
@@ -154,6 +153,38 @@ std::vector<std::pair<int, std::string>>sortyByFreq(std::vector<std::pair<int, s
 
 }
 
+bool isStraight(vector < std::pair<int, std::string>> hand) {
+    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
+    int iterator = hand[0].first;
+    int counter = 0;
+    for (auto i : hand) {
+        cout << i.first << endl;
+        if (iterator == (i.first) - 1)
+        {
+            cout << "Counted!" << endl;
+            counter++;
+        }
+
+        iterator = i.first;
+    }
+    if (hand[0].first == 1 && hand[6].first == 13 && counter == 4) {
+        return true;
+    }
+    if (counter >= 5) {
+        return true;
+    }
+    else return false;
+
+}
+
+bool isFlush(vector < std::pair<int, std::string>> hand)
+{
+    if (searchHandSuit(hand)[0].first >= 5) {
+        return true;
+    }
+    else return false;
+}
+
 HandAnalysis::HandAnalysis()
 {
     cout << "Constructor" << endl;
@@ -181,6 +212,17 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     printHand(sortyByFreq(_combinedHand));
     cout << "Occourences of Suit" << endl;
     printHand(searchHandSuit(_combinedHand));
+
+
+    vector<std::pair<int, std::string>> straight = { {1,"spade"},{4,"heart"}, {5,"diamond"},{6,"heart"}, {7,"spade"}, {8,"diamond"}, {13,"spade"} };
+    cout << "Straight Test" << endl;
+    printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout <<"Truth Value:" << isStraight(straight) << endl;
+    cout << "Flush Test" << endl;
+    printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isFlush(straight) << endl;
 
     // Poker Hands (highest to lowest):
 // 1. Royal flush
