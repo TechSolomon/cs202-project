@@ -47,36 +47,6 @@ void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed 
     }
 }
 
-//Taken from https://codereview.stackexchange.com/questions/173382/sorting-elements-according-to-frequency-of-occurence-in-c
-template<class T>
-void sortByFreq2(std::vector<T>& v)
-{
-    std::unordered_map<T, size_t> count;
-
-    for (T i : v) {
-        count[i]++;
-    }
-
-    std::sort(
-        v.begin(),
-        v.end(),
-        [&count](T const& a, T const& b) {
-            if (a == b) {
-                return false;
-            }
-            if (count[a] > count[b]) {
-                return true;
-            }
-            else if (count[a] < count[b]) {
-                return false;
-            }
-            return a < b;
-        });
-}
-
-
-
-
 std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
     std::vector<std::pair<int, std::string>> counter = { { 0,"heart" }, { 0,"club" }, { 0,"diamond" }, { 0, "spade" } };
@@ -104,64 +74,14 @@ std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int
     return counter; 
 }
 
-std::vector<std::pair<int, std::string>>sortyByFreq(std::vector<std::pair<int, std::string>>& hand) //returns vector sorted by occourences.
-{
-    auto tempHand = hand;
-    auto temp = searchHandSuit(hand);
-    //sort(tempHand.begin(), tempHand.end(), same_suit);
-        std::sort(tempHand.begin(),tempHand.end(),
-            [&temp](std::pair<int, std::string> const& a, std::pair<int, std::string> const& b) {
-                for (auto i : temp) {
-                    if (i.second == a.second ) {
-
-                        if (a.second == b.second) {
-                            return a.first < b.first;
-                        }
-                        else return false;
-
-                    }
-                }
-              /*  else if (temp[1].second == a.second) {
-
-                    if (a.second == b.second) {
-                        return a.first < b.first;
-                    }
-                    else return false;
-
-                }
-                else if (temp[2].second == a.second) {
-
-                    if (a.second == b.second) {
-                        return a.first < b.first;
-                    }
-                    else return false;
-
-                }
-                else if (temp[3].second == a.second) {
-
-                    if (a.second == b.second) {
-                        return a.first < b.first;
-                    }
-                    else return false;
-
-                }
-                else return false;*/
-
-            });
-    
-    return tempHand;
-
-}
-
 bool isStraight(vector < std::pair<int, std::string>> hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     int iterator = hand[0].first;
     int counter = 0;
     for (auto i : hand) {
-        cout << i.first << endl;
-        if (iterator == (i.first) - 1)
+        
+        if (iterator == (i.first) - 1|| (iterator == hand[0].first && hand[0].first != hand[1].first )) // checks if the first value is a double
         {
-            cout << "Counted!" << endl;
             counter++;
         }
 
@@ -177,9 +97,86 @@ bool isStraight(vector < std::pair<int, std::string>> hand) {
 
 }
 
+bool isbetterStraight(vector < std::pair<int, std::string>> hand) {
+    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
+    vector<std::pair<int, std::string>> temporary;
+    int iterator = hand[0].first;
+    int counter = 0;
+    for (auto i : hand) {
+
+        if (iterator == (i.first) - 1 || (iterator == hand[0].first && hand[0].first != hand[1].first)) // checks if the first value is a double
+        {
+            temporary.push_back(i);
+            counter++;
+        }
+
+        iterator = i.first;
+    }
+    //printHand(temporary);
+    if (temporary[0].first == 11 && temporary[1].first == 12 && temporary[2].first == 13)
+    {
+        
+        if (hand[0].first == 1) return true;
+    }
+    if (counter >= 5) {
+        return true;
+    }
+    else return false;
+
+
+}
+
 bool isFlush(vector < std::pair<int, std::string>> hand)
 {
     if (searchHandSuit(hand)[0].first >= 5) {
+        return true;
+    }
+    else return false;
+}
+
+bool isStraightFlush(vector < std::pair<int, std::string>> hand) {
+    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
+    printHand(hand);
+    int iteratorInt = hand[0].first;
+    std::string iteratorString=searchHandSuit(hand)[0].second;
+
+    int counter = 0;
+    for (int i = 0; i < hand.size(); i++) {
+     
+        if ((iteratorInt == (hand[i].first) -  1 || (iteratorInt == hand[0].first && hand[0].first != hand[1].first)) && hand[i].second == iteratorString)
+        {
+            counter++;
+        }
+
+        iteratorInt = hand[i].first;
+    }
+    
+    if (counter >= 5) {
+        return true;
+    }
+    else return false;
+
+}
+
+bool isRoyalFlush(vector < std::pair<int, std::string>> hand) {
+
+    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;});
+    int iteratorInt = hand[0].first;
+    std::string iteratorString = searchHandSuit(hand)[0].second;
+    vector<std::pair<int, std::string>> temporary;
+
+    int counter = 0;
+    for (int i = 0; i < hand.size(); i++) {
+
+        if ((iteratorInt == (hand[i].first) - 1 || (iteratorInt == hand[0].first && hand[0].first != hand[1].first)) && hand[i].second == iteratorString)
+        {
+            temporary.push_back(hand[i]);
+            counter++;
+        }
+
+        iteratorInt = hand[i].first;
+    }
+    if (temporary[0].second == iteratorString) {
         return true;
     }
     else return false;
@@ -196,34 +193,43 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     _combinedHand = chand; // throws chand (community hand) into the combinded hand.
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
 
-    cout << "Not Sorted" << endl;
-    printHand(_combinedHand);
+    //cout << "Not Sorted" << endl;
+    //printHand(_combinedHand);
 
-    sort(_combinedHand.begin(),_combinedHand.end()); // sorts by int value, ie Ace, 2,3,...,J,Q,K
-    cout << "Sorted Via Card Value" << endl;
-    printHand(_combinedHand);
+    //sort(_combinedHand.begin(),_combinedHand.end()); // sorts by int value, ie Ace, 2,3,...,J,Q,K
+    //cout << "Sorted Via Card Value" << endl;
+    //printHand(_combinedHand);
 
-    sort(_combinedHand.begin(), _combinedHand.end(), same_number);
-    cout << "Sorted Via Same Value" << endl;
-    printHand(_combinedHand);
+    //sort(_combinedHand.begin(), _combinedHand.end(), same_number);
+    //cout << "Sorted Via Same Value" << endl;
+    //printHand(_combinedHand);
 
-    //sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
-    cout << "Sorted Via Same Suit" << endl;
-    printHand(sortyByFreq(_combinedHand));
-    cout << "Occourences of Suit" << endl;
-    printHand(searchHandSuit(_combinedHand));
+    ////sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
+    //cout << "Sorted Via Same Suit" << endl;
+    //printHand(_combinedHand);
+
+    //cout << "Occourences of Suit" << endl;
+    //printHand(searchHandSuit(_combinedHand));
 
 
-    vector<std::pair<int, std::string>> straight = { {1,"spade"},{4,"heart"}, {5,"diamond"},{6,"heart"}, {7,"spade"}, {8,"diamond"}, {13,"spade"} };
-    cout << "Straight Test" << endl;
-    printHand(straight);
+    vector<std::pair<int, std::string>> straight = { {1,"spade"},{3,"diamond"}, {10,"spade"},{11,"diamonds"}, {13,"spade"}, {12,"spade"}, {13,"diamond"} };
+
+
+    cout << isRoyalFlush(straight) << endl;
+   // cout << "Straight Test" << endl;
+   //// printHand(straight);
+   // cout << "0 = False, 1 = True" << endl;
+   // cout <<"Truth Value:" << isStraight(straight) << endl;
+
+    //cout << "Flush Test" << endl;
+    ////printHand(straight);
+    //cout << "0 = False, 1 = True" << endl;
+    //cout << "Truth Value:" << isFlush(straight) << endl;
+
+    cout << "Straight Flush Test" << endl;
+    //printHand(straight);
     cout << "0 = False, 1 = True" << endl;
-    cout <<"Truth Value:" << isStraight(straight) << endl;
-    cout << "Flush Test" << endl;
-    printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isFlush(straight) << endl;
-
+    cout << "Truth Value:" << isStraightFlush(straight) << endl;
     // Poker Hands (highest to lowest):
 // 1. Royal flush
 //     if(){}
