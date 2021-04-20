@@ -17,7 +17,7 @@ public:
 	~Game();
 
 	void setup(int& players); // Constructs deck and player objects before starting the game
-	void gameLoop(); // Starts a round of poker
+	void gameLoop(Game& game); // Starts a round of poker
 
 	void setPot(const int& bet);
 	int getPot(const int& bet) const;

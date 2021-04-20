@@ -41,7 +41,7 @@ int main() {
     int numPlayers = 3;
     game.setup(numPlayers); // Construct Deck and Player objects
 
-    
+    // game.gameLoop(game);
     
     //------------------------------------------------------
      //----------TESTING OF RANKING.H BY BENJAMIN STREAM-------
