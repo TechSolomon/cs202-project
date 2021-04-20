@@ -19,17 +19,17 @@ int main() {
     sf::Texture texture;
 
     // Load a sprite to display (background design)
-    if (!texture.loadFromFile("../assets/poker-table-design.png"))
+    if (!texture.loadFromFile("assets/poker-table-design.png"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
     // TODO: create graphical text & UI buttons to input.
     sf::Font font;
-    if (!font.loadFromFile("../assets/sansation.ttf"))
+    if (!font.loadFromFile("assets/sansation.ttf"))
         return EXIT_FAILURE;
 
     // TODO: transition text to touch targets or buttons for final UI design.
-    sf::Text text("Total Chip Value: $0.00 | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
+    sf::Text text("Total Chip Value: $NaN | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
     text.setFillColor(sf::Color::White);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
