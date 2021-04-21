@@ -15,7 +15,8 @@
 static sf::Texture cardMap;
 class displayCard {
     friend void cardDisplayValue(std::vector<displayCard>& drawCard, std::vector<std::pair<int, std::string>>& cards);
-
+    friend void OffsetPosition(std::vector<displayCard>& cardPool);
+    friend void initialPoisition(std::vector<displayCard>& cardPool);
 public:
     displayCard(int LorR, int UorB);
     sf::Sprite cardSprite;

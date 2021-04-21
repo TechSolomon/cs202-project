@@ -45,6 +45,20 @@ void cardDisplayValue(std::vector<displayCard>& drawCard, std::vector<std::pair<
     }
 }
 
+void OffsetPosition(std::vector<displayCard>& cardPool)
+{
+    for (int i = 0; i < cardPool.size(); ++i) {
+        cardPool[i].cardSprite.move(sf::Vector2f(i * 50.0f, 150.f));
+    }
+}
+
+void initialPoisition(std::vector<displayCard>& cardPool)
+{
+    for (auto it : cardPool) {
+        it.cardSprite.setPosition(150.0f, 150.0f);
+    }
+}
+
 
 displayCard::displayCard(int LorR, int TorB) {
     if (!cardMap.loadFromFile("assets/momoko_Deck_of_52_Stylized_Playing_Cards.png")) {
