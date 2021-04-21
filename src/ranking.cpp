@@ -283,26 +283,41 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
 // 1. Royal flush
 //     if(){}
 // 2 Straight flush
-//     else if(){}
+//     else if(isStraight(_combinedHand){
+// return scoreHand(_combinedHand) + 9; 
+// }
 // 3. Four of a kind
-//     else if(){}
+//     else if(){
+// return scoreHand(_combinedHand) + 8; 
+// }
 // 4. Full house
-//     else if(){}
+//     else if(){
+// return scoreHand(_combinedHand) + 7; 
+// }
 // 5. Flush
-//     else if(){}
+//     else if(){
+// return scoreHand(_combinedHand) + 6; 
+// }
 // 6. Straight
-//     else if(){}
+//     else if(){
+// return scoreHand(_combinedHand) + 5; 
+// }
 // 7. Three of a kind
-//     else if(){}
+//     else if(){
+// return scoreHand(_combinedHand) + 4; 
+// }
 // 8. Two pair
-//     else if(){}
+//     {
+// return scoreHand(_combinedHand) + 3; 
+// }
 // 9. Pair
-//     else if(){}
+//     {
+// return scoreHand(_combinedHand) + 2; 
+// }
 // 10. High card
-//  else {
-//  sort(hand.begin(), hand.end());
-//  return hand[0].first / 100; 
-//}
+//  else{
+// return scoreHand(_combinedHand) + 1; 
+// }
 
 
 
