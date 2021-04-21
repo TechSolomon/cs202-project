@@ -68,7 +68,7 @@ bool Player::isFolded() const {
 
 void Player::getPlayerInput(Game& game, Player& p) {
     while (true) { // Wait for input then break when found
-        int bet; // Player's inputed amount of money
+        int bet; // Player's inputted amount of money
 
         // Keyboard initial input (1-9) to change amount of chips.
         // Use b/c/r/f for bet, call, raise, and fold.

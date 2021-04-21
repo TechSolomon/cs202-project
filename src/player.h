@@ -12,8 +12,7 @@
 // TODO: Investigate pre-declare class Game bug fix.
 class Game;
 
-class Player
-{
+class Player {
 	friend class Game;
 
 public:

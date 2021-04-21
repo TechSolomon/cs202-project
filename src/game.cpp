@@ -72,7 +72,7 @@ void Game::gameLoop() {
 	// 4. Round ends, winning player gets the pot, loop back to beginning
 
     sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
-                                       "Test Window", sf::Style::Close | sf::Style::Titlebar);
+                                       "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
 
     sf::Event event;
     sf::Texture texture;
@@ -137,9 +137,24 @@ void Game::gameLoop() {
                     else if (event.key.code == sf::Keyboard::Num0) {
                         cout << "DOLLAR AMOUNT ENTERED: $0" << endl;
                     }
+                    else if (event.key.code == sf::Keyboard::Space) {
+                        cout << "SPACE = Check" << endl;
+                    }
+                    else if (event.key.code == sf::Keyboard::B) {
+                        cout << "B = Bet" << endl;
+                    }
+                    else if (event.key.code == sf::Keyboard::C) {
+                        cout << "C = Check" << endl;
+                    }
+                    else if (event.key.code == sf::Keyboard::R) {
+                        cout << "R = Raise" << endl;
+                    }
+                    else if (event.key.code == sf::Keyboard::F) {
+                        cout << "F = Fold" << endl;
+                    }
                     else if (event.key.code == sf::Keyboard::Q) {
                         cout << "PRESSED Q (DEBUG)" << endl;
-                        p1.getMoney();
+//                        p1.getMoney();
                     }
                 case sf::Event::Closed:
                     break;
