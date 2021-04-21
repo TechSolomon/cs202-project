@@ -36,34 +36,37 @@ void Game::setup(int& players) { // Constructs deck and player objects before st
 
 }
 
+void Game::prepareLoop(Game &game) {
+    switch (_roundPhase) {
+        case 0:	// Betting phase
+            p1.getPlayerInput(game, game.p1);
+            p2.getPlayerInput(game, game.p2);
+            p3.getPlayerInput(game, game.p3);
+            p4.getPlayerInput(game, game.p4);
+            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
+                _roundPhase = 1;
+            break;
+        case 1: // Deal 3 cards to river
+            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+            _cards.drawCards(_river, 3);
+            _roundPhase = 0; // Go back to betting phase
+            break;
+        case 2: // Deal 1 card to river
+            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+            _cards.drawCards(_river, 1);
+            _roundPhase = 0; // Go back to betting phase
+            break;
+        case 3:
+            break;
+        default:
+            break;
+    }
+}
+
 // TODO: Change file path to "../" if running OS other than Windows.
 void Game::gameLoop() {
     // Starts a round of poker
 	// 1. Go through each players' turn (each player can check, bet, call, etc.)
-	switch (_roundPhase) {
-	case 0:	// Betting phase
-		p1.getPlayerInput(game, game.p1);
-		p2.getPlayerInput(game, game.p2);
-		p3.getPlayerInput(game, game.p3);
-		p4.getPlayerInput(game, game.p4);
-		if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
-			_roundPhase = 1;
-		break;
-	case 1: // Deal 3 cards to river
-		_cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-		_cards.drawCards(_river, 3);
-		_roundPhase = 0; // Go back to betting phase
-		break;
-	case 2: // Deal 1 card to river
-		_cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-		_cards.drawCards(_river, 1);
-		_roundPhase = 0; // Go back to betting phase
-		break;
-	case 3:
-		break;
-	default:
-		break;
-	}
 	// 2. Deal a card to the river
 	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
 	// 4. Round ends, winning player gets the pot, loop back to beginning
