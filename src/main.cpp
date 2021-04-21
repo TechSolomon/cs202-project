@@ -28,8 +28,13 @@ int main() {
         return EXIT_FAILURE;
 
     // TODO: transition text to touch targets or buttons for final UI design.
-    sf::Text text("Total Chip Value: $0.00 | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
-    text.setFillColor(sf::Color::White);
+    sf::Text playerCommands("Check (space) | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
+    playerCommands.setFillColor(sf::Color::White);
+    playerCommands.move(100.f, 0.f);
+
+    sf::Text chipAmount("Total Chip Value: $0", font, 50);
+    chipAmount.setFillColor(sf::Color::White);
+    chipAmount.move(50.f, 500.f);
 
     //------------TESTING OF DECK.H BY ADRIAN ANTONIO------
     Deck tempCards;//can now change how many decks
@@ -58,7 +63,8 @@ int main() {
         }
         testWindow.clear();
         testWindow.draw(sprite);
-        testWindow.draw(text);
+        testWindow.draw(chipAmount);
+        testWindow.draw(playerCommands);
         testWindow.display();
 
         
