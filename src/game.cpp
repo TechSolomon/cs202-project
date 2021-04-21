@@ -50,13 +50,13 @@ void Game::gameLoop() {
     sf::Event event;
     sf::Texture texture;
 
-    if (!texture.loadFromFile("../assets/poker-table-design.png")) {
+    if (!texture.loadFromFile("assets/poker-table-design.png")) {
         throw EXIT_FAILURE;
     }
     sf::Sprite sprite(texture);
 
     sf::Font font;
-    if (!font.loadFromFile("../assets/sansation.ttf")) {
+    if (!font.loadFromFile("assets/sansation.ttf")) {
         throw EXIT_FAILURE;
     }
 
@@ -64,6 +64,7 @@ void Game::gameLoop() {
     playerCommands.setFillColor(sf::Color::White);
     playerCommands.move(100.f, 0.f);
 
+    // TODO: Add total score to the graphic display.
     int totalScore = 0;
 
     sf::Text chipAmount("Total Chip Value: $0", font, 50);
@@ -119,7 +120,7 @@ void Game::gameLoop() {
                         cout << "B = Bet" << endl;
                     }
                     else if (event.key.code == sf::Keyboard::C) {
-                        cout << "C = Check" << endl;
+                        cout << "C = Call" << endl;
                     }
                     else if (event.key.code == sf::Keyboard::R) {
                         cout << "R = Raise" << endl;
@@ -190,35 +191,35 @@ void Game::gameLoop() {
     }
 
     // TODO: Fix memory management issues.
-    switch (_roundPhase) {
-        case 0:	// Betting phase
-            getPlayerInput(p1);
-            getPlayerInput(p2);
-            getPlayerInput(p3);
-            getPlayerInput(p4);
-            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
-                _roundPhase = 1;
-            break;
-        case 1: // Deal 3 cards to river
-            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-            _cards.drawCards(_river, 3);
-            _roundPhase = 0; // Go back to betting phase
-            break;
-        case 2: // Deal 1 card to river
-            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-            _cards.drawCards(_river, 1);
-            _roundPhase = 0; // Go back to betting phase
-            break;
-        case 3: // Determine winner then reset cards
-            p1._score = _analysis.grade(p1.getHand(), _river);
-            p2._score = _analysis.grade(p2.getHand(), _river);
-            p3._score = _analysis.grade(p3.getHand(), _river);
-            p4._score = _analysis.grade(p4.getHand(), _river);
-            // determineWinner();
-            break;
-        default:
-            break;
-    }
+//    switch (_roundPhase) {
+//        case 0:	// Betting phase
+//            getPlayerInput(p1);
+//            getPlayerInput(p2);
+//            getPlayerInput(p3);
+//            getPlayerInput(p4);
+//            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
+//                _roundPhase = 1;
+//            break;
+//        case 1: // Deal 3 cards to river
+//            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+//            _cards.drawCards(_river, 3);
+//            _roundPhase = 0; // Go back to betting phase
+//            break;
+//        case 2: // Deal 1 card to river
+//            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+//            _cards.drawCards(_river, 1);
+//            _roundPhase = 0; // Go back to betting phase
+//            break;
+//        case 3: // Determine winner then reset cards
+//            p1._score = _analysis.grade(p1.getHand(), _river);
+//            p2._score = _analysis.grade(p2.getHand(), _river);
+//            p3._score = _analysis.grade(p3.getHand(), _river);
+//            p4._score = _analysis.grade(p4.getHand(), _river);
+//            // determineWinner();
+//            break;
+//        default:
+//            break;
+//    }
 
 }
 
