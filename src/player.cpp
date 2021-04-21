@@ -4,6 +4,10 @@
 #include "game.h"
 #include "player.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::cin;
 
 Player::Player() {
 }
@@ -62,12 +66,12 @@ bool Player::isFolded() const {
     return _isFolded;
 }
 
-void Player::getPlayerInput(Game& game, Player& p) const {
+void Player::getPlayerInput(Game& game, Player& p) {
     while (true) { // Wait for input then break when found
         int bet; // Player's inputed amount of money
 
         // Keyboard initial input (1-9) to change amount of chips.
-            // Use b/c/r/f for bet, call, raise, and fold.
+        // Use b/c/r/f for bet, call, raise, and fold.
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Player checks (moves on to next player's turn)
             sf::sleep((sf::milliseconds(150)));
             std::cout << "KEYBOARD CHECK (CHECK). Space key was pressed." << std::endl;
