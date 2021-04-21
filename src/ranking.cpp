@@ -74,6 +74,55 @@ std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int
     return counter; 
 }
 
+std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, std::string>>& hand,int suit) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
+{
+    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
+    std::vector<std::pair<int, std::string>> sorted;
+    std::vector < std::pair<int, std::string>> heart_cards;
+    std::vector < std::pair<int, std::string>> club_cards;
+    std::vector < std::pair<int, std::string>> diamond_cards;
+    std::vector < std::pair<int, std::string>> spade_cards;
+    for (auto i : hand) {
+
+        if (i.second == "heart")
+        {
+            heart_cards.push_back(i);
+          
+        }
+        else if (i.second == "club")
+        {
+            club_cards.push_back(i);
+            
+        }
+        else if (i.second == "diamond")
+        {
+            diamond_cards.push_back(i);
+          
+        }
+        else if (i.second == "spade")
+        {
+            spade_cards.push_back(i);
+           
+        }
+
+
+    }
+    if(suit ==1 )
+    {
+        return heart_cards;
+    }
+    if (suit == 2)
+    {
+        return club_cards;
+    } if (suit == 3)
+    {
+        return diamond_cards;
+    } if (suit == 4)
+    {
+        return spade_cards;
+    }
+}
+
 bool isStraight(vector < std::pair<int, std::string>> hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     int iterator = hand[0].first;
