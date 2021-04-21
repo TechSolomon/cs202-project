@@ -117,6 +117,5 @@ void Player::getPlayerInput(Game& game, Player& p) const {
             break;
         }
     }
-
     // TODO: Exception handling for numeric chip additions (1-9) & error checking for other keys.
 }

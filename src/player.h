@@ -36,6 +36,7 @@ public:
 	void getPlayerInput(Game& game, Player& p) const;
 
 private:
+	double _score = 0; // Player's score; highest score wins
 	int _money = 1000; // Amount of poker chips player has
 	bool _isFolded = false;
 

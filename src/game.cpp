@@ -53,7 +53,11 @@ void Game::gameLoop(Game& game) { // Starts a round of poker
 		_cards.drawCards(_river, 1);
 		_roundPhase = 0; // Go back to betting phase
 		break;
-	case 3:
+	case 3: // Determine winner then reset cards
+		p1._score = _analysis.grade(game.p1.getHand(), _river);
+		p2._score = _analysis.grade(game.p2.getHand(), _river);
+		p3._score = _analysis.grade(game.p3.getHand(), _river);
+		p4._score = _analysis.grade(game.p4.getHand(), _river);
 		break;
 	default:
 		break;
@@ -98,4 +102,8 @@ bool Game::everyoneCalled() { // Advances round phase if everyone has called
 			return false;
 	}
 	return true;
+}
+
+void Game::determineWinner() const {
+	
 }

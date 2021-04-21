@@ -43,7 +43,7 @@ int main() {
     //----------TESTING OF GAME.H BY JAY-MARK PASCUA-------
 
     Game game;
-    int numPlayers = 3;
+    int numPlayers = 4;
     game.setup(numPlayers); // Construct Deck and Player objects
 
     // game.gameLoop(game);
