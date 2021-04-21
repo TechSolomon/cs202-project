@@ -70,14 +70,14 @@ void Player::getPlayerInput(Game& game, Player& p) const {
             // Use b/c/r/f for bet, call, raise, and fold.
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Player checks (moves on to next player's turn)
             sf::sleep((sf::milliseconds(150)));
-            std::cout << "KEYBOARD CHECK – (CHECK) – Space key was pressed." << std::endl;
+            std::cout << "KEYBOARD CHECK (CHECK). Space key was pressed." << std::endl;
             break;
         }
 
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
             // BET
             sf::sleep((sf::milliseconds(150)));
-            std::cout << "KEYBOARD INPUT – (BET) – B key was pressed." << std::endl;
+            std::cout << "KEYBOARD INPUT (BET). B key was pressed." << std::endl;
             std::cin >> bet;
             p.bet(bet);
             game.setCurrentBet(p.playerCurrentBet);
@@ -89,7 +89,7 @@ void Player::getPlayerInput(Game& game, Player& p) const {
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
             // CALL
             sf::sleep((sf::milliseconds(150)));
-            std::cout << "KEYBOARD INPUT – (CALL) – C key was pressed." << std::endl;
+            std::cout << "KEYBOARD INPUT (CALL). C key was pressed." << std::endl;
             p.call(game.getCurrentBet());
             game.setCurrentBet(p.playerCurrentBet);
             game.setPot(p.playerCurrentBet);
@@ -100,7 +100,7 @@ void Player::getPlayerInput(Game& game, Player& p) const {
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
             // RAISE
             sf::sleep((sf::milliseconds(150)));
-            std::cout << "KEYBOARD INPUT – (RAISE) – R key was pressed." << std::endl;
+            std::cout << "KEYBOARD INPUT (RAISE). R key was pressed." << std::endl;
             std::cin >> bet;
             p.raise(game, bet);
             game.setCurrentBet(p.playerCurrentBet);
@@ -112,7 +112,7 @@ void Player::getPlayerInput(Game& game, Player& p) const {
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
             // FOLD
             sf::sleep((sf::milliseconds(150)));
-            std::cout << "KEYBOARD INPUT – (FOLD) – F key was pressed." << std::endl;
+            std::cout << "KEYBOARD INPUT (FOLD). F key was pressed." << std::endl;
             std::cin.clear();
             break;
         }
