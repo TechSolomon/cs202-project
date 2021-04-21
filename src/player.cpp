@@ -4,6 +4,10 @@
 #include "game.h"
 #include "player.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::cin;
 
 Player::Player() {
 }
@@ -62,12 +66,55 @@ bool Player::isFolded() const {
     return _isFolded;
 }
 
+// TODO: Change file path to "../" if running OS other than Windows.
+void Player::events() {
+
+    sf::RenderWindow testWindow(sf::VideoMode(1300, 600),
+                                "Test Window",sf::Style::Close|sf::Style::Titlebar);
+
+    sf::Event event;
+    sf::Texture texture;
+
+    if (!texture.loadFromFile("assets/poker-table-design.png")) {
+        throw EXIT_FAILURE;
+    }
+    sf::Sprite sprite(texture);
+
+    sf::Font font;
+    if (!font.loadFromFile("assets/fonts/sansation.ttf")) {
+        throw EXIT_FAILURE;
+    }
+
+    sf::Text playerCommands("Check (space) | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
+    playerCommands.setFillColor(sf::Color::White);
+    playerCommands.move(100.f, 0.f);
+
+    sf::Text chipAmount("Total Chip Value: $0", font, 50);
+    chipAmount.setFillColor(sf::Color::White);
+    chipAmount.move(50.f, 500.f);
+
+    // SFML – start the event loop.
+    while (testWindow.isOpen()) {
+        while (testWindow.pollEvent(event)) {
+            if (event.type == sf::Event::EventType::Closed)
+                testWindow.close();
+        }
+
+        testWindow.clear();
+        testWindow.draw(sprite);
+        testWindow.draw(chipAmount);
+        testWindow.draw(playerCommands);
+        testWindow.display();
+    }
+
+}
+
 void Player::getPlayerInput(Game& game, Player& p) const {
     while (true) { // Wait for input then break when found
         int bet; // Player's inputed amount of money
 
         // Keyboard initial input (1-9) to change amount of chips.
-            // Use b/c/r/f for bet, call, raise, and fold.
+        // Use b/c/r/f for bet, call, raise, and fold.
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Player checks (moves on to next player's turn)
             sf::sleep((sf::milliseconds(150)));
             std::cout << "KEYBOARD CHECK (CHECK). Space key was pressed." << std::endl;

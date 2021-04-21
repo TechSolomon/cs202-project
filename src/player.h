@@ -33,6 +33,8 @@ public:
 	int getMoney() const;
 	bool isFolded() const;
 
+	static void events();
+
 	void getPlayerInput(Game& game, Player& p) const;
 
 private:
