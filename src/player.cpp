@@ -66,10 +66,6 @@ bool Player::isFolded() const {
     return _isFolded;
 }
 
-void Player::getNumericInput(Game& game, Player& p) {
-    // type here
-}
-
 void Player::getPlayerInput(Game& game, Player& p) {
     while (true) { // Wait for input then break when found
         int bet; // Player's inputed amount of money
