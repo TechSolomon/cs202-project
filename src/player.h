@@ -33,8 +33,6 @@ public:
 	int getMoney() const;
 	bool isFolded() const;
 
-	void getPlayerInput(Game& game, Player& p);
-
 private:
 	double _score = 0; // Player's score; highest score wins
 	int _money = 1000; // Amount of poker chips player has

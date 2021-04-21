@@ -39,10 +39,10 @@ void Game::setup(int& players) { // Constructs deck and player objects before st
 void Game::prepareLoop(Game &game) {
     switch (_roundPhase) {
         case 0:	// Betting phase
-            p1.getPlayerInput(game, game.p1);
-            p2.getPlayerInput(game, game.p2);
-            p3.getPlayerInput(game, game.p3);
-            p4.getPlayerInput(game, game.p4);
+            getPlayerInput(game.p1);
+            getPlayerInput(game.p2);
+            getPlayerInput(game.p3);
+            getPlayerInput(game.p4);
             if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
                 _roundPhase = 1;
             break;
@@ -56,7 +56,12 @@ void Game::prepareLoop(Game &game) {
             _cards.drawCards(_river, 1);
             _roundPhase = 0; // Go back to betting phase
             break;
-        case 3:
+        case 3: // Determine winner then reset cards
+            p1._score = _analysis.grade(game.p1.getHand(), _river);
+            p2._score = _analysis.grade(game.p2.getHand(), _river);
+            p3._score = _analysis.grade(game.p3.getHand(), _river);
+            p4._score = _analysis.grade(game.p4.getHand(), _river);
+            // determineWinner();
             break;
         default:
             break;
@@ -200,6 +205,64 @@ void Game::gameLoop() {
 
 }
 
+void Game::getPlayerInput(Player& p) {
+    while (true) { // Wait for input then break when found
+        int bet; // Player's inputed amount of money
+
+        // Keyboard initial input (1-9) to change amount of chips.
+        // Use b/c/r/f for bet, call, raise, and fold.
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Player checks (moves on to next player's turn)
+            sf::sleep((sf::milliseconds(150)));
+            std::cout << "KEYBOARD CHECK (CHECK). Space key was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+            // BET
+            sf::sleep((sf::milliseconds(150)));
+            std::cout << "KEYBOARD INPUT (BET). B key was pressed." << std::endl;
+            std::cin >> bet;
+            p.bet(bet);
+            setCurrentBet(p.playerCurrentBet);
+            setPot(p.playerCurrentBet);
+            std::cin.clear();
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            // CALL
+            sf::sleep((sf::milliseconds(150)));
+            std::cout << "KEYBOARD INPUT (CALL). C key was pressed." << std::endl;
+            p.call(getCurrentBet());
+            setCurrentBet(p.playerCurrentBet);
+            setPot(p.playerCurrentBet);
+            std::cin.clear();
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            // RAISE
+            sf::sleep((sf::milliseconds(150)));
+            std::cout << "KEYBOARD INPUT (RAISE). R key was pressed." << std::endl;
+            std::cin >> bet;
+            p.raise(*this, bet);
+            setCurrentBet(p.playerCurrentBet);
+            setPot(p.playerCurrentBet);
+            std::cin.clear();
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+            // FOLD
+            sf::sleep((sf::milliseconds(150)));
+            std::cout << "KEYBOARD INPUT (FOLD). F key was pressed." << std::endl;
+            std::cin.clear();
+            break;
+        }
+    }
+    // TODO: Exception handling for numeric chip additions (1-9) & error checking for other keys.
+}
+
 void Game::setPot(const int& bet) {
 	_pot += bet;
 }
@@ -233,4 +296,8 @@ bool Game::everyoneCalled() { // Advances round phase if everyone has called
 			return false;
 	}
 	return true;
+}
+
+void Game::determineWinner() const {
+
 }
