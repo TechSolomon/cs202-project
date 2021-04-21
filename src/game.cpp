@@ -43,8 +43,28 @@ void Game::prepareLoop(Game &game) {
             getPlayerInput(game.p2);
             getPlayerInput(game.p3);
             getPlayerInput(game.p4);
-            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
-                _roundPhase = 1;
+
+            if (_river.size() == 0) { // Move on to dealing 3 cards to river (case 1) if everyone bet/check
+                if (everyoneCalled()) 
+                    _roundPhase = 1;
+                else if (everyoneChecked())
+                    _roundPhase = 1;
+            }
+
+            else if (_river.size() == 3) { // Move on to dealing 1 card to river (case 2) if everyone bet/check
+                if (everyoneCalled())
+                    _roundPhase = 2;
+                else if (everyoneChecked())
+                    _roundPhase = 2;
+            }
+
+            else if (_river.size() == 5) { // Move on to dealing determining winner (case 3) if everyone bet/check
+                if (everyoneCalled()) 
+                    _roundPhase = 3;
+                else if (everyoneChecked())
+                    _roundPhase = 3;
+            }
+
             break;
         case 1: // Deal 3 cards to river
             _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
@@ -61,7 +81,9 @@ void Game::prepareLoop(Game &game) {
             p2._score = _analysis.grade(game.p2.getHand(), _river);
             p3._score = _analysis.grade(game.p3.getHand(), _river);
             p4._score = _analysis.grade(game.p4.getHand(), _river);
-            // determineWinner();
+
+            determineWinner(); // Finds who won and gives them the pot money
+            resetRound(); // Resets the _cards, _pot, _currentBet, _highestScore, and _roundPhase, then calls setup()
             break;
         default:
             break;
@@ -161,6 +183,7 @@ void Game::gameLoop() {
                         cout << "PRESSED Q (DEBUG)" << endl;
 //                        p1.getMoney();
                     }
+                    break;
                 case sf::Event::Closed:
                     break;
                 case sf::Event::Resized:
@@ -218,6 +241,16 @@ void Game::gameLoop() {
 
     }
 
+}
+
+void Game::resetRound() {
+    _cards.resetCard();
+    _cards.shuffle();
+    _pot = 0;
+    _currentBet = 0;
+    _highestScore = 0;
+    _roundPhase = 0;
+    this->setup(_numPlayers);
 }
 
 void Game::getPlayerInput(Player& p) {
@@ -296,7 +329,7 @@ int Game::getCurrentBet() const {
 
 bool Game::everyoneCalled() { // Advances round phase if everyone has called
 
-	std::vector<Player> playersStillPlaying;
+	std::vector<Player> playersStillPlaying; // Consider only players who are still playing
 	if (p1._isFolded == false)
 		playersStillPlaying.push_back(p1);
 	if (p2._isFolded == false)
@@ -313,6 +346,51 @@ bool Game::everyoneCalled() { // Advances round phase if everyone has called
 	return true;
 }
 
-void Game::determineWinner() const {
+bool Game::everyoneChecked() { // Advances round phase if everyone has 
 
+    std::vector<Player> playersStillPlaying; // Consider only players who are still playing
+    if (p1._isFolded == false)
+        playersStillPlaying.push_back(p1);
+    if (p2._isFolded == false)
+        playersStillPlaying.push_back(p2);
+    if (p3._isFolded == false)
+        playersStillPlaying.push_back(p3);
+    if (p4._isFolded == false)
+        playersStillPlaying.push_back(p4);
+
+    for (const auto& x : playersStillPlaying) { // Returns false if not everyone checked
+        if (x._checked == false)
+            return false;
+    }
+    return true;
+}
+
+void Game::determineWinner() {
+    std::vector<double> scores; // Contain all the scores
+
+    scores.push_back(p1._score);
+    scores.push_back(p2._score);
+    scores.push_back(p3._score);
+    scores.push_back(p4._score);
+
+    if (p1._score > _highestScore) // Find what is the highest score
+        _highestScore = p1._score;
+
+    if (p2._score > _highestScore)
+        _highestScore = p2._score;
+
+    if (p3._score > _highestScore)
+        _highestScore = p3._score;
+
+    if (p4._score > _highestScore)
+        _highestScore = p4._score;
+
+    if (_highestScore == p1._score) // Find who has the highest score, give them the pot
+        p1._money += _pot;
+    else if (_highestScore == p2._score) 
+        p2._money += _pot;
+    else if (_highestScore == p3._score)
+        p3._money += _pot;
+    else if (_highestScore == p4._score)
+        p4._money += _pot;
 }

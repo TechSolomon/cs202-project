@@ -23,6 +23,7 @@ public:
 
 	void dealCards(Deck& cards);
 
+	void check();
 	void bet(const int& bet);
 	void call(const int& call);
 	void raise(Game& game, const int& raise);
@@ -36,6 +37,7 @@ private:
 	double _score = 0; // Player's score; highest score wins
 	int _money = 1000; // Amount of poker chips player has
 	bool _isFolded = false;
+	bool _checked = false; // True if player decides to "check" for their turn
 
 	std::vector<std::pair<int, std::string>> _playerHand; // Player's current cards
 };

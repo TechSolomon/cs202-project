@@ -19,6 +19,11 @@ void Player::dealCards(Deck& cards) {
     cards.drawCards(_playerHand, 2);
 }
 
+
+void Player::check() {
+    _checked = true;
+}
+
 void Player::bet(const int& bet) { // Player bets an amount of money
     // Check if player has sufficient amount of money to make a bet
     // Subtract bet from player's money
