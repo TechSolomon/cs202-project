@@ -35,6 +35,7 @@ public:
 
 	static void events();
 
+    void getNumericInput(Game& game, Player& p) const;
 	void getPlayerInput(Game& game, Player& p) const;
 
 private:

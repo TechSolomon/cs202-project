@@ -24,7 +24,7 @@ int main() {
     HandAnalysis testAnalysis;
     testAnalysis.grade(game.p1.getHand(), testCHand);
 
-    // Monitor for Keyboard Input
+    // SFML sequence & monitor for input
     Player::events();
 
     return 0;
