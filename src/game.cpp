@@ -36,38 +36,6 @@ void Game::setup(int& players) { // Constructs deck and player objects before st
 
 }
 
-void Game::prepareLoop(Game &game) {
-    switch (_roundPhase) {
-        case 0:	// Betting phase
-            getPlayerInput(game.p1);
-            getPlayerInput(game.p2);
-            getPlayerInput(game.p3);
-            getPlayerInput(game.p4);
-            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
-                _roundPhase = 1;
-            break;
-        case 1: // Deal 3 cards to river
-            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-            _cards.drawCards(_river, 3);
-            _roundPhase = 0; // Go back to betting phase
-            break;
-        case 2: // Deal 1 card to river
-            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-            _cards.drawCards(_river, 1);
-            _roundPhase = 0; // Go back to betting phase
-            break;
-        case 3: // Determine winner then reset cards
-            p1._score = _analysis.grade(game.p1.getHand(), _river);
-            p2._score = _analysis.grade(game.p2.getHand(), _river);
-            p3._score = _analysis.grade(game.p3.getHand(), _river);
-            p4._score = _analysis.grade(game.p4.getHand(), _river);
-            // determineWinner();
-            break;
-        default:
-            break;
-    }
-}
-
 // TODO: Change file path to "../" if running OS other than Windows.
 void Game::gameLoop() {
     // Starts a round of poker
@@ -82,19 +50,21 @@ void Game::gameLoop() {
     sf::Event event;
     sf::Texture texture;
 
-    if (!texture.loadFromFile("assets/poker-table-design.png")) {
+    if (!texture.loadFromFile("../assets/poker-table-design.png")) {
         throw EXIT_FAILURE;
     }
     sf::Sprite sprite(texture);
 
     sf::Font font;
-    if (!font.loadFromFile("assets/sansation.ttf")) {
+    if (!font.loadFromFile("../assets/sansation.ttf")) {
         throw EXIT_FAILURE;
     }
 
     sf::Text playerCommands("Check (space) | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
     playerCommands.setFillColor(sf::Color::White);
     playerCommands.move(100.f, 0.f);
+
+    int totalScore = 0;
 
     sf::Text chipAmount("Total Chip Value: $0", font, 50);
     chipAmount.setFillColor(sf::Color::White);
@@ -159,7 +129,7 @@ void Game::gameLoop() {
                     }
                     else if (event.key.code == sf::Keyboard::Q) {
                         cout << "PRESSED Q (DEBUG)" << endl;
-//                        p1.getMoney();
+                        p1.getMoney();
                     }
                 case sf::Event::Closed:
                     break;
@@ -208,6 +178,7 @@ void Game::gameLoop() {
                 case sf::Event::Count:
                     break;
             }
+
         }
 
         userWindowDisplay.clear();
@@ -216,6 +187,37 @@ void Game::gameLoop() {
         userWindowDisplay.draw(playerCommands);
         userWindowDisplay.display();
 
+    }
+
+    // TODO: Fix memory management issues.
+    switch (_roundPhase) {
+        case 0:	// Betting phase
+            getPlayerInput(p1);
+            getPlayerInput(p2);
+            getPlayerInput(p3);
+            getPlayerInput(p4);
+            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
+                _roundPhase = 1;
+            break;
+        case 1: // Deal 3 cards to river
+            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+            _cards.drawCards(_river, 3);
+            _roundPhase = 0; // Go back to betting phase
+            break;
+        case 2: // Deal 1 card to river
+            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+            _cards.drawCards(_river, 1);
+            _roundPhase = 0; // Go back to betting phase
+            break;
+        case 3: // Determine winner then reset cards
+            p1._score = _analysis.grade(p1.getHand(), _river);
+            p2._score = _analysis.grade(p2.getHand(), _river);
+            p3._score = _analysis.grade(p3.getHand(), _river);
+            p4._score = _analysis.grade(p4.getHand(), _river);
+            // determineWinner();
+            break;
+        default:
+            break;
     }
 
 }

@@ -17,7 +17,6 @@ public:
 	~Game();
 
 	void setup(int& players); // Constructs deck and player objects before starting the game
-    void prepareLoop(Game& game); // Prepares for a round of poker
 	void gameLoop(); // Starts a round of poker
 	void getPlayerInput(Player& p);
 
