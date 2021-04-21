@@ -12,8 +12,7 @@
 // TODO: Investigate pre-declare class Game bug fix.
 class Game;
 
-class Player
-{
+class Player {
 	friend class Game;
 
 public:
@@ -33,9 +32,8 @@ public:
 	int getMoney() const;
 	bool isFolded() const;
 
-	void getPlayerInput(Game& game, Player& p) const;
-
 private:
+	double _score = 0; // Player's score; highest score wins
 	int _money = 1000; // Amount of poker chips player has
 	bool _isFolded = false;
 
