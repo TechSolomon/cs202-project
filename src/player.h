@@ -33,10 +33,8 @@ public:
 	int getMoney() const;
 	bool isFolded() const;
 
-	static void events();
-
-    void getNumericInput(Game& game, Player& p) const;
-	void getPlayerInput(Game& game, Player& p) const;
+    void getNumericInput(Game& game, Player& p);
+	void getPlayerInput(Game& game, Player& p);
 
 private:
 	int _money = 1000; // Amount of poker chips player has
