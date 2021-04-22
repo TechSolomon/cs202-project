@@ -93,7 +93,7 @@ void Game::gameLoop() {
 	// 2. Deal a card to the river
 	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
 	// 4. Round ends, winning player gets the pot, loop back to beginning
-
+    std::string s;
     sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
                                        "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
 
@@ -116,21 +116,29 @@ void Game::gameLoop() {
                         displayPlayerCards(userWindowDisplay, p1);
                         std::cout << "PLAYER 1'S TURN" << std::endl;
                         getPlayerInput(p1);
+                        cout << "Press enter key" << endl;
+                        std::cin >> s;
                     }
                     if (p2._isFolded == false) {
                         displayPlayerCards(userWindowDisplay, p2);
                         std::cout << "PLAYER 2'S TURN" << std::endl;
                         getPlayerInput(p2);
+                        cout << "Press enter key" << endl;
+                        std::cin >> s;
                     }
                     if (p3._isFolded == false) {
                         displayPlayerCards(userWindowDisplay, p3);
                         std::cout << "PLAYER 3'S TURN" << std::endl;
                         getPlayerInput(p3);
+                        cout << "Press enter key" << endl;
+                        std::cin >> s;
                     }
                     if (p4._isFolded == false) {
                         displayPlayerCards(userWindowDisplay, p4);
                         std::cout << "PLAYER 4'S TURN" << std::endl;
                         getPlayerInput(p4);
+                        cout << "Press enter key" << endl;
+                        std::cin >> s;
                     }
 
                     if (_river.size() == 0) { // Move on to dealing 3 cards to river (case 1) if everyone bet/check
