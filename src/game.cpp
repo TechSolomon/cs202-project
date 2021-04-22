@@ -1,3 +1,8 @@
+/*
+ * CS 202 Final Project (Spring 2021) Texas Hold'em Poker
+ * By: Adrian Antonio, Benjamin Stream, Jay-Mark Pascua, & Solomon Himelbloom
+*/
+
 #include "game.h"
 #include <SFML/Graphics.hpp>
 using std::cout;
@@ -36,18 +41,7 @@ void Game::setup(int& players) { // Constructs deck and player objects before st
 
 }
 
-// TODO: Change file path to "../" if running OS other than Windows.
-void Game::gameLoop() {
-    // Starts a round of poker
-	// 1. Go through each players' turn (each player can check, bet, call, etc.)
-	// 2. Deal a card to the river
-	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
-	// 4. Round ends, winning player gets the pot, loop back to beginning
-
-    sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
-                                       "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
-
-    sf::Event event;
+void Game::displayPlayerCards(sf::RenderWindow& userWindow, Player& p) {
     sf::Texture texture;
 
     if (!texture.loadFromFile("assets/poker-table-design.png")) {
@@ -73,115 +67,132 @@ void Game::gameLoop() {
     totalPot.setFillColor(sf::Color::White);
     totalPot.move(50.f, 550.f);
 
+    std::vector<displayCard> displayRiver{};
+    cardDisplayValue(displayRiver, _river);
+    initialPosition(displayRiver, 450.0f, 125.0f);//change this to where it draw in the screen
+    offsetPosition(displayRiver, 125.0f);
+    std::vector<displayCard> player{};
+    cardDisplayValue(player, p._playerHand);
+    initialPosition(player, 575.0f, 230.0f);
+    offsetPosition(player, 230.0f);
+
+    userWindow.clear();
+    userWindow.draw(sprite);
+    userWindow.draw(totalPot);
+    userWindow.draw(chipValues);
+    userWindow.draw(playerCommands);
+    screenCards(displayRiver, userWindow);//draws river
+    screenCards(player, userWindow);
+    userWindow.display();
+}
+
+// TODO: Change file path to "../" if running OS other than Windows.
+void Game::gameLoop() {
+    // Starts a round of poker
+	// 1. Go through each players' turn (each player can check, bet, call, etc.)
+	// 2. Deal a card to the river
+	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
+	// 4. Round ends, winning player gets the pot, loop back to beginning
+
+    sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
+                                       "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
+
+    sf::Event event;
+    
+
     // SFML – start the event loop.
     while (userWindowDisplay.isOpen()) {
         while (userWindowDisplay.pollEvent(event)) {
             if (event.type == sf::Event::EventType::Closed)
                 userWindowDisplay.close();
-            
-                    
-            if (p1._money == 0) {// Game keeps going until p1 runs out of money
-                cout << "OH NO BREAK" << endl;
-                break;
-            }  
-            std::vector<displayCard> displayRiver{};
-            cardDisplayValue(displayRiver, _river);
-            initialPosition(displayRiver, 450.0f, 125.0f);//change this to where it draw in the screen
-            offsetPosition(displayRiver, 125.0f);
-            std::vector<displayCard> playerOne{};
-            cardDisplayValue(playerOne, p1._playerHand);
-            initialPosition(playerOne, 575.0f, 230.0f);
-            offsetPosition(playerOne, 230.0f);
-            userWindowDisplay.clear();
-            userWindowDisplay.draw(sprite);
-            userWindowDisplay.draw(totalPot);
-            userWindowDisplay.draw(chipValues);
-            userWindowDisplay.draw(playerCommands);
-            screenCards(displayRiver, userWindowDisplay);//draws river
-            screenCards(playerOne, userWindowDisplay);//draws hand
-            userWindowDisplay.display();
-                
-            std::cout << "CURRENT POT: " << _pot << std::endl;
-            totalPot.setString("$" + std::to_string(_pot));
-            if (_roundPhase == 0) {	// Betting phase
-                resetBets();
-                if (p1._isFolded == false) {
-                    std::cout << "PLAYER 1'S TURN" << std::endl;
-                    getPlayerInput(p1);
-                }
-                if (p2._isFolded == false) {
-                    std::cout << "PLAYER 2'S TURN" << std::endl;
-                    getPlayerInput(p2);
-                }
-                if (p3._isFolded == false) {
-                    std::cout << "PLAYER 3'S TURN" << std::endl;
-                    getPlayerInput(p3);
-                }
-                if (p4._isFolded == false) {
-                    std::cout << "PLAYER 4'S TURN" << std::endl;
-                    getPlayerInput(p4);
-                }
 
-                if (_river.size() == 0) { // Move on to dealing 3 cards to river (case 1) if everyone bet/check
-                    if (everyoneCalled())
-                        _roundPhase = 1;
-                    else if (everyoneChecked())
-                        _roundPhase = 1;
-                    else {
-                        letPlayerCallARaise();
-                        _roundPhase = 1;
+
+            while (p1._money != 0) { // Game keeps going until p1 runs out of money
+                displayPlayerCards(userWindowDisplay, p1);
+                std::cout << "CURRENT POT: " << _pot << std::endl;
+                if (_roundPhase == 0) {	// Betting phase
+                    resetBets();
+                    if (p1._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p1);
+                        std::cout << "PLAYER 1'S TURN" << std::endl;
+                        getPlayerInput(p1);
+                    }
+                    if (p2._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p2);
+                        std::cout << "PLAYER 2'S TURN" << std::endl;
+                        getPlayerInput(p2);
+                    }
+                    if (p3._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p3);
+                        std::cout << "PLAYER 3'S TURN" << std::endl;
+                        getPlayerInput(p3);
+                    }
+                    if (p4._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p4);
+                        std::cout << "PLAYER 4'S TURN" << std::endl;
+                        getPlayerInput(p4);
+                    }
+
+                    if (_river.size() == 0) { // Move on to dealing 3 cards to river (case 1) if everyone bet/check
+                        if (everyoneCalled())
+                            _roundPhase = 1;
+                        else if (everyoneChecked())
+                            _roundPhase = 1;
+                        else {
+                            letPlayerCallARaise();
+                            _roundPhase = 1;
+                        }
+                    }
+
+                    else if (_river.size() == 3 || _river.size() == 4) { // Move on to dealing 1 card to river (case 2) if everyone bet/check
+                        if (everyoneCalled())
+                            _roundPhase = 2;
+                        else if (everyoneChecked())
+                            _roundPhase = 2;
+                        else {
+                            letPlayerCallARaise();
+                            _roundPhase = 2;
+                        }
+                    }
+
+                    else if (_river.size() == 5) { // Move on to dealing determining winner (case 3) if everyone bet/check
+                        if (everyoneCalled())
+                            _roundPhase = 3;
+                        else if (everyoneChecked())
+                            _roundPhase = 3;
+                        else {
+                            letPlayerCallARaise();
+                            _roundPhase = 3;
+                        }
                     }
                 }
 
-                else if (_river.size() == 3 || _river.size() == 4) { // Move on to dealing 1 card to river (case 2) if everyone bet/check
-                    if (everyoneCalled())
-                        _roundPhase = 2;
-                    else if (everyoneChecked())
-                        _roundPhase = 2;
-                    else {
-                        letPlayerCallARaise();
-                        _roundPhase = 2;
-                    }
+                else if (_roundPhase == 1) { // Deal 3 cards to river
+                    std::cout << "DEALING 3 CARDS TO RIVER" << std::endl;
+                    _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+                    _cards.drawCards(_river, 3);
+                    _roundPhase = 0; // Go back to betting phase
                 }
 
-                else if (_river.size() == 5) { // Move on to dealing determining winner (case 3) if everyone bet/check
-                    if (everyoneCalled())
-                        _roundPhase = 3;
-                    else if (everyoneChecked())
-                        _roundPhase = 3;
-                    else {
-                        letPlayerCallARaise();
-                        _roundPhase = 3;
-                    }
+                else if (_roundPhase == 2) { // Deal 1 card to river
+                    std::cout << "DEALING 1 CARD TO RIVER" << std::endl;
+                    _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+                    _cards.drawCards(_river, 1);
+                    _roundPhase = 0; // Go back to betting phase
+                }
+
+                else if (_roundPhase == 3) { // Determine winner then reset cards
+                    std::cout << "DETERMINING WINNER" << std::endl;
+                    p1._score = _analysis.grade(p1.getHand(), _river);
+                    p2._score = _analysis.grade(p2.getHand(), _river);
+                    p3._score = _analysis.grade(p3.getHand(), _river);
+                    p4._score = _analysis.grade(p4.getHand(), _river);
+
+                    determineWinner();
+                    resetRound();
+
                 }
             }
-
-            else if (_roundPhase == 1) { // Deal 3 cards to river
-                std::cout << "DEALING 3 CARDS TO RIVER" << std::endl;
-                _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-                _cards.drawCards(_river, 3);
-                _roundPhase = 0; // Go back to betting phase
-            }
-
-            else if (_roundPhase == 2) { // Deal 1 card to river
-                std::cout << "DEALING 1 CARD TO RIVER" << std::endl;
-                _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-                _cards.drawCards(_river, 1);
-                _roundPhase = 0; // Go back to betting phase
-            }
-
-            else if (_roundPhase == 3) { // Determine winner then reset cards
-                std::cout << "DETERMINING WINNER" << std::endl;
-                p1._score = _analysis.grade(p1.getHand(), _river);
-                p2._score = _analysis.grade(p2.getHand(), _river);
-                p3._score = _analysis.grade(p3.getHand(), _river);
-                p4._score = _analysis.grade(p4.getHand(), _river);
-
-                determineWinner();
-                resetRound();
-
-            }              
-            
         }
     }
 }

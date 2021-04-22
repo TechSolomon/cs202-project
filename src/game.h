@@ -1,3 +1,8 @@
+/*
+ * CS 202 Final Project (Spring 2021) Texas Hold'em Poker
+ * By: Adrian Antonio, Benjamin Stream, Jay-Mark Pascua, & Solomon Himelbloom
+*/
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -18,6 +23,7 @@ public:
 	~Game();
 
 	void setup(int& players); // Constructs deck and player objects before starting the game
+	void displayPlayerCards(sf::RenderWindow& userWindow, Player& p);
 	void gameLoop(); // Starts a round of poker
 	void resetRound(); // Resets the _cards, _pot, _currentBet, and _highestScore, calls setup()
 	void resetBets(); // Reset players' bets and current round's highest bet
