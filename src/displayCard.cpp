@@ -71,11 +71,7 @@ void screenCards(std::vector<displayCard>& cardPool, sf::RenderWindow& display)
     }
 }
 
-void initialWithOffsetPostion(std::vector<displayCard>& cards, float x, float y)
-{
-    void initialPoisition(std::vector<displayCard>&cardPool, float x, float y);
-    void OffsetPosition(std::vector<displayCard>&cardPool, float y);
-}
+
 
 
 displayCard::displayCard(int LorR, int TorB) {

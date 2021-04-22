@@ -24,7 +24,6 @@ class displayCard {
     friend void offsetPosition(std::vector<displayCard>& cardPool,float y);//Moves cards to the right by 50*wherever it is in the vector
     friend void initialPosition(std::vector<displayCard>& cardPool, float x, float y);
     friend void screenCards(std::vector<displayCard>& cardPool,sf::RenderWindow &display);//Draws on a RenderedWindow
-    friend void initialWithOffsetPostion(std::vector<displayCard>& cards, float x, float y);//does both initial and offset
 public:
     displayCard(int LorR, int UorB);
     sf::Sprite cardSprite;
