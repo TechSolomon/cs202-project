@@ -1,5 +1,5 @@
 //
-// Created by Benjamin Stream & Solomon Himelbloom on 4/8/21. TEST BRANCH
+// Created by Benjamin Stream & Solomon Himelbloom on 4/8/21.
 //
 
 #include "ranking.h"
