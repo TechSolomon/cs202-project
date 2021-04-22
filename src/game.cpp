@@ -76,11 +76,6 @@ void Game::gameLoop() {
             if (event.type == sf::Event::EventType::Closed)
                 userWindowDisplay.close();
 
-            userWindowDisplay.clear();
-            userWindowDisplay.draw(sprite);
-            userWindowDisplay.draw(chipAmount);
-            userWindowDisplay.draw(playerCommands);
-            userWindowDisplay.display();
             while (p1._money != 0) { // Game keeps going until p1 runs out of money
                 std::cout << "CURRENT POT: " << _pot << std::endl;
                 if (_roundPhase == 0) {	// Betting phase
@@ -152,11 +147,13 @@ void Game::gameLoop() {
                     resetRound();
                 }
             }
+            std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
         }
-
-        std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
-
-
+        userWindowDisplay.clear();
+        userWindowDisplay.draw(sprite);
+        userWindowDisplay.draw(chipAmount);
+        userWindowDisplay.draw(playerCommands);
+        userWindowDisplay.display();
     }
     
 }
@@ -223,11 +220,18 @@ void Game::getPlayerInput(Player& p) {
             p.fold();
             break;
         }
+    }
+}
 
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+int Game::getNumericInput() const { // Gets money input from player
+    int bet; // Amount of money
+    std::cout << "[1] = $1 | [2] = $2 | [3] = $5 | [4] = $10 | [5] = $20 | [6] = $25 | [7] = $50 | [8] = $100 | [9] = $500 | [0] = $1000" << std::endl;
+    while (true) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
             // Num1 = $1
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 1 was pressed." << std::endl;
+            bet = 1;
             break;
         }
 
@@ -235,6 +239,7 @@ void Game::getPlayerInput(Player& p) {
             // Num2 = $2
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 2 was pressed." << std::endl;
+            bet = 2;
             break;
         }
 
@@ -242,6 +247,7 @@ void Game::getPlayerInput(Player& p) {
             // Num3 = $5
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 3 was pressed." << std::endl;
+            bet = 5;
             break;
         }
 
@@ -249,6 +255,7 @@ void Game::getPlayerInput(Player& p) {
             // Num4 = $10
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 4 was pressed." << std::endl;
+            bet = 10;
             break;
         }
 
@@ -256,6 +263,7 @@ void Game::getPlayerInput(Player& p) {
             // Num5 = $20
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 5 was pressed." << std::endl;
+            bet = 20;
             break;
         }
 
@@ -263,6 +271,7 @@ void Game::getPlayerInput(Player& p) {
             // Num6 = $25
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 6 was pressed." << std::endl;
+            bet = 25;
             break;
         }
 
@@ -270,6 +279,7 @@ void Game::getPlayerInput(Player& p) {
             // Num7 = $50
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 7 was pressed." << std::endl;
+            bet = 50;
             break;
         }
 
@@ -277,6 +287,7 @@ void Game::getPlayerInput(Player& p) {
             // Num8 = $100
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 8 was pressed." << std::endl;
+            bet = 100;
             break;
         }
 
@@ -284,6 +295,7 @@ void Game::getPlayerInput(Player& p) {
             // Num9 = $500
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 9 was pressed." << std::endl;
+            bet = 500;
             break;
         }
 
@@ -291,14 +303,11 @@ void Game::getPlayerInput(Player& p) {
             // Num0 = $1000
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 0 was pressed." << std::endl;
+            std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
+            bet = 1000;
             break;
         }
     }
-}
-
-int Game::getNumericInput() const { // Gets money input from player
-    int bet; // Amount of money
-    std::cin >> bet;
         return bet;
 }
 
