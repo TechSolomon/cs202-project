@@ -20,6 +20,7 @@ public:
 	void setup(int& players); // Constructs deck and player objects before starting the game
 	void gameLoop(); // Starts a round of poker
 	void resetRound(); // Resets the _cards, _pot, _currentBet, and _highestScore, calls setup()
+	void resetBets(); // Reset players' bets and current round's highest bet
 	void getPlayerInput(Player& p);
 	void getPlayerSecondInput(Player& p); // Use when a player needs to respond to a raise
 	int getNumericInput() const;

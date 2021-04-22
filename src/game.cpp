@@ -95,6 +95,7 @@ void Game::gameLoop() {
                 std::cout << "CURRENT POT: " << _pot << std::endl;
                 totalPot.setString("$" + std::to_string(_pot));
                 if (_roundPhase == 0) {	// Betting phase
+                    resetBets();
                     if (p1._isFolded == false) {
                         std::cout << "PLAYER 1'S TURN" << std::endl;
                         getPlayerInput(p1);
@@ -180,10 +181,17 @@ void Game::resetRound() {
     _cards.resetCard();
     _cards.shuffle();
     _pot = 0;
-    _currentBet = 0;
     _highestScore = 0;
     _roundPhase = 0;
     this->setup(_numPlayers);
+}
+
+void Game::resetBets() {
+    p1.playerCurrentBet = 0;
+    p2.playerCurrentBet = 0;
+    p3.playerCurrentBet = 0;
+    p4.playerCurrentBet = 0;
+    _currentBet = 0;
 }
 
 void Game::getPlayerInput(Player& p) {
