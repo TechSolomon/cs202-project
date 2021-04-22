@@ -83,8 +83,28 @@ void Game::gameLoop() {
                         getPlayerInput(p2);
                         getPlayerInput(p3);
                         getPlayerInput(p4);
-                        if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
-                            _roundPhase = 1;
+
+                        if (_river.size() == 0) { // Move on to dealing 3 cards to river (case 1) if everyone bet/check
+                            if (everyoneCalled())
+                                _roundPhase = 1;
+                            else if (everyoneChecked())
+                                _roundPhase = 1;
+                        }
+
+                        else if (_river.size() == 3) { // Move on to dealing 1 card to river (case 2) if everyone bet/check
+                            if (everyoneCalled())
+                                _roundPhase = 2;
+                            else if (everyoneChecked())
+                                _roundPhase = 2;
+                        }
+
+                        else if (_river.size() == 5) { // Move on to dealing determining winner (case 3) if everyone bet/check
+                            if (everyoneCalled())
+                                _roundPhase = 3;
+                            else if (everyoneChecked())
+                                _roundPhase = 3;
+                        }
+
                         break;
                     case 1: // Deal 3 cards to river
                         _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
@@ -101,7 +121,9 @@ void Game::gameLoop() {
                         p2._score = _analysis.grade(p2.getHand(), _river);
                         p3._score = _analysis.grade(p3.getHand(), _river);
                         p4._score = _analysis.grade(p4.getHand(), _river);
-                        // determineWinner();
+
+                        determineWinner();
+                        resetRound();
                         break;
                     default:
                         break;
