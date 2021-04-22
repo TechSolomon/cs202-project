@@ -64,11 +64,14 @@ void Game::gameLoop() {
     playerCommands.setFillColor(sf::Color::White);
     playerCommands.move(100.f, 0.f);
 
-    // TODO: Add total score to the graphic display.
-    int totalScore = 0;
-    sf::Text chipAmount("Chips (1-9) | Pot: $999,999", font, 40);
-    chipAmount.setFillColor(sf::Color::White);
-    chipAmount.move(50.f, 500.f);
+    sf::Text chipValues("Chip Presets (1-9)", font, 35);
+    chipValues.setFillColor(sf::Color::White);
+    chipValues.move(50.f, 500.f);
+
+    sf::Text totalPot("Total Pot: ", font, 35);
+    totalPot.setString("$" + std::to_string(_pot));
+    totalPot.setFillColor(sf::Color::White);
+    totalPot.move(50.f, 550.f);
 
     // SFML – start the event loop.
     while (userWindowDisplay.isOpen()) {
@@ -84,11 +87,13 @@ void Game::gameLoop() {
                 offsetPosition(displayRiver, 150.f);
                 userWindowDisplay.clear();            
                 userWindowDisplay.draw(sprite);
-                userWindowDisplay.draw(chipAmount);
+                userWindowDisplay.draw(totalPot);
+                userWindowDisplay.draw(chipValues);
                 userWindowDisplay.draw(playerCommands);
                 screenCards(displayRiver, userWindowDisplay);//draws river
                 userWindowDisplay.display();
                 std::cout << "CURRENT POT: " << _pot << std::endl;
+                totalPot.setString("$" + std::to_string(_pot));
                 if (_roundPhase == 0) {	// Betting phase
                     std::cout << "PLAYER 1'S TURN" << std::endl;
                     getPlayerInput(p1);
