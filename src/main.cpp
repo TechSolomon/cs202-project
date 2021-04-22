@@ -3,6 +3,7 @@
  * By: Adrian Antonio, Benjamin Stream, Jay-Mark Pascua, & Solomon Himelbloom
 */
 
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "game.h"
 #include <iostream>
@@ -11,7 +12,10 @@ using std::endl;
 using std::cin;
 
 int main() {
-
+    sf::Music music;
+    if (!music.openFromFile("../assets/higherLOVE.flac"))
+        return -1; // error
+    music.play();
     Game game;
     int numPlayers = 4;
     game.setup(numPlayers); // Construct Deck & Player Objects
