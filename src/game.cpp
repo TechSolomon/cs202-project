@@ -77,6 +77,12 @@ void Game::gameLoop() {
             if (event.type == sf::Event::EventType::Closed)
                 userWindowDisplay.close();
 
+            userWindowDisplay.clear();
+            userWindowDisplay.draw(sprite);
+            userWindowDisplay.draw(chipAmount);
+            userWindowDisplay.draw(playerCommands);
+            userWindowDisplay.display();
+
                 switch (_roundPhase) {
                     case 0:	// Betting phase
                         getPlayerInput(p1);
@@ -131,11 +137,7 @@ void Game::gameLoop() {
 
         }
 
-        userWindowDisplay.clear();
-        userWindowDisplay.draw(sprite);
-        userWindowDisplay.draw(chipAmount);
-        userWindowDisplay.draw(playerCommands);
-        userWindowDisplay.display();
+        
 
     }
     
