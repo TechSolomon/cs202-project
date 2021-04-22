@@ -50,7 +50,7 @@ void Game::gameLoop() {
     sf::Event event;
     sf::Texture texture;
 
-    if (!texture.loadFromFile("assets/poker-table-blank.png")) {
+    if (!texture.loadFromFile("assets/poker-table-design.png")) {
         throw EXIT_FAILURE;
     }
     sf::Sprite sprite(texture);
@@ -66,8 +66,7 @@ void Game::gameLoop() {
 
     // TODO: Add total score to the graphic display.
     int totalScore = 0;
-
-    sf::Text chipAmount("Total Chip Value: $0", font, 50);
+    sf::Text chipAmount("Chips (1-9) | Pot: $999,999", font, 40);
     chipAmount.setFillColor(sf::Color::White);
     chipAmount.move(50.f, 500.f);
 
@@ -174,7 +173,7 @@ void Game::resetRound() {
 
 void Game::getPlayerInput(Player& p) {
     while (true) { // Wait for input then break when found
-        int bet; // Player's inputed amount of money
+        int bet; // Player's inputted amount of money
 
         // Keyboard initial input (1-9) to change amount of chips.
         // Use b/c/r/f for bet, call, raise, and fold.
@@ -224,8 +223,77 @@ void Game::getPlayerInput(Player& p) {
             p.fold();
             break;
         }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+            // Num1 = $1
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 1 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+            // Num2 = $2
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 2 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
+            // Num3 = $5
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 3 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
+            // Num4 = $10
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 4 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)) {
+            // Num5 = $20
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 5 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) {
+            // Num6 = $25
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 6 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)) {
+            // Num7 = $50
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 7 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) {
+            // Num8 = $100
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 8 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)) {
+            // Num9 = $500
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 9 was pressed." << std::endl;
+            break;
+        }
+
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
+            // Num0 = $1000
+            sf::sleep((sf::milliseconds(500)));
+            std::cout << "Key 0 was pressed." << std::endl;
+            break;
+        }
     }
-    // TODO: Exception handling for numeric chip additions (1-9) & error checking for other keys.
 }
 
 int Game::getNumericInput() const { // Gets money input from player
