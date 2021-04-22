@@ -58,9 +58,9 @@ void Game::displayPlayerCards(sf::RenderWindow& userWindow, Player& p) {
     playerCommands.setFillColor(sf::Color::White);
     playerCommands.move(100.f, 0.f);
 
-    sf::Text chipValues("Chip Presets (1-9)", font, 35);
+    sf::Text chipValues("[1] = $1 | [2] = $2 | [3] = $5 | [4] = $10 | [5] = $20 | [6] = $25 | [7] = $50 | [8] = $100 | [9] = $500 | [0] = $1000", font, 28);
     chipValues.setFillColor(sf::Color::White);
-    chipValues.move(50.f, 500.f);
+    chipValues.move(30.f, 400.f);
 
     sf::Text totalPot("", font, 35);
     totalPot.setString("Total Pot: $" + std::to_string(_pot));
@@ -198,6 +198,10 @@ void Game::gameLoop() {
 }
 
 void Game::resetRound() {
+    p1._playerHand.clear();
+    p2._playerHand.clear();
+    p3._playerHand.clear();
+    p4._playerHand.clear();
     _cards.resetCard();
     _cards.shuffle();
     _pot = 0;
@@ -223,21 +227,31 @@ void Game::getPlayerInput(Player& p) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) { // Player checks (moves on to next player's turn)
             sf::sleep((sf::milliseconds(500)));
             if (p.playerCurrentBet != _currentBet) {
-                std::cout << "PLAYER CANNOT CHECK, MUST BET, RAISE, OR FOLD" << std::endl;
+                std::cout << "PLAYER CANNOT CHECK: MUST CALL, RAISE, OR FOLD" << std::endl;
+                getPlayerSecondInput(p);
             }
-            std::cout << "KEYBOARD CHECK (CHECK). Space key was pressed." << std::endl;
-            p.check();
+            else {
+                std::cout << "KEYBOARD CHECK (CHECK). Space key was pressed." << std::endl;
+                p.check();
+            }
             break;
         }
 
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
             // BET
             sf::sleep((sf::milliseconds(500)));
-            std::cout << "KEYBOARD INPUT (BET). B key was pressed." << std::endl;
-            bet = getNumericInput(); 
-            p.bet(bet);
-            setCurrentBet(p.playerCurrentBet);
-            setPot(p.playerCurrentBet);
+            if (p.playerCurrentBet != _currentBet) {
+                std::cout << "PLAYER CANNOT BET: MUST CALL, RAISE, OR FOLD" << std::endl;
+                getPlayerSecondInput(p);
+            }
+            else {
+                std::cout << "KEYBOARD INPUT (BET). B key was pressed." << std::endl;
+                bet = getNumericInput();
+                p.bet(bet);
+                setCurrentBet(p.playerCurrentBet);
+                setPot(p.playerCurrentBet);
+                std::cout << "CURRENT POT: " << _pot << std::endl;
+            }
             break;
         }
 
@@ -248,6 +262,7 @@ void Game::getPlayerInput(Player& p) {
             p.call(getCurrentBet());
             setCurrentBet(p.playerCurrentBet);
             setPot(p.playerCurrentBet);
+            std::cout << "CURRENT POT: " << _pot << std::endl;
             break;
         }
 
@@ -259,6 +274,7 @@ void Game::getPlayerInput(Player& p) {
             p.raise(*this, bet);
             setCurrentBet(p.playerCurrentBet);
             setPot(p.playerCurrentBet);
+            std::cout << "CURRENT POT: " << _pot << std::endl;
             break;
         }
 
@@ -280,10 +296,11 @@ void Game::getPlayerSecondInput(Player& p) { // Use when a player needs to respo
         // CALL
         sf::sleep((sf::milliseconds(500)));
         std::cout << "KEYBOARD INPUT (CALL). C key was pressed." << std::endl;
-        _pot - p.playerCurrentBet; // Removes the player's old bet from the pot
+        _pot -= p.playerCurrentBet; // Removes the player's old bet from the pot
         p.call(getCurrentBet());
         setCurrentBet(p.playerCurrentBet);
         setPot(p.playerCurrentBet); // Add Player's new bet to pot
+        std::cout << "CURRENT POT: " << _pot << std::endl;
         break;
         }
 
@@ -296,6 +313,7 @@ void Game::getPlayerSecondInput(Player& p) { // Use when a player needs to respo
         p.raise(*this, bet);
         setCurrentBet(p.playerCurrentBet);
         setPot(p.playerCurrentBet);
+        std::cout << "CURRENT POT: " << _pot << std::endl;
         break;
         }
 
@@ -452,20 +470,20 @@ bool Game::everyoneChecked() { // Advances round phase if everyone has
 
 void Game::letPlayerCallARaise() {
     if (p1.playerCurrentBet != _currentBet) {
-        std::cout << "LET PLAYER CALL/FOLD A RAISE: P1" << std::endl;
-        getPlayerInput(p1);
+        std::cout << "LET PLAYER RESPOND TO A RAISE: P1" << std::endl;
+        getPlayerSecondInput(p1);
     }
     if (p2.playerCurrentBet != _currentBet) {
-        std::cout << "LET PLAYER CALL/FOLD A RAISE: P1" << std::endl;
-        getPlayerInput(p2);
+        std::cout << "LET PLAYER RESPOND TO A RAISE: P2" << std::endl;
+        getPlayerSecondInput(p2);
     }
     if (p3.playerCurrentBet != _currentBet) {
-        std::cout << "LET PLAYER CALL/FOLD A RAISE: P1" << std::endl;
-        getPlayerInput(p3);
+        std::cout << "LET PLAYER RESPOND TO A RAISE: P3" << std::endl;
+        getPlayerSecondInput(p3);
     }
     if (p4.playerCurrentBet != _currentBet) {
-        std::cout << "LET PLAYER CALL/FOLD A RAISE: P1" << std::endl;
-        getPlayerInput(p4);
+        std::cout << "LET PLAYER RESPOND TO A RAISE: P4" << std::endl;
+        getPlayerSecondInput(p4);
     }
 }
 

@@ -50,10 +50,14 @@ void Player::call(const int& call) { // Player places down same amount of money 
 void Player::raise(Game& game, const int& raise) { // Player bets more than what a previous player bet
     // Check if player has sufficient amount of money and is greater than the previous bet by at least $5 to make the raise
     // Subtract raise from player's money
-    if (_money >= raise && raise >= game._currentBet + 5) {
+    if (_money >= raise && raise > game._currentBet) {
         _money -= raise - playerCurrentBet;
         playerCurrentBet = raise;
         game._currentBet = raise;
+    }
+    else {
+        std::cout << "RAISE MUST BE HIGHER THAN CURRENT BET" << std::endl;
+        game.getPlayerInput(*this);
     }
 }
 
