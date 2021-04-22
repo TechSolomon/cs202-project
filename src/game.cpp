@@ -202,6 +202,7 @@ void Game::resetRound() {
     p2._playerHand.clear();
     p3._playerHand.clear();
     p4._playerHand.clear();
+    _river.clear();
     _cards.resetCard();
     _cards.shuffle();
     _pot = 0;
