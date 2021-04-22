@@ -80,8 +80,8 @@ void Game::gameLoop() {
             while (p1._money != 0) { // Game keeps going until p1 runs out of money
                 std::vector<displayCard> displayRiver{};
                 cardDisplayValue(displayRiver, _river);
-                initialPosition(displayRiver, 100.0f, 150.0f);//change this to where it draw in the screen
-                offsetPosition(displayRiver, 150.f);
+                initialPosition(displayRiver, 450.0f, 125.0f);//change this to where it draw in the screen
+                offsetPosition(displayRiver, 125.0f);
                 userWindowDisplay.clear();            
                 userWindowDisplay.draw(sprite);
                 userWindowDisplay.draw(chipAmount);
