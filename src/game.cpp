@@ -36,60 +36,6 @@ void Game::setup(int& players) { // Constructs deck and player objects before st
 
 }
 
-void Game::prepareLoop(Game &game) {
-    switch (_roundPhase) {
-        case 0:	// Betting phase
-            getPlayerInput(game.p1);
-            getPlayerInput(game.p2);
-            getPlayerInput(game.p3);
-            getPlayerInput(game.p4);
-
-            if (_river.size() == 0) { // Move on to dealing 3 cards to river (case 1) if everyone bet/check
-                if (everyoneCalled()) 
-                    _roundPhase = 1;
-                else if (everyoneChecked())
-                    _roundPhase = 1;
-            }
-
-            else if (_river.size() == 3) { // Move on to dealing 1 card to river (case 2) if everyone bet/check
-                if (everyoneCalled())
-                    _roundPhase = 2;
-                else if (everyoneChecked())
-                    _roundPhase = 2;
-            }
-
-            else if (_river.size() == 5) { // Move on to dealing determining winner (case 3) if everyone bet/check
-                if (everyoneCalled()) 
-                    _roundPhase = 3;
-                else if (everyoneChecked())
-                    _roundPhase = 3;
-            }
-
-            break;
-        case 1: // Deal 3 cards to river
-            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-            _cards.drawCards(_river, 3);
-            _roundPhase = 0; // Go back to betting phase
-            break;
-        case 2: // Deal 1 card to river
-            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-            _cards.drawCards(_river, 1);
-            _roundPhase = 0; // Go back to betting phase
-            break;
-        case 3: // Determine winner then reset cards
-            p1._score = _analysis.grade(game.p1.getHand(), _river);
-            p2._score = _analysis.grade(game.p2.getHand(), _river);
-            p3._score = _analysis.grade(game.p3.getHand(), _river);
-            p4._score = _analysis.grade(game.p4.getHand(), _river);
-
-            determineWinner(); // Finds who won and gives them the pot money
-            resetRound(); // Resets the _cards, _pot, _currentBet, _highestScore, and _roundPhase, then calls setup()
-            break;
-        default:
-            break;
-    }
-}
-
 // TODO: Change file path to "../" if running OS other than Windows.
 void Game::gameLoop() {
     // Starts a round of poker
@@ -117,6 +63,9 @@ void Game::gameLoop() {
     sf::Text playerCommands("Check (space) | Bet (b) | Call (c) | Raise (r) | Fold (f)", font, 50);
     playerCommands.setFillColor(sf::Color::White);
     playerCommands.move(100.f, 0.f);
+
+    // TODO: Add total score to the graphic display.
+    int totalScore = 0;
 
     sf::Text chipAmount("Total Chip Value: $0", font, 50);
     chipAmount.setFillColor(sf::Color::White);
@@ -171,7 +120,7 @@ void Game::gameLoop() {
                         cout << "B = Bet" << endl;
                     }
                     else if (event.key.code == sf::Keyboard::C) {
-                        cout << "C = Check" << endl;
+                        cout << "C = Call" << endl;
                     }
                     else if (event.key.code == sf::Keyboard::R) {
                         cout << "R = Raise" << endl;
@@ -181,7 +130,7 @@ void Game::gameLoop() {
                     }
                     else if (event.key.code == sf::Keyboard::Q) {
                         cout << "PRESSED Q (DEBUG)" << endl;
-//                        p1.getMoney();
+                        p1.getMoney();
                     }
                     break;
                 case sf::Event::Closed:
@@ -231,6 +180,7 @@ void Game::gameLoop() {
                 case sf::Event::Count:
                     break;
             }
+
         }
 
         userWindowDisplay.clear();
@@ -240,6 +190,37 @@ void Game::gameLoop() {
         userWindowDisplay.display();
 
     }
+
+    // TODO: Fix memory management issues.
+//    switch (_roundPhase) {
+//        case 0:	// Betting phase
+//            getPlayerInput(p1);
+//            getPlayerInput(p2);
+//            getPlayerInput(p3);
+//            getPlayerInput(p4);
+//            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
+//                _roundPhase = 1;
+//            break;
+//        case 1: // Deal 3 cards to river
+//            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+//            _cards.drawCards(_river, 3);
+//            _roundPhase = 0; // Go back to betting phase
+//            break;
+//        case 2: // Deal 1 card to river
+//            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+//            _cards.drawCards(_river, 1);
+//            _roundPhase = 0; // Go back to betting phase
+//            break;
+//        case 3: // Determine winner then reset cards
+//            p1._score = _analysis.grade(p1.getHand(), _river);
+//            p2._score = _analysis.grade(p2.getHand(), _river);
+//            p3._score = _analysis.grade(p3.getHand(), _river);
+//            p4._score = _analysis.grade(p4.getHand(), _river);
+//            // determineWinner();
+//            break;
+//        default:
+//            break;
+//    }
 
 }
 
