@@ -78,8 +78,7 @@ std::vector<std::pair<int,int>>searchHandCard(std::vector<std::pair<int, std::st
     std::vector<std::pair<int, int>> counter = { { 0,1 }, { 0,2 }, { 0,3 }, { 0, 4 },{ 0,5 }, { 0,6 }, { 0,7 }, { 0, 8 },{ 0,9 }, { 0,10 },{ 0,11 }, { 0,12 }, { 0,13 }};
 
     for (auto i : hand) {
-            counter[i.first-1].first++;
-                      
+            counter[i.first-1].first++;    
     }
     return counter;
 }
@@ -135,6 +134,51 @@ std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, 
     }
 }
 
+bool isFourKind(vector < std::pair<int, std::string>>& hand) {
+    auto temp = searchHandCard(hand);
+    for (auto i : temp) {
+        if(i.first == 4)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isThreeKind(vector < std::pair<int, std::string>>& hand) {
+    auto temp = searchHandCard(hand);
+    for (auto i : temp) {
+        if (i.first == 3)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isTwoPair(vector < std::pair<int, std::string>>& hand) {
+    auto temp = searchHandCard(hand);
+    int counter =0;
+    for (auto i : temp) {
+        if (i.first == 2)
+        {
+            counter++;
+        }
+    }
+    if (counter == 2) return true;
+    else return false;
+}
+
+bool isPair(vector < std::pair<int, std::string>>& hand) {
+    auto temp = searchHandCard(hand);
+    for (auto i : temp) {
+        if (i.first == 2)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 bool isStraight(vector < std::pair<int, std::string>> &hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
@@ -183,8 +227,6 @@ bool isStraightFlush(vector < std::pair<int, std::string>> &hand) {
     else return false;
 }
 
-
-
 bool isRoyalFlush(vector < std::pair<int, std::string>> &hand) {
     
     if (searchHandSuit(hand)[0].first = 5)
@@ -220,7 +262,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
 
    
-    vector<std::pair<int, std::string>> straight = { {1,"heart"},{2,"heart"}, {3,"heart"},{4,"heart"}, {5,"heart"}, {2,"club"}, {3,"diamond"} };
+    vector<std::pair<int, std::string>> straight = { {2,"diamond"},{2,"spade"}, {7,"heart"},{4,"heart"}, {9,"heart"}, {3,"club"}, {3,"diamond"} };
 
     printHand(straight);
     
@@ -240,9 +282,36 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     //printHand(straight);
     cout << "0 = False, 1 = True" << endl;
     cout << "Truth Value:" << isRoyalFlush(straight) << endl;
+    cout << "Search Hand Card Test" << endl;
     for (auto i : searchHandCard(straight)) {
         cout << i.first << ":"<< i.second << endl;
     }
+
+    cout << "4 Kind Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isFourKind(straight) << endl;
+
+    cout << "3 Kind Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isThreeKind(straight) << endl;
+
+    cout << " 2Pair Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isTwoPair(straight) << endl;
+
+
+
+
+
+
+
+
+
+
+
     // Poker Hands (highest to lowest):
 // 1. Royal flush
      if(isRoyalFlush(_combinedHand)){
@@ -252,10 +321,10 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
      else if(isStraight(_combinedHand)){
  totalScore= scoreHand(hand) + 9; 
  }
- ////3. Four of a kind
- //    else if(){
- // totalScore = scoreHand(hand) + 8; 
- //}
+ //3. Four of a kind
+     else if(isFourKind(_combinedHand)){
+  totalScore = scoreHand(hand) + 8; 
+ }
  ////4. Full house
  //    else if(){
  //totalScore = scoreHand(hand) + 7; 
@@ -268,20 +337,18 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
      else if(isStraight(_combinedHand)){
  totalScore = scoreHand(hand) + 5; 
  }
- ////7. Three of a kind
- //    else if(){
- //totalScore = scoreHand(hand) + 4; 
- //}
- ////8. Two pair
- //    else if ()
- //    {
- //totalScore =scoreHand(hand) + 3; 
- //}
- ////9. Pair
- //    else if ()
- //    {
- //totalScore = scoreHand(hand) + 2; 
- //}
+ //7. Three of a kind
+     else if(isThreeKind(_combinedHand)){
+ totalScore = scoreHand(hand) + 4; 
+ }
+ //8. Two pair
+     else if (isTwoPair(_combinedHand)){
+ totalScore =scoreHand(hand) + 3; 
+ }
+ //9. Pair
+     else if (isPair(_combinedHand)){
+ totalScore = scoreHand(hand) + 2; 
+ }
  //10. High card
   else{
          sort(hand.begin(), hand.end());
