@@ -50,13 +50,13 @@ void Game::gameLoop() {
     sf::Event event;
     sf::Texture texture;
 
-    if (!texture.loadFromFile("../assets/poker-table-design.png")) {
+    if (!texture.loadFromFile("assets/poker-table-design.png")) {
         throw EXIT_FAILURE;
     }
     sf::Sprite sprite(texture);
 
     sf::Font font;
-    if (!font.loadFromFile("../assets/sansation.ttf")) {
+    if (!font.loadFromFile("assets/sansation.ttf")) {
         throw EXIT_FAILURE;
     }
 
