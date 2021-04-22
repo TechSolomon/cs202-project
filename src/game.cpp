@@ -36,18 +36,7 @@ void Game::setup(int& players) { // Constructs deck and player objects before st
 
 }
 
-// TODO: Change file path to "../" if running OS other than Windows.
-void Game::gameLoop() {
-    // Starts a round of poker
-	// 1. Go through each players' turn (each player can check, bet, call, etc.)
-	// 2. Deal a card to the river
-	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
-	// 4. Round ends, winning player gets the pot, loop back to beginning
-
-    sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
-                                       "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
-
-    sf::Event event;
+void Game::displayPlayerCards(sf::RenderWindow& userWindow, Player& p) {
     sf::Texture texture;
 
     if (!texture.loadFromFile("assets/poker-table-design.png")) {
@@ -73,6 +62,39 @@ void Game::gameLoop() {
     totalPot.setFillColor(sf::Color::White);
     totalPot.move(50.f, 550.f);
 
+    std::vector<displayCard> displayRiver{};
+    cardDisplayValue(displayRiver, _river);
+    initialPosition(displayRiver, 450.0f, 125.0f);//change this to where it draw in the screen
+    offsetPosition(displayRiver, 125.0f);
+    std::vector<displayCard> player{};
+    cardDisplayValue(player, p._playerHand);
+    initialPosition(player, 575.0f, 230.0f);
+    offsetPosition(player, 230.0f);
+
+    userWindow.clear();
+    userWindow.draw(sprite);
+    userWindow.draw(totalPot);
+    userWindow.draw(chipValues);
+    userWindow.draw(playerCommands);
+    screenCards(displayRiver, userWindow);//draws river
+    screenCards(player, userWindow);
+    userWindow.display();
+}
+
+// TODO: Change file path to "../" if running OS other than Windows.
+void Game::gameLoop() {
+    // Starts a round of poker
+	// 1. Go through each players' turn (each player can check, bet, call, etc.)
+	// 2. Deal a card to the river
+	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
+	// 4. Round ends, winning player gets the pot, loop back to beginning
+
+    sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
+                                       "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
+
+    sf::Event event;
+    
+
     // SFML – start the event loop.
     while (userWindowDisplay.isOpen()) {
         while (userWindowDisplay.pollEvent(event)) {
@@ -81,39 +103,27 @@ void Game::gameLoop() {
 
 
             while (p1._money != 0) { // Game keeps going until p1 runs out of money
-                std::vector<displayCard> displayRiver{};
-                cardDisplayValue(displayRiver, _river);
-                initialPosition(displayRiver, 450.0f, 125.0f);//change this to where it draw in the screen
-                offsetPosition(displayRiver, 125.0f);
-                std::vector<displayCard> playerOne{};
-                cardDisplayValue(playerOne, p1._playerHand);
-                initialPosition(playerOne, 575.0f, 230.0f);
-                offsetPosition(playerOne, 230.0f);
-                userWindowDisplay.clear();            
-                userWindowDisplay.draw(sprite);
-                userWindowDisplay.draw(totalPot);
-                userWindowDisplay.draw(chipValues);
-                userWindowDisplay.draw(playerCommands);
-                screenCards(displayRiver, userWindowDisplay);//draws river
-                screenCards(playerOne, userWindowDisplay);
-                userWindowDisplay.display();
+                displayPlayerCards(userWindowDisplay, p1);
                 std::cout << "CURRENT POT: " << _pot << std::endl;
-                totalPot.setString("$" + std::to_string(_pot));
                 if (_roundPhase == 0) {	// Betting phase
                     resetBets();
                     if (p1._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p1);
                         std::cout << "PLAYER 1'S TURN" << std::endl;
                         getPlayerInput(p1);
                     }
                     if (p2._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p2);
                         std::cout << "PLAYER 2'S TURN" << std::endl;
                         getPlayerInput(p2);
                     }
                     if (p3._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p3);
                         std::cout << "PLAYER 3'S TURN" << std::endl;
                         getPlayerInput(p3);
                     }
                     if (p4._isFolded == false) {
+                        displayPlayerCards(userWindowDisplay, p4);
                         std::cout << "PLAYER 4'S TURN" << std::endl;
                         getPlayerInput(p4);
                     }
