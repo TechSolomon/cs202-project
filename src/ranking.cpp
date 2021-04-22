@@ -316,7 +316,7 @@ double HandAnalysis::grade(vector<pair<int, string>> &hand, vector<pair<int, str
              totalScore = 1.99;
          }
          else {
-             totalScore = hand[1].first / 100 + 1;
+             totalScore = hand[1].first / static_cast<double>(100) + 1;
          }
  }
 

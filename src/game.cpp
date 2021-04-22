@@ -183,14 +183,19 @@ void Game::gameLoop() {
 
                 else if (_roundPhase == 3) { // Determine winner then reset cards
                     std::cout << "DETERMINING WINNER" << std::endl;
-                    p1._score = _analysis.grade(p1.getHand(), _river);
-                    p2._score = _analysis.grade(p2.getHand(), _river);
-                    p3._score = _analysis.grade(p3.getHand(), _river);
-                    p4._score = _analysis.grade(p4.getHand(), _river);
+                    if (p1.isFolded()) p1._score = 0;
+                    else p1._score = _analysis.grade(p1.getHand(), _river);
+                    if (p2.isFolded()) p2._score = 0;
+                    else p2._score = _analysis.grade(p2.getHand(), _river);
+                    if (p3.isFolded()) p3._score = 0;
+                    else p3._score = _analysis.grade(p3.getHand(), _river);
+                    if (p4.isFolded()) p4._score = 0;
+                    else p4._score = _analysis.grade(p4.getHand(), _river);
 
                     determineWinner();
+                    _roundPhase = 0;
                     resetRound();
-
+                    
                 }
             }
         }
