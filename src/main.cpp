@@ -13,8 +13,9 @@ using std::cin;
 
 int main() {
     sf::Music music;
-    if (!music.openFromFile("../assets/higherLOVE.flac"))
+    if (!music.openFromFile("assets/higherLOVE.flac"))
         return -1; // error
+    music.setVolume(10.f);
     music.play();
     Game game;
     int numPlayers = 4;
