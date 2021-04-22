@@ -1,3 +1,8 @@
+/*
+ * CS 202 Final Project (Spring 2021) Texas Hold'em Poker
+ * By: Adrian Antonio, Benjamin Stream, Jay-Mark Pascua, & Solomon Himelbloom
+*/
+
 /* Jay-Mark Pascua
    Player actions and attributes
 */

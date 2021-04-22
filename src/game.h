@@ -1,3 +1,8 @@
+/*
+ * CS 202 Final Project (Spring 2021) Texas Hold'em Poker
+ * By: Adrian Antonio, Benjamin Stream, Jay-Mark Pascua, & Solomon Himelbloom
+*/
+
 #ifndef GAME_H
 #define GAME_H
 
