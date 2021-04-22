@@ -10,34 +10,34 @@ int arithmethic(int num) {
     num *= d;
     return num;
 }
-void cardDisplayValue(std::vector<displayCard>& drawCard, std::vector<std::pair<int, std::string>>& cards) {
+void cardDisplayValue(std::vector<displayCard>& putCards, std::vector<std::pair<int, std::string>>& cards) {
     for (auto it : cards) {
         if (it.first == 1) {
             if (it.second == "spade") {
-                drawCard.push_back({ arithmethic(14), 0 });
+                putCards.push_back({ arithmethic(14), 0 });
             }
             else if (it.second == "club") {
-                drawCard.push_back({ arithmethic(14), 104 });
+                putCards.push_back({ arithmethic(14), 104 });
             }
             else if (it.second == "heart") {
-                drawCard.push_back({ arithmethic(14), 208 });
+                putCards.push_back({ arithmethic(14), 208 });
             }
             else if (it.second == "diamond") {
-                drawCard.push_back({ arithmethic(14), 312 });
+                putCards.push_back({ arithmethic(14), 312 });
             }
         }
         else {
             if (it.second == "spade") {
-                drawCard.push_back({ arithmethic(it.first), 0 });
+                putCards.push_back({ arithmethic(it.first), 0 });
             }
             else if (it.second == "club") {
-                drawCard.push_back({ arithmethic(it.first), 104 });
+                putCards.push_back({ arithmethic(it.first), 104 });
             }
             else if (it.second == "heart") {
-                drawCard.push_back({ arithmethic(it.first), 208 });
+                putCards.push_back({ arithmethic(it.first), 208 });
             }
             else if (it.second == "diamond") {
-                drawCard.push_back({ arithmethic(it.first), 312 });
+                putCards.push_back({ arithmethic(it.first), 312 });
             }
         }
 
@@ -52,10 +52,17 @@ void OffsetPosition(std::vector<displayCard>& cardPool)
     }
 }
 
-void initialPoisition(std::vector<displayCard>& cardPool)
+void initialPoisition(std::vector<displayCard>& cardPool,float x,float y)
 {
-    for (auto it : cardPool) {
-        it.cardSprite.setPosition(150.0f, 150.0f);
+    for (auto &it : cardPool) {
+        it.cardSprite.setPosition(x, y);
+    }
+}
+
+void screenCards(std::vector<displayCard>& cardPool, sf::RenderWindow& display)
+{
+    for (auto& i : cardPool) {
+        display.draw(i.cardSprite);
     }
 }
 
