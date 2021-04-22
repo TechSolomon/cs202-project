@@ -3,6 +3,10 @@
 */
 #include "game.h"
 #include "player.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::cin;
 
 Player::Player() {
 }
@@ -12,6 +16,11 @@ Player::~Player() {
 
 void Player::dealCards(Deck& cards) {
     cards.drawCards(_playerHand, 2);
+}
+
+
+void Player::check() {
+    _checked = true;
 }
 
 void Player::bet(const int& bet) { // Player bets an amount of money
@@ -60,3 +69,4 @@ int Player::getMoney() const {
 bool Player::isFolded() const {
     return _isFolded;
 }
+

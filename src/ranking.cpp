@@ -258,7 +258,10 @@ HandAnalysis::HandAnalysis()
 }
 
 
+
 double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::vector<std::pair<int, std::string>> &chand)
+
+
 {
     double totalScore= 0.0;
     _combinedHand = chand; // throws chand (community hand) into the combinded hand.
