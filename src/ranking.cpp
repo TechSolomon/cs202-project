@@ -4,36 +4,30 @@
 
 #include "ranking.h"
 #include <iostream>
-#include <stdio.h>
 #include <string>
 #include <map>
 #include <vector>
 #include <algorithm>
-#include <fstream>
-#include <iomanip>
 using std::cin;
 using std::cout;
 using std::endl;
-using std::fstream;
-using std::ifstream;
 using std::map;
-using std::ofstream;
-using std::reverse;
 using std::sort;
 using std::string;
+using std::pair;
 using std::vector;
 
 
-void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
+void printHand(vector<pair<int, string>> hand) // prints inputed hand to console. 
 {
     for (auto i: hand) {
         cout << i.first << "," << i.second << endl; // for testing purposes, prints the card value of each card inside the vector.
     }
 }
 
-std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
+vector<pair<int, string>>searchHandSuit(vector<pair<int, string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
-    std::vector<std::pair<int, std::string>> counter = { { 0,"heart" }, { 0,"club" }, { 0,"diamond" }, { 0, "spade" } };
+    vector<pair<int, string>> counter = { { 0,"heart" }, { 0,"club" }, { 0,"diamond" }, { 0, "spade" } };
     
     for (auto i: hand) {
 
@@ -54,13 +48,13 @@ std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int
             counter[3].first++;
         } 
     }
-    sort(counter.begin(), counter.end(), [](std::pair<int, std::string>&i, std::pair<int, std::string> &j) {return i.first > j.first;  });
+    sort(counter.begin(), counter.end(), [](pair<int, string>&i, pair<int, string> &j) {return i.first > j.first;  });
     return counter; 
 }
 
-std::vector<std::pair<int,int>>searchHandCard(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH CARDS HAVE MOST OCCOURENCES 
+vector<pair<int,int>>searchHandCard(vector<pair<int, string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH CARDS HAVE MOST OCCOURENCES 
 {
-    std::vector<std::pair<int, int>> counter = { { 0,1 }, { 0,2 }, { 0,3 }, { 0, 4 },{ 0,5 }, { 0,6 }, { 0,7 }, { 0, 8 },{ 0,9 }, { 0,10 },{ 0,11 }, { 0,12 }, { 0,13 }};
+    vector<pair<int, int>> counter = { { 0,1 }, { 0,2 }, { 0,3 }, { 0, 4 },{ 0,5 }, { 0,6 }, { 0,7 }, { 0, 8 },{ 0,9 }, { 0,10 },{ 0,11 }, { 0,12 }, { 0,13 }};
 
     for (auto i : hand) {
             counter[i.first-1].first++;    
@@ -70,14 +64,14 @@ std::vector<std::pair<int,int>>searchHandCard(std::vector<std::pair<int, std::st
 
 
 
-std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, std::string>>& hand,string suit) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
+vector<pair<int, string>>getSuitCards(vector<pair<int, string>>& hand,string suit) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
-    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
-    std::vector<std::pair<int, std::string>> sorted;
-    std::vector < std::pair<int, std::string>> heart_cards;
-    std::vector < std::pair<int, std::string>> club_cards;
-    std::vector < std::pair<int, std::string>> diamond_cards;
-    std::vector < std::pair<int, std::string>> spade_cards;
+    sort(hand.begin(), hand.end(), [](pair<int, string>& i, pair<int, string>& j) {return i.first < j.first;  });
+    vector<pair<int, string>> sorted;
+    vector < pair<int, string>> heart_cards;
+    vector < pair<int, string>> club_cards;
+    vector < pair<int, string>> diamond_cards;
+    vector < pair<int, string>> spade_cards;
     for (auto i : hand) {
 
         if (i.second == "heart")
@@ -122,7 +116,7 @@ std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, 
  
 }
 
-bool isFullHouse(vector < std::pair<int, std::string>>& hand) {
+bool isFullHouse(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     int counter1 = 0;
     int counter2 = 0;
@@ -140,7 +134,7 @@ bool isFullHouse(vector < std::pair<int, std::string>>& hand) {
     else return false;
 }
 
-bool isFourKind(vector < std::pair<int, std::string>>& hand) {
+bool isFourKind(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     for (auto i : temp) {
         if(i.first == 4)
@@ -151,7 +145,7 @@ bool isFourKind(vector < std::pair<int, std::string>>& hand) {
     return false;
 }
 
-bool isThreeKind(vector < std::pair<int, std::string>>& hand) {
+bool isThreeKind(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     for (auto i : temp) {
         if (i.first == 3)
@@ -162,7 +156,7 @@ bool isThreeKind(vector < std::pair<int, std::string>>& hand) {
     return false;
 }
 
-bool isTwoPair(vector < std::pair<int, std::string>>& hand) {
+bool isTwoPair(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     int counter =0;
     for (auto i : temp) {
@@ -175,7 +169,7 @@ bool isTwoPair(vector < std::pair<int, std::string>>& hand) {
     else return false;
 }
 
-bool isPair(vector < std::pair<int, std::string>>& hand) {
+bool isPair(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     for (auto i : temp) {
         if (i.first == 2)
@@ -186,9 +180,9 @@ bool isPair(vector < std::pair<int, std::string>>& hand) {
     return false;
 }
 
-bool isStraight(vector < std::pair<int, std::string>> &hand) {
-    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
-    vector<std::pair<int, std::string>> temporary;
+bool isStraight(vector < pair<int, string>> &hand) {
+    sort(hand.begin(), hand.end(), [](pair<int, string>& i, pair<int, string>& j) {return i.first < j.first;  });
+    vector<pair<int, string>> temporary;
     int iterator = hand[0].first;
     int counter = 0;
     for (auto i : hand) {
@@ -201,7 +195,6 @@ bool isStraight(vector < std::pair<int, std::string>> &hand) {
 
         iterator = i.first;
     }
-    //printHand(temporary);
     if (temporary[0].first == 11 && temporary[1].first == 12 && temporary[2].first == 13)
     {
         
@@ -215,7 +208,7 @@ bool isStraight(vector < std::pair<int, std::string>> &hand) {
 
 }
 
-bool isFlush(vector < std::pair<int, std::string>> &hand)
+bool isFlush(vector < pair<int, string>> &hand)
 {
     if (searchHandSuit(hand)[0].first >= 5) {
         return true;
@@ -223,7 +216,7 @@ bool isFlush(vector < std::pair<int, std::string>> &hand)
     else return false;
 }
 
-bool isStraightFlush(vector < std::pair<int, std::string>> &hand) {
+bool isStraightFlush(vector < pair<int, string>> &hand) {
     if (isFlush(hand)) {
         auto temp = getSuitCards(hand, searchHandSuit(hand)[0].second);
         if (isStraight(temp)) {
@@ -234,7 +227,7 @@ bool isStraightFlush(vector < std::pair<int, std::string>> &hand) {
     else return false;
 }
 
-bool isRoyalFlush(vector < std::pair<int, std::string>> &hand) {
+bool isRoyalFlush(vector < pair<int, string>> &hand) {
     
     if (searchHandSuit(hand)[0].first = 5)
     {
@@ -248,7 +241,7 @@ bool isRoyalFlush(vector < std::pair<int, std::string>> &hand) {
     else return false;
 }
 
-double scoreHand(vector < std::pair<int, std::string>>& hand) {
+double scoreHand(vector < pair<int, string>>& hand) {
     double score =0;
     for (auto i : hand) {
         score += i.first;
@@ -263,7 +256,7 @@ HandAnalysis::HandAnalysis()
 
 
 
-double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::vector<std::pair<int, std::string>> &chand)
+double HandAnalysis::grade(vector<pair<int, string>> &hand, vector<pair<int, string>> &chand)
 
 
 {
@@ -322,7 +315,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
          }
  }
 
-     cout << totalScore << endl;
+     cout << "Hand Score: " << totalScore << endl; //For testing Purposes
      return totalScore;
 }
 
