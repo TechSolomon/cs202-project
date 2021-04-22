@@ -134,6 +134,24 @@ std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, 
     }
 }
 
+bool isFullHouse(vector < std::pair<int, std::string>>& hand) {
+    auto temp = searchHandCard(hand);
+    int counter1 = 0;
+    int counter2 = 0;
+    for (auto i : temp) {
+        if (i.first == 2)
+        {
+            if (counter1 == 0)counter1++;
+        }
+        if (i.first == 3)
+        {
+            if(counter2==0) counter2++;
+        }
+    }
+    if (counter1 + counter2 == 2) return true;
+    else return false;
+}
+
 bool isFourKind(vector < std::pair<int, std::string>>& hand) {
     auto temp = searchHandCard(hand);
     for (auto i : temp) {
@@ -262,7 +280,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
 
    
-    vector<std::pair<int, std::string>> straight = { {2,"diamond"},{2,"spade"}, {7,"heart"},{4,"heart"}, {9,"heart"}, {3,"club"}, {3,"diamond"} };
+    vector<std::pair<int, std::string>> straight = { {2,"diamond"},{2,"spade"}, {4,"heart"},{4,"heart"}, {4,"heart"}, {3,"club"}, {3,"diamond"} };
 
     printHand(straight);
     
@@ -302,6 +320,10 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     cout << "0 = False, 1 = True" << endl;
     cout << "Truth Value:" << isTwoPair(straight) << endl;
 
+    cout << " Full House Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isFullHouse(straight) << endl;
 
 
 
@@ -325,10 +347,10 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
      else if(isFourKind(_combinedHand)){
   totalScore = scoreHand(hand) + 8; 
  }
- ////4. Full house
- //    else if(){
- //totalScore = scoreHand(hand) + 7; 
- //}
+ //4. Full house
+     else if(isFullHouse(_combinedHand)){
+ totalScore = scoreHand(hand) + 7; 
+ }
  //5. Flush
      else if(isFlush(_combinedHand)){
  totalScore = scoreHand(hand) + 6; 
