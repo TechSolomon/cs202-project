@@ -245,7 +245,7 @@ bool isRoyalFlush(vector < std::pair<int, std::string>> &hand) {
 }
 
 double scoreHand(vector < std::pair<int, std::string>>& hand) {
-    double score;
+    double score =0;
     for (auto i : hand) {
         score += i.first;
     }
