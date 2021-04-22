@@ -76,7 +76,18 @@ void Game::gameLoop() {
             if (event.type == sf::Event::EventType::Closed)
                 userWindowDisplay.close();
 
+
             while (p1._money != 0) { // Game keeps going until p1 runs out of money
+                std::vector<displayCard> displayRiver{};
+                cardDisplayValue(displayRiver, _river);
+                initialPosition(displayRiver, 100.0f, 150.0f);//change this to where it draw in the screen
+                offsetPosition(displayRiver, 150.f);
+                userWindowDisplay.clear();            
+                userWindowDisplay.draw(sprite);
+                userWindowDisplay.draw(chipAmount);
+                userWindowDisplay.draw(playerCommands);
+                screenCards(displayRiver, userWindowDisplay);//draws river
+                userWindowDisplay.display();
                 std::cout << "CURRENT POT: " << _pot << std::endl;
                 if (_roundPhase == 0) {	// Betting phase
                     std::cout << "PLAYER 1'S TURN" << std::endl;
@@ -145,15 +156,15 @@ void Game::gameLoop() {
 
                     determineWinner();
                     resetRound();
+
                 }
+                std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
+                
             }
-            std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
+           
         }
-        userWindowDisplay.clear();
-        userWindowDisplay.draw(sprite);
-        userWindowDisplay.draw(chipAmount);
-        userWindowDisplay.draw(playerCommands);
-        userWindowDisplay.display();
+        
+
     }
     
 }
