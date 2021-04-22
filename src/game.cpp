@@ -68,8 +68,8 @@ void Game::gameLoop() {
     chipValues.setFillColor(sf::Color::White);
     chipValues.move(50.f, 500.f);
 
-    sf::Text totalPot("Total Pot: ", font, 35);
-    totalPot.setString("$" + std::to_string(_pot));
+    sf::Text totalPot("", font, 35);
+    totalPot.setString("Total Pot: $" + std::to_string(_pot));
     totalPot.setFillColor(sf::Color::White);
     totalPot.move(50.f, 550.f);
 
@@ -100,6 +100,7 @@ void Game::gameLoop() {
                 std::cout << "CURRENT POT: " << _pot << std::endl;
                 totalPot.setString("$" + std::to_string(_pot));
                 if (_roundPhase == 0) {	// Betting phase
+                    resetBets();
                     if (p1._isFolded == false) {
                         std::cout << "PLAYER 1'S TURN" << std::endl;
                         getPlayerInput(p1);
@@ -185,10 +186,17 @@ void Game::resetRound() {
     _cards.resetCard();
     _cards.shuffle();
     _pot = 0;
-    _currentBet = 0;
     _highestScore = 0;
     _roundPhase = 0;
     this->setup(_numPlayers);
+}
+
+void Game::resetBets() {
+    p1.playerCurrentBet = 0;
+    p2.playerCurrentBet = 0;
+    p3.playerCurrentBet = 0;
+    p4.playerCurrentBet = 0;
+    _currentBet = 0;
 }
 
 void Game::getPlayerInput(Player& p) {
