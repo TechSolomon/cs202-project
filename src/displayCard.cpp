@@ -45,14 +45,14 @@ void cardDisplayValue(std::vector<displayCard>& putCards, std::vector<std::pair<
     }
 }
 
-void OffsetPosition(std::vector<displayCard>& cardPool,float y)
+void offsetPosition(std::vector<displayCard>& cardPool,float y)
 {
     for (int i = 0; i < cardPool.size(); ++i) {
         cardPool[i].cardSprite.move(sf::Vector2f(i * 50.0f, y));
     }
 }
 
-void initialPoisition(std::vector<displayCard>& cardPool,float x,float y)
+void initialPosition(std::vector<displayCard>& cardPool,float x,float y)
 {
     for (auto &it : cardPool) {
         it.cardSprite.setPosition(x, y);
@@ -64,6 +64,12 @@ void screenCards(std::vector<displayCard>& cardPool, sf::RenderWindow& display)
     for (auto& i : cardPool) {
         display.draw(i.cardSprite);
     }
+}
+
+void initialWithOffsetPostion(std::vector<displayCard>& cards, float x, float y)
+{
+    void initialPoisition(std::vector<displayCard>&cardPool, float x, float y);
+    void OffsetPosition(std::vector<displayCard>&cardPool, float y);
 }
 
 
