@@ -50,7 +50,7 @@ void Game::gameLoop() {
     sf::Event event;
     sf::Texture texture;
 
-    if (!texture.loadFromFile("assets/poker-table-design.png")) {
+    if (!texture.loadFromFile("assets/poker-table-blank.png")) {
         throw EXIT_FAILURE;
     }
     sf::Sprite sprite(texture);
@@ -77,109 +77,35 @@ void Game::gameLoop() {
             if (event.type == sf::Event::EventType::Closed)
                 userWindowDisplay.close();
 
-            switch (event.type) {
-                // TODO: Exception handling for numeric chip additions (1-9) & error checking for other keys.
-                case sf::Event::KeyReleased:
-                    if (event.key.code == sf::Keyboard::Enter) {
-                        cout << "Enter key pressed!" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num1) {
-                        cout << "DOLLAR AMOUNT ENTERED: $1" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num2) {
-                        cout << "DOLLAR AMOUNT ENTERED: $2" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num3) {
-                        cout << "DOLLAR AMOUNT ENTERED: $3" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num4) {
-                        cout << "DOLLAR AMOUNT ENTERED: $4" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num5) {
-                        cout << "DOLLAR AMOUNT ENTERED: $5" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num6) {
-                        cout << "DOLLAR AMOUNT ENTERED: $6" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num7) {
-                        cout << "DOLLAR AMOUNT ENTERED: $7" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num8) {
-                        cout << "DOLLAR AMOUNT ENTERED: $8" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num9) {
-                        cout << "DOLLAR AMOUNT ENTERED: $9" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num0) {
-                        cout << "DOLLAR AMOUNT ENTERED: $0" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Space) {
-                        cout << "SPACE = Check" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::B) {
-                        cout << "B = Bet" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::C) {
-                        cout << "C = Call" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::R) {
-                        cout << "R = Raise" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::F) {
-                        cout << "F = Fold" << endl;
-                    }
-                    else if (event.key.code == sf::Keyboard::Q) {
-                        cout << "PRESSED Q (DEBUG)" << endl;
-                        p1.getMoney();
-                    }
-                    break;
-                case sf::Event::Closed:
-                    break;
-                case sf::Event::Resized:
-                    break;
-                case sf::Event::LostFocus:
-                    break;
-                case sf::Event::GainedFocus:
-                    break;
-                case sf::Event::TextEntered:
-                    break;
-                case sf::Event::KeyPressed:
-                    break;
-                case sf::Event::MouseWheelMoved:
-                    break;
-                case sf::Event::MouseWheelScrolled:
-                    break;
-                case sf::Event::MouseButtonPressed:
-                    break;
-                case sf::Event::MouseButtonReleased:
-                    break;
-                case sf::Event::MouseMoved:
-                    break;
-                case sf::Event::MouseEntered:
-                    break;
-                case sf::Event::MouseLeft:
-                    break;
-                case sf::Event::JoystickButtonPressed:
-                    break;
-                case sf::Event::JoystickButtonReleased:
-                    break;
-                case sf::Event::JoystickMoved:
-                    break;
-                case sf::Event::JoystickConnected:
-                    break;
-                case sf::Event::JoystickDisconnected:
-                    break;
-                case sf::Event::TouchBegan:
-                    break;
-                case sf::Event::TouchMoved:
-                    break;
-                case sf::Event::TouchEnded:
-                    break;
-                case sf::Event::SensorChanged:
-                    break;
-                case sf::Event::Count:
-                    break;
-            }
+                switch (_roundPhase) {
+                    case 0:	// Betting phase
+                        getPlayerInput(p1);
+                        getPlayerInput(p2);
+                        getPlayerInput(p3);
+                        getPlayerInput(p4);
+                        if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
+                            _roundPhase = 1;
+                        break;
+                    case 1: // Deal 3 cards to river
+                        _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+                        _cards.drawCards(_river, 3);
+                        _roundPhase = 0; // Go back to betting phase
+                        break;
+                    case 2: // Deal 1 card to river
+                        _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
+                        _cards.drawCards(_river, 1);
+                        _roundPhase = 0; // Go back to betting phase
+                        break;
+                    case 3: // Determine winner then reset cards
+                        p1._score = _analysis.grade(p1.getHand(), _river);
+                        p2._score = _analysis.grade(p2.getHand(), _river);
+                        p3._score = _analysis.grade(p3.getHand(), _river);
+                        p4._score = _analysis.grade(p4.getHand(), _river);
+                        // determineWinner();
+                        break;
+                    default:
+                        break;
+                }
 
         }
 
@@ -190,38 +116,7 @@ void Game::gameLoop() {
         userWindowDisplay.display();
 
     }
-
-    // TODO: Fix memory management issues.
-//    switch (_roundPhase) {
-//        case 0:	// Betting phase
-//            getPlayerInput(p1);
-//            getPlayerInput(p2);
-//            getPlayerInput(p3);
-//            getPlayerInput(p4);
-//            if (everyoneCalled()) // Move on to dealing cards to river if everyone bet
-//                _roundPhase = 1;
-//            break;
-//        case 1: // Deal 3 cards to river
-//            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-//            _cards.drawCards(_river, 3);
-//            _roundPhase = 0; // Go back to betting phase
-//            break;
-//        case 2: // Deal 1 card to river
-//            _cards.playableCards.pop_back(); // Remove a card before dealing (standard thing they do in poker before dealing to river)
-//            _cards.drawCards(_river, 1);
-//            _roundPhase = 0; // Go back to betting phase
-//            break;
-//        case 3: // Determine winner then reset cards
-//            p1._score = _analysis.grade(p1.getHand(), _river);
-//            p2._score = _analysis.grade(p2.getHand(), _river);
-//            p3._score = _analysis.grade(p3.getHand(), _river);
-//            p4._score = _analysis.grade(p4.getHand(), _river);
-//            // determineWinner();
-//            break;
-//        default:
-//            break;
-//    }
-
+    
 }
 
 void Game::resetRound() {
