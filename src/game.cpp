@@ -137,8 +137,6 @@ void Game::gameLoop() {
 
         }
 
-        
-
     }
     
 }

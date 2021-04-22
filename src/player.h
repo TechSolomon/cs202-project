@@ -2,14 +2,12 @@
    Player actions and attributes
 */
 #include "deck.h"
-
-#ifndef PLAYER_H
-#define PLAYER_H
 #include <vector>
 #include <string>
 #include <utility>
+#ifndef PLAYER_H
+#define PLAYER_H
 
-// TODO: Investigate pre-declare class Game bug fix.
 class Game;
 
 class Player {
@@ -33,9 +31,33 @@ public:
 	int getMoney() const;
 	bool isFolded() const;
 
+//    +----------------+-------------------+
+//    | Keyboard Input | Poker Chip Amount |
+//    +----------------+-------------------+
+//    | 1              | 1                 |
+//    +----------------+-------------------+
+//    | 2              | 2                 |
+//    +----------------+-------------------+
+//    | 3              | 5                 |
+//    +----------------+-------------------+
+//    | 4              | 10                |
+//    +----------------+-------------------+
+//    | 5              | 20                |
+//    +----------------+-------------------+
+//    | 6              | 25                |
+//    +----------------+-------------------+
+//    | 7              | 50                |
+//    +----------------+-------------------+
+//    | 8              | 100               |
+//    +----------------+-------------------+
+//    | 9              | 500               |
+//    +----------------+-------------------+
+//    | 0              | 1000              |
+//    +----------------+-------------------+
+
 private:
 	double _score = 0; // Player's score; highest score wins
-	int _money = 1000; // Amount of poker chips player has
+	int _money = 10000; // Amount of poker chips each player has
 	bool _isFolded = false;
 	bool _checked = false; // True if player decides to "check" for their turn
 
