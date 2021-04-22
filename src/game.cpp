@@ -166,15 +166,9 @@ void Game::gameLoop() {
                     resetRound();
 
                 }
-                std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
-                
             }
-           
         }
-        
-
     }
-    
 }
 
 void Game::resetRound() {
