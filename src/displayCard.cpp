@@ -45,10 +45,10 @@ void cardDisplayValue(std::vector<displayCard>& putCards, std::vector<std::pair<
     }
 }
 
-void OffsetPosition(std::vector<displayCard>& cardPool)
+void OffsetPosition(std::vector<displayCard>& cardPool,float y)
 {
     for (int i = 0; i < cardPool.size(); ++i) {
-        cardPool[i].cardSprite.move(sf::Vector2f(i * 50.0f, 150.f));
+        cardPool[i].cardSprite.move(sf::Vector2f(i * 50.0f, y));
     }
 }
 
