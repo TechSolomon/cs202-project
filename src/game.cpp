@@ -68,8 +68,8 @@ void Game::gameLoop() {
     chipValues.setFillColor(sf::Color::White);
     chipValues.move(50.f, 500.f);
 
-    sf::Text totalPot("Total Pot: ", font, 35);
-    totalPot.setString("$" + std::to_string(_pot));
+    sf::Text totalPot("", font, 35);
+    totalPot.setString("Total Pot: $" + std::to_string(_pot));
     totalPot.setFillColor(sf::Color::White);
     totalPot.move(50.f, 550.f);
 
