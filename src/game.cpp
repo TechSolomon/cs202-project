@@ -389,7 +389,6 @@ int Game::getNumericInput() const { // Gets money input from player
             // Num0 = $1000
             sf::sleep((sf::milliseconds(500)));
             std::cout << "Key 0 was pressed." << std::endl;
-            std::cout << "BROKE OUT OF LOOP" << _roundPhase << std::endl;
             bet = 1000;
             break;
         }
