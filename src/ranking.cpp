@@ -25,7 +25,7 @@ using std::vector;
 
 void printHand(vector<pair<int, string>> hand) // prints inputed hand to console. 
 {
-    for (auto i: hand) {
+    for (auto &i: hand) {
         cout << i.first << "," << i.second << endl; // for testing purposes, prints the card value of each card inside the vector.
     }
 }
@@ -34,7 +34,7 @@ vector<pair<int, string>>searchHandSuit(vector<pair<int, string>> hand) // WILL 
 {
     vector<pair<int, string>> counter = { { 0,"heart" }, { 0,"club" }, { 0,"diamond" }, { 0, "spade" } };
     
-    for (auto i: hand) {
+    for (auto &i: hand) {
 
         if (i.second == "heart") 
         {
@@ -61,7 +61,7 @@ vector<pair<int,int>>searchHandCard(vector<pair<int, string>> hand) // WILL RETU
 {
     vector<pair<int, int>> counter = { { 0,1 }, { 0,2 }, { 0,3 }, { 0, 4 },{ 0,5 }, { 0,6 }, { 0,7 }, { 0, 8 },{ 0,9 }, { 0,10 },{ 0,11 }, { 0,12 }, { 0,13 }};
 
-    for (auto i : hand) {
+    for (auto &i : hand) {
             counter[i.first-1].first++;    
     }
     return counter;
@@ -77,7 +77,7 @@ vector<pair<int, string>>getSuitCards(vector<pair<int, string>>& hand,string sui
     vector < pair<int, string>> club_cards;
     vector < pair<int, string>> diamond_cards;
     vector < pair<int, string>> spade_cards;
-    for (auto i : hand) {
+    for (auto &i : hand) {
 
         if (i.second == "heart")
         {
@@ -125,7 +125,7 @@ bool isFullHouse(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     int counter1 = 0;
     int counter2 = 0;
-    for (auto i : temp) {
+    for (auto &i : temp) {
         if (i.first == 2)
         {
             if (counter1 == 0)counter1++;
@@ -141,7 +141,7 @@ bool isFullHouse(vector < pair<int, string>>& hand) {
 
 bool isFourKind(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
-    for (auto i : temp) {
+    for (auto &i : temp) {
         if(i.first == 4)
         {
             return true;
@@ -152,7 +152,7 @@ bool isFourKind(vector < pair<int, string>>& hand) {
 
 bool isThreeKind(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
-    for (auto i : temp) {
+    for (auto &i : temp) {
         if (i.first == 3)
         {
             return true;
@@ -164,7 +164,7 @@ bool isThreeKind(vector < pair<int, string>>& hand) {
 bool isTwoPair(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
     int counter =0;
-    for (auto i : temp) {
+    for (auto &i : temp) {
         if (i.first == 2)
         {
             counter++;
@@ -176,7 +176,7 @@ bool isTwoPair(vector < pair<int, string>>& hand) {
 
 bool isPair(vector < pair<int, string>>& hand) {
     auto temp = searchHandCard(hand);
-    for (auto i : temp) {
+    for (auto &i : temp) {
         if (i.first == 2)
         {
             return true;
@@ -190,7 +190,7 @@ bool isStraight(vector < pair<int, string>> &hand) {
     vector<pair<int, string>> temporary;
     int iterator = hand[0].first;
     int counter = 0;
-    for (auto i : hand) {
+    for (auto &i : hand) {
 
         if (iterator == (i.first) - 1 || (iterator == hand[0].first && hand[0].first != hand[1].first)) // checks if the first value is a double
         {
@@ -248,7 +248,7 @@ bool isRoyalFlush(vector < pair<int, string>> &hand) {
 
 double scoreHand(vector < pair<int, string>>& hand) {
     double score =0;
-    for (auto i : hand) {
+    for (auto &i : hand) {
         score += i.first;
     }
     return score/100;
@@ -311,8 +311,9 @@ double HandAnalysis::grade(vector<pair<int, string>> &hand, vector<pair<int, str
  }
  //10. High card
      else{
-         sort(hand.begin(), hand.end());
-         if (hand[0].first == 1) {
+         vector<pair<int, string>> hand2 = hand;
+         sort(hand2.begin(), hand2.end());
+         if (hand2[0].first == 1) {
              totalScore = 1.99;
          }
          else {
