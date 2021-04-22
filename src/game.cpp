@@ -85,12 +85,17 @@ void Game::gameLoop() {
                 cardDisplayValue(displayRiver, _river);
                 initialPosition(displayRiver, 450.0f, 125.0f);//change this to where it draw in the screen
                 offsetPosition(displayRiver, 125.0f);
+                std::vector<displayCard> playerOne{};
+                cardDisplayValue(playerOne, p1._playerHand);
+                initialPosition(playerOne, 575.0f, 230.0f);
+                offsetPosition(playerOne, 230.0f);
                 userWindowDisplay.clear();            
                 userWindowDisplay.draw(sprite);
                 userWindowDisplay.draw(totalPot);
                 userWindowDisplay.draw(chipValues);
                 userWindowDisplay.draw(playerCommands);
                 screenCards(displayRiver, userWindowDisplay);//draws river
+                screenCards(playerOne, userWindowDisplay);
                 userWindowDisplay.display();
                 std::cout << "CURRENT POT: " << _pot << std::endl;
                 totalPot.setString("$" + std::to_string(_pot));
