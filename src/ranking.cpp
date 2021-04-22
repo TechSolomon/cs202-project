@@ -24,21 +24,6 @@ using std::string;
 using std::vector;
 
 
-bool incrementing_number(std::pair<int,std::string> i, std::pair<int, std::string> j) {
-    return j.first == i.first - 1;
-}
-
-bool same_suit(std::pair<int, std::string> i, std::pair<int, std::string> j) {
-
-    return i.second < j.second;
-}
-
-bool same_number(std::pair<int, std::string> i, std::pair<int, std::string> j) {
-    if (i.first == j.first) return true;
-    else return false;
-   
-}
-
 void printHand(std::vector<std::pair<int, std::string>> hand) // prints inputed hand to console. 
 {
     for (auto i: hand) {
@@ -279,59 +264,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     _combinedHand = chand; // throws chand (community hand) into the combinded hand.
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
 
-   
-    vector<std::pair<int, std::string>> straight = { {2,"diamond"},{2,"spade"}, {4,"heart"},{4,"heart"}, {4,"heart"}, {3,"club"}, {3,"diamond"} };
-
-    printHand(straight);
-    
-   cout << "Straight Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout <<"Truth Value:" << isStraight(straight) << endl;
-    cout << "Flush Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isFlush(straight) << endl;
-    cout << "Straight Flush Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isStraightFlush(straight) << endl;
-    cout << "Royal Flush Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isRoyalFlush(straight) << endl;
-    cout << "Search Hand Card Test" << endl;
-    for (auto i : searchHandCard(straight)) {
-        cout << i.first << ":"<< i.second << endl;
-    }
-
-    cout << "4 Kind Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isFourKind(straight) << endl;
-
-    cout << "3 Kind Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isThreeKind(straight) << endl;
-
-    cout << " 2Pair Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isTwoPair(straight) << endl;
-
-    cout << " Full House Test" << endl;
-    //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isFullHouse(straight) << endl;
-
-
-
-
-
-
-
-
+    printHand(_combinedHand); // For testing Purposes
 
 
     // Poker Hands (highest to lowest):
@@ -372,7 +305,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
  totalScore = scoreHand(hand) + 2; 
  }
  //10. High card
-  else{
+     else{
          sort(hand.begin(), hand.end());
          if (hand[0].first == 1) {
              totalScore = 1.99;
@@ -383,29 +316,6 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
  }
 
      cout << totalScore << endl;
-    return totalScore;
+     return totalScore;
 }
-// the dream of this function is to be ran at the end of the round and then will return a value (double) for each player, we can then compare those values to give the winner the pot
-
-
-    //Hand has 2 cards
-    // Community hand has 5
-    // vector community + personal hand = 7
-    // sort combinded hand then comepare 
-    // do this for every individual player
-    // assign score, biggest score wins the pot
-    //break hand scores into base score + (card value / 100) ie 2 pair is 3 points, so a 2 pair of 10s is 3.1 points, a 2 pair of 2s is 3.02 points
-    // 
-    // TODO:
-    // community hand (vector -> filled to 5 spaces)
-    // compared to attributes of pairs to a set list of hands (cases)
-    // example: full house, etc.
-    // Assign the rankings up to a max value.
-    // Final comparison on 5th card.
-    // Sum of values for conflicting hands.
-
-    // Steps:
-    // 1 – table algorithm for ranking (already have the cards in Deck.cpp)
-    // 2 – interact with cards based on rules
-
 
