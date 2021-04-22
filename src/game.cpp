@@ -89,16 +89,16 @@ void Game::displayPlayerCards(sf::RenderWindow& userWindow, Player& p) {
 // TODO: Change file path to "../" if running OS other than Windows.
 void Game::gameLoop() {
     // Starts a round of poker
-	// 1. Go through each players' turn (each player can check, bet, call, etc.)
-	// 2. Deal a card to the river
-	// 3. If there are 5 cards in the river, check which player has the highest ranking hand
-	// 4. Round ends, winning player gets the pot, loop back to beginning
+    // 1. Go through each players' turn (each player can check, bet, call, etc.)
+    // 2. Deal a card to the river
+    // 3. If there are 5 cards in the river, check which player has the highest ranking hand
+    // 4. Round ends, winning player gets the pot, loop back to beginning
 
     sf::RenderWindow userWindowDisplay(sf::VideoMode(1300, 600),
-                                       "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
+        "Texas Hold'em Poker", sf::Style::Close | sf::Style::Titlebar);
 
     sf::Event event;
-    
+
 
     // SFML – start the event loop.
     while (userWindowDisplay.isOpen()) {
@@ -106,8 +106,8 @@ void Game::gameLoop() {
             if (event.type == sf::Event::EventType::Closed)
                 userWindowDisplay.close();
 
-
-            while (p1._money != 0) { // Game keeps going until p1 runs out of money
+            if (userWindowDisplay.isOpen()) {
+                // Game keeps going until p1 runs out of money
                 displayPlayerCards(userWindowDisplay, p1);
                 std::cout << "CURRENT POT: " << _pot << std::endl;
                 if (_roundPhase == 0) {	// Betting phase
@@ -195,7 +195,7 @@ void Game::gameLoop() {
                     determineWinner();
                     _roundPhase = 0;
                     resetRound();
-                    
+
                 }
             }
         }
@@ -433,6 +433,9 @@ bool Game::everyoneCalled() { // Advances round phase if everyone has called
 		if (x.playerCurrentBet != _currentBet)
 			return false;
 	}
+    if (playersStillPlaying.size() == 0) {
+        return false;
+    }
 	return true;
 }
 
@@ -451,6 +454,9 @@ bool Game::everyoneChecked() { // Advances round phase if everyone has
     for (const auto& x : playersStillPlaying) { // Returns false if not everyone checked
         if (x._checked == false)
             return false;
+    }
+    if (playersStillPlaying.size() == 0) {
+        return false;
     }
     return true;
 }
@@ -493,8 +499,13 @@ void Game::determineWinner() {
 
     if (p4._score > _highestScore)
         _highestScore = p4._score;
+    
+    if (_highestScore == 0) {
+        std::cout << "NO ONE WINS" << std::endl;
+        
+    }
 
-    if (_highestScore == p1._score) { // Find who has the highest score, give them the pot
+    else if (_highestScore == p1._score) { // Find who has the highest score, give them the pot
         std::cout << "PLAYER 1 WINS" << std::endl;
         p1._money += _pot;
     }
