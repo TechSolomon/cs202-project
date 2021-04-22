@@ -23,7 +23,6 @@ using std::sort;
 using std::string;
 using std::vector;
 
-//Hello
 
 bool incrementing_number(std::pair<int,std::string> i, std::pair<int, std::string> j) {
     return j.first == i.first - 1;
@@ -74,6 +73,19 @@ std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int
     return counter; 
 }
 
+std::vector<std::pair<int,int>>searchHandCard(std::vector<std::pair<int, std::string>> hand) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH CARDS HAVE MOST OCCOURENCES 
+{
+    std::vector<std::pair<int, int>> counter = { { 0,1 }, { 0,2 }, { 0,3 }, { 0, 4 },{ 0,5 }, { 0,6 }, { 0,7 }, { 0, 8 },{ 0,9 }, { 0,10 },{ 0,11 }, { 0,12 }, { 0,13 }};
+
+    for (auto i : hand) {
+            counter[i.first-1].first++;
+                      
+    }
+    return counter;
+}
+
+
+
 std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, std::string>>& hand,string suit) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
@@ -123,30 +135,8 @@ std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, 
     }
 }
 
+
 bool isStraight(vector < std::pair<int, std::string>> &hand) {
-    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
-    int iterator = hand[0].first;
-    int counter = 0;
-    for (auto i : hand) {
-        
-        if (iterator == (i.first) - 1|| (iterator == hand[0].first && hand[0].first != hand[1].first )) // checks if the first value is a double
-        {
-            counter++;
-        }
-
-        iterator = i.first;
-    }
-    if (hand[0].first == 1 && hand[6].first == 13 && counter == 4) {
-        return true;
-    }
-    if (counter >= 5) {
-        return true;
-    }
-    else return false;
-
-}
-
-bool isbetterStraight(vector < std::pair<int, std::string>> &hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     vector<std::pair<int, std::string>> temporary;
     int iterator = hand[0].first;
@@ -184,28 +174,16 @@ bool isFlush(vector < std::pair<int, std::string>> &hand)
 }
 
 bool isStraightFlush(vector < std::pair<int, std::string>> &hand) {
-    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
-    printHand(hand);
-    int iteratorInt = hand[0].first;
-    std::string iteratorString=searchHandSuit(hand)[0].second;
-
-    int counter = 0;
-    for (int i = 0; i < hand.size(); i++) {
-     
-        if ((iteratorInt == (hand[i].first) -  1 || (iteratorInt == hand[0].first && hand[0].first != hand[1].first)) && hand[i].second == iteratorString)
-        {
-            counter++;
+    if (isFlush(hand)) {
+        auto temp = getSuitCards(hand, searchHandSuit(hand)[0].second);
+        if(isStraight(temp)){
+            return true;
         }
-
-        iteratorInt = hand[i].first;
-    }
-    
-    if (counter >= 5) {
-        return true;
     }
     else return false;
-
 }
+
+
 
 bool isRoyalFlush(vector < std::pair<int, std::string>> &hand) {
     
@@ -241,52 +219,39 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     _combinedHand = chand; // throws chand (community hand) into the combinded hand.
     _combinedHand.insert(_combinedHand.end(), hand.begin(), hand.end()); // combinds chand and hand to create a vector 7 length 
 
-    //cout << "Not Sorted" << endl;
-    //printHand(_combinedHand);
+   
+    vector<std::pair<int, std::string>> straight = { {1,"heart"},{2,"heart"}, {3,"heart"},{4,"heart"}, {5,"heart"}, {2,"club"}, {3,"diamond"} };
 
-    //sort(_combinedHand.begin(),_combinedHand.end()); // sorts by int value, ie Ace, 2,3,...,J,Q,K
-    //cout << "Sorted Via Card Value" << endl;
-    //printHand(_combinedHand);
-
-    //sort(_combinedHand.begin(), _combinedHand.end(), same_number);
-    //cout << "Sorted Via Same Value" << endl;
-    //printHand(_combinedHand);
-
-    ////sort(_combinedHand.begin(), _combinedHand.end(), same_suit);
-    //cout << "Sorted Via Same Suit" << endl;
-    //printHand(_combinedHand);
-
-    //cout << "Occourences of Suit" << endl;
-    //printHand(searchHandSuit(_combinedHand));
-
-
-    vector<std::pair<int, std::string>> straight = { {1,"spade"},{3,"diamond"}, {10,"spade"},{11,"spade"}, {13,"spade"}, {12,"spade"}, {13,"diamond"} };
-
-
-    cout << isRoyalFlush(straight) << endl;
-   // cout << "Straight Test" << endl;
-   //// printHand(straight);
-   // cout << "0 = False, 1 = True" << endl;
-   // cout <<"Truth Value:" << isStraight(straight) << endl;
-
-    //cout << "Flush Test" << endl;
-    ////printHand(straight);
-    //cout << "0 = False, 1 = True" << endl;
-    //cout << "Truth Value:" << isFlush(straight) << endl;
-
-    //cout << "Straight Flush Test" << endl;
+    printHand(straight);
+    
+   cout << "Straight Test" << endl;
     //printHand(straight);
-    //cout << "0 = False, 1 = True" << endl;
-   //cout << "Truth Value:" << isStraightFlush(straight) << endl;
+    cout << "0 = False, 1 = True" << endl;
+    cout <<"Truth Value:" << isStraight(straight) << endl;
+    cout << "Flush Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isFlush(straight) << endl;
+    cout << "Straight Flush Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isStraightFlush(straight) << endl;
+    cout << "Royal Flush Test" << endl;
+    //printHand(straight);
+    cout << "0 = False, 1 = True" << endl;
+    cout << "Truth Value:" << isRoyalFlush(straight) << endl;
+    for (auto i : searchHandCard(straight)) {
+        cout << i.first << ":"<< i.second << endl;
+    }
     // Poker Hands (highest to lowest):
 // 1. Royal flush
      if(isRoyalFlush(_combinedHand)){
  totalScore = scoreHand(hand) + 10;
  }
- ////2 Straight flush
- //    else if(isStraight(_combinedHand)){
- //totalScore= scoreHand(hand) + 9; 
- //}
+ //2 Straight flush
+     else if(isStraight(_combinedHand)){
+ totalScore= scoreHand(hand) + 9; 
+ }
  ////3. Four of a kind
  //    else if(){
  // totalScore = scoreHand(hand) + 8; 
@@ -295,14 +260,14 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
  //    else if(){
  //totalScore = scoreHand(hand) + 7; 
  //}
- ////5. Flush
- //    else if(){
- //totalScore = scoreHand(hand) + 6; 
- //}
- ////6. Straight
- //    else if(){
- //totalScore = scoreHand(hand) + 5; 
- //}
+ //5. Flush
+     else if(isFlush(_combinedHand)){
+ totalScore = scoreHand(hand) + 6; 
+ }
+ //6. Straight
+     else if(isStraight(_combinedHand)){
+ totalScore = scoreHand(hand) + 5; 
+ }
  ////7. Three of a kind
  //    else if(){
  //totalScore = scoreHand(hand) + 4; 
