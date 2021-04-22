@@ -280,7 +280,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
  totalScore = scoreHand(hand) + 10;
  }
  //2 Straight flush
-     else if(isStraight(_combinedHand)){
+     else if(isStraightFlush(_combinedHand)){
  totalScore= scoreHand(hand) + 9; 
  }
  //3. Four of a kind
