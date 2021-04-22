@@ -103,20 +103,23 @@ std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, 
 
 
     }
-    if(suit =="heart" )
+    if (suit == "heart")
     {
         return heart_cards;
     }
-    if (suit == "club")
+    else if (suit == "club")
     {
         return club_cards;
-    } if (suit == "diamond")
+    }
+    else if (suit == "diamond")
     {
         return diamond_cards;
-    } if (suit == "spade")
+    }
+    else
     {
         return spade_cards;
     }
+ 
 }
 
 bool isFullHouse(vector < std::pair<int, std::string>>& hand) {
@@ -223,9 +226,10 @@ bool isFlush(vector < std::pair<int, std::string>> &hand)
 bool isStraightFlush(vector < std::pair<int, std::string>> &hand) {
     if (isFlush(hand)) {
         auto temp = getSuitCards(hand, searchHandSuit(hand)[0].second);
-        if(isStraight(temp)){
+        if (isStraight(temp)) {
             return true;
         }
+        else return false;
     }
     else return false;
 }
