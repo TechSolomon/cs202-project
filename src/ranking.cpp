@@ -74,7 +74,7 @@ std::vector<std::pair<int, std::string>>searchHandSuit(std::vector<std::pair<int
     return counter; 
 }
 
-std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, std::string>>& hand,int suit) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
+std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, std::string>>& hand,string suit) // WILL RETURN A VECTOR OF PAIRS THAT IS NOT A HAND, IT CONTAINS WHICH SUIT HAS MOST OCCOURENCES 
 {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     std::vector<std::pair<int, std::string>> sorted;
@@ -107,23 +107,23 @@ std::vector<std::pair<int, std::string>>getSuitCards(std::vector<std::pair<int, 
 
 
     }
-    if(suit ==1 )
+    if(suit =="heart" )
     {
         return heart_cards;
     }
-    if (suit == 2)
+    if (suit == "club")
     {
         return club_cards;
-    } if (suit == 3)
+    } if (suit == "diamond")
     {
         return diamond_cards;
-    } if (suit == 4)
+    } if (suit == "spade")
     {
         return spade_cards;
     }
 }
 
-bool isStraight(vector < std::pair<int, std::string>> hand) {
+bool isStraight(vector < std::pair<int, std::string>> &hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     int iterator = hand[0].first;
     int counter = 0;
@@ -146,7 +146,7 @@ bool isStraight(vector < std::pair<int, std::string>> hand) {
 
 }
 
-bool isbetterStraight(vector < std::pair<int, std::string>> hand) {
+bool isbetterStraight(vector < std::pair<int, std::string>> &hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     vector<std::pair<int, std::string>> temporary;
     int iterator = hand[0].first;
@@ -175,7 +175,7 @@ bool isbetterStraight(vector < std::pair<int, std::string>> hand) {
 
 }
 
-bool isFlush(vector < std::pair<int, std::string>> hand)
+bool isFlush(vector < std::pair<int, std::string>> &hand)
 {
     if (searchHandSuit(hand)[0].first >= 5) {
         return true;
@@ -183,7 +183,7 @@ bool isFlush(vector < std::pair<int, std::string>> hand)
     else return false;
 }
 
-bool isStraightFlush(vector < std::pair<int, std::string>> hand) {
+bool isStraightFlush(vector < std::pair<int, std::string>> &hand) {
     sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;  });
     printHand(hand);
     int iteratorInt = hand[0].first;
@@ -207,34 +207,33 @@ bool isStraightFlush(vector < std::pair<int, std::string>> hand) {
 
 }
 
-bool isRoyalFlush(vector < std::pair<int, std::string>> hand) {
-
-    sort(hand.begin(), hand.end(), [](std::pair<int, std::string>& i, std::pair<int, std::string>& j) {return i.first < j.first;});
-    int iteratorInt = hand[0].first;
-    std::string iteratorString = searchHandSuit(hand)[0].second;
-    vector<std::pair<int, std::string>> temporary;
-
-    int counter = 0;
-    for (int i = 0; i < hand.size(); i++) {
-
-        if ((iteratorInt == (hand[i].first) - 1 || (iteratorInt == hand[0].first && hand[0].first != hand[1].first)) && hand[i].second == iteratorString)
-        {
-            temporary.push_back(hand[i]);
-            counter++;
+bool isRoyalFlush(vector < std::pair<int, std::string>> &hand) {
+    
+    if (searchHandSuit(hand)[0].first = 5)
+    {
+        auto temp = getSuitCards(hand, searchHandSuit(hand)[0].second);
+        if (temp[0].first == 1 && temp[4].first == 13) {
+            return true;
         }
-
-        iteratorInt = hand[i].first;
+        else return false;
     }
-    if (temporary[0].second == iteratorString) {
-        return true;
-    }
+    
     else return false;
+}
+
+double scoreHand(vector < std::pair<int, std::string>>& hand) {
+    double score;
+    for (auto i : hand) {
+        score += i.first;
+    }
+    return score/100;
 }
 
 HandAnalysis::HandAnalysis()
 {
     cout << "Constructor" << endl;
 }
+
 
 double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::vector<std::pair<int, std::string>> &chand)
 {
@@ -261,7 +260,7 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     //printHand(searchHandSuit(_combinedHand));
 
 
-    vector<std::pair<int, std::string>> straight = { {1,"spade"},{3,"diamond"}, {10,"spade"},{11,"diamonds"}, {13,"spade"}, {12,"spade"}, {13,"diamond"} };
+    vector<std::pair<int, std::string>> straight = { {1,"spade"},{3,"diamond"}, {10,"spade"},{11,"spade"}, {13,"spade"}, {12,"spade"}, {13,"diamond"} };
 
 
     cout << isRoyalFlush(straight) << endl;
@@ -275,57 +274,61 @@ double HandAnalysis::grade(std::vector<std::pair<int, std::string>> &hand, std::
     //cout << "0 = False, 1 = True" << endl;
     //cout << "Truth Value:" << isFlush(straight) << endl;
 
-    cout << "Straight Flush Test" << endl;
+    //cout << "Straight Flush Test" << endl;
     //printHand(straight);
-    cout << "0 = False, 1 = True" << endl;
-    cout << "Truth Value:" << isStraightFlush(straight) << endl;
+    //cout << "0 = False, 1 = True" << endl;
+   //cout << "Truth Value:" << isStraightFlush(straight) << endl;
     // Poker Hands (highest to lowest):
 // 1. Royal flush
-//     if(){}
-// 2 Straight flush
-//     else if(isStraight(_combinedHand){
-// return scoreHand(_combinedHand) + 9; 
-// }
-// 3. Four of a kind
-//     else if(){
-// return scoreHand(_combinedHand) + 8; 
-// }
-// 4. Full house
-//     else if(){
-// return scoreHand(_combinedHand) + 7; 
-// }
-// 5. Flush
-//     else if(){
-// return scoreHand(_combinedHand) + 6; 
-// }
-// 6. Straight
-//     else if(){
-// return scoreHand(_combinedHand) + 5; 
-// }
-// 7. Three of a kind
-//     else if(){
-// return scoreHand(_combinedHand) + 4; 
-// }
-// 8. Two pair
-//     {
-// return scoreHand(_combinedHand) + 3; 
-// }
-// 9. Pair
-//     {
-// return scoreHand(_combinedHand) + 2; 
-// }
-// 10. High card
-//  else{
-// return scoreHand(_combinedHand) + 1; 
-// }
+     if(isRoyalFlush(_combinedHand)){
+ totalScore = scoreHand(hand) + 10;
+ }
+ ////2 Straight flush
+ //    else if(isStraight(_combinedHand)){
+ //totalScore= scoreHand(hand) + 9; 
+ //}
+ ////3. Four of a kind
+ //    else if(){
+ // totalScore = scoreHand(hand) + 8; 
+ //}
+ ////4. Full house
+ //    else if(){
+ //totalScore = scoreHand(hand) + 7; 
+ //}
+ ////5. Flush
+ //    else if(){
+ //totalScore = scoreHand(hand) + 6; 
+ //}
+ ////6. Straight
+ //    else if(){
+ //totalScore = scoreHand(hand) + 5; 
+ //}
+ ////7. Three of a kind
+ //    else if(){
+ //totalScore = scoreHand(hand) + 4; 
+ //}
+ ////8. Two pair
+ //    else if ()
+ //    {
+ //totalScore =scoreHand(hand) + 3; 
+ //}
+ ////9. Pair
+ //    else if ()
+ //    {
+ //totalScore = scoreHand(hand) + 2; 
+ //}
+ //10. High card
+  else{
+         sort(hand.begin(), hand.end());
+         if (hand[0].first == 1) {
+             totalScore = 1.99;
+         }
+         else {
+             totalScore = hand[1].first / 100 + 1;
+         }
+ }
 
-
-
-
-
-
-
-
+     cout << totalScore << endl;
     return totalScore;
 }
 // the dream of this function is to be ran at the end of the round and then will return a value (double) for each player, we can then compare those values to give the winner the pot
