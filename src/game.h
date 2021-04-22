@@ -20,6 +20,7 @@ public:
 	void gameLoop(); // Starts a round of poker
 	void resetRound(); // Resets the _cards, _pot, _currentBet, and _highestScore, calls setup()
 	void getPlayerInput(Player& p);
+	int getNumericInput() const;
 
 	void setPot(const int& bet);
 	int getPot(const int& bet) const;
@@ -29,6 +30,7 @@ public:
 
 	bool everyoneCalled(); // Advances round phase if everyone has called
 	bool everyoneChecked(); // Advances round phase if everyone has checked
+	void letPlayerCallARaise(); // Goes through all the players that need to call a raise
 	void determineWinner(); // Returns the player that won the round
 
 	friend void Player::raise(Game& game, const int& raise);
