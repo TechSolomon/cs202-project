@@ -1,9 +1,10 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include "player.h"
 #include "deck.h"
 #include "ranking.h"
-
-#ifndef GAME_H
-#define GAME_H
+#include "displayCard.h"
 
 class Game
 {
